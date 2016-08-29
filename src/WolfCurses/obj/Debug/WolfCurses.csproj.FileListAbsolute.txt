@@ -1,0 +1,6 @@
+C:\OregonTrailBot\bin\WolfCurses.XML
+C:\OregonTrailBot\bin\WolfCurses.dll
+C:\OregonTrailBot\bin\WolfCurses.pdb
+C:\OregonTrailBot\src\WolfCurses\obj\Debug\WolfCurses.dll
+C:\OregonTrailBot\src\WolfCurses\obj\Debug\WolfCurses.pdb
+C:\OregonTrailBot\src\WolfCurses\obj\Debug\WolfCurses.csprojResolveAssemblyReference.cache
