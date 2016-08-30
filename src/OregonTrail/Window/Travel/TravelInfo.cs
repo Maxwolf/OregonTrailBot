@@ -18,16 +18,6 @@ namespace OregonTrail.Travel
     public sealed class TravelInfo : WindowData
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="TravelInfo" /> class.
-        ///     Creates default store implementation.
-        /// </summary>
-        public TravelInfo()
-        {
-            // Store so player can buy food, clothes, ammo, etc.
-            Store = new StoreGenerator(Game);
-        }
-
-        /// <summary>
         ///     Reference for any river information that we might need to be holding when we encounter one it will be generated and
         ///     this object filled with needed data that can be accessed by the other states as we attach them.
         /// </summary>
@@ -36,7 +26,7 @@ namespace OregonTrail.Travel
         /// <summary>
         ///     Keeps track of all the pending transactions that need to be made when the player visits a store.
         /// </summary>
-        public StoreGenerator Store { get; }
+        public StoreGenerator Store { get; private set; }
 
         /// <summary>
         ///     Holds all the important information related to a hunt for animals using bullets. When hunting form is attached this
@@ -187,6 +177,12 @@ namespace OregonTrail.Travel
 
             // Destroy the river data.
             River = null;
+        }
+
+        public override void OnPostCreate(GameSimulationApp game)
+        {
+            // Store so player can buy food, clothes, ammo, etc.
+            Store = new StoreGenerator(game);
         }
     }
 }

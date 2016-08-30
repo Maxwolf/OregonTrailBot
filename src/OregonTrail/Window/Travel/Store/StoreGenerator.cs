@@ -84,19 +84,14 @@ namespace OregonTrail.Travel.Store
         /// </summary>
         internal void PurchaseItems()
         {
-            // Grab the total transaction cost once since it requires work to get the property value.
-            var totalBill = TotalTransactionCost;
-
-            // Throws exception if player cannot afford items. Developer calling this at wrong time!
-            if (_game.Vehicle.Balance < totalBill)
-                throw new InvalidOperationException(
-                    "Attempted to purchase items the player does not have enough monies for!");
+            //// Throws exception if player cannot afford items. Developer calling this at wrong time!
+            //if (_game.Vehicle.Balance < TotalTransactionCost)
+            //    throw new InvalidOperationException(
+            //        "Attempted to purchase items the player does not have enough monies for!");
 
             // Loop through all the pending transaction and buy them out.
             foreach (var transaction in _totalTransactions)
-            {
                 _game.Vehicle.Purchase(transaction.Value);
-            }
 
             // Remove all the transactions now that we have processed them.
             Reset();

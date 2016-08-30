@@ -43,6 +43,11 @@ namespace OregonTrail
         /// </summary>
         WindowData UserData { get; }
 
+        /// <summary>
+        ///     Defines the menu options in the enumeration which we have to work with for this window.
+        /// </summary>
+        object MenuCommands { get; }
+
         /// <summary>Creates and adds the specified type of state to currently active game Windows.</summary>
         /// <param name="stateType">The state Type.</param>
         void SetForm(Type stateType);

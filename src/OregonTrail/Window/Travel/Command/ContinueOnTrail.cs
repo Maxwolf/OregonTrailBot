@@ -3,7 +3,6 @@
 
 using System;
 using System.Text;
-using OregonTrail.Control;
 using OregonTrail.Form;
 using OregonTrail.Location;
 using OregonTrail.Travel.Dialog;
@@ -23,17 +22,6 @@ namespace OregonTrail.Travel.Command
         ///     Holds the current drive state, since we can size up the situation at any time.
         /// </summary>
         private StringBuilder _drive;
-
-        /// <summary>
-        ///     Animated sway bar that prints out as text, ping-pongs back and fourth between left and right side, moved by
-        ///     stepping it with tick.
-        /// </summary>
-        private MarqueeBar _marqueeBar;
-
-        /// <summary>
-        ///     Holds the text related to animated sway bar, each tick of simulation steps it.
-        /// </summary>
-        private string _swayBarText;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ContinueOnTrail" /> class.
@@ -67,10 +55,6 @@ namespace OregonTrail.Travel.Command
             // We don't create it in the constructor, will update with ticks.
             _drive = new StringBuilder();
 
-            // Animated sway bar.
-            _marqueeBar = new MarqueeBar();
-            _swayBarText = _marqueeBar.Step();
-
             // Vehicle has departed the current location for the next one but you can only depart once.
             if (game.Trail.DistanceToNextLocation > 0 &&
                 game.Trail.CurrentLocation.Status == LocationStatus.Arrived)
@@ -88,9 +72,6 @@ namespace OregonTrail.Travel.Command
         {
             // Clear whatever was in the string builder last tick.
             _drive.Clear();
-
-            // Ping-pong progress bar to show that we are moving.
-            _drive.AppendLine($"{Environment.NewLine}{_swayBarText}");
 
             // Basic information about simulation.
             _drive.AppendLine(UserData.DriveStatus);
@@ -141,7 +122,6 @@ namespace OregonTrail.Travel.Command
                     break;
                 case VehicleStatus.Moving:
                     // Check if there is a tombstone here, if so we attach question form that asks if we stop or not.
-                    _swayBarText = _marqueeBar.Step();
                     if (game.Tombstone.ContainsTombstone(game.Vehicle.Odometer) &&
                         !game.Trail.CurrentLocation.ArrivalFlag)
                     {

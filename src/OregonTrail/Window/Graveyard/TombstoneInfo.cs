@@ -43,5 +43,10 @@ namespace OregonTrail.Graveyard
         {
             tempTombstone = null;
         }
+
+        public override void OnPostCreate(GameSimulationApp game)
+        {
+            
+        }
     }
 }

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Threading;
 using OregonTrail;
-using OregonTrail.Control;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types;
@@ -138,55 +135,94 @@ namespace TrailBot
                 // Send whatever we got to the simulation for processing it will decide what it wants.
                 game.InputManager.SendInputBufferAsCommand();
 
-                if (message.Text.StartsWith("/keyboard")) // send custom keyboard
-                {
-                    var keyboard = new ReplyKeyboardMarkup(new[]
-                    {
-                        new[] // first row
-                        {
-                            new KeyboardButton("1.1"),
-                            new KeyboardButton("1.2")
-                        },
-                        new[] // last row
-                        {
-                            new KeyboardButton("2.1"),
-                            new KeyboardButton("2.2")
-                        }
-                    });
+                //if (message.Text.StartsWith("/photo")) // send a photo
+                //{
+                //    await Bot.SendChatActionAsync(message.Chat.Id, ChatAction.UploadPhoto);
+                //    const string file = @"C:\OregonTrailBot\bin\test.png";
+                //    var fileName = file.Split('\\').Last();
 
-                    await Bot.SendTextMessageAsync(message.Chat.Id, "Choose",
-                        replyMarkup: keyboard);
-                }
-                else if (message.Text.StartsWith("/photo")) // send a photo
-                {
-                    await Bot.SendChatActionAsync(message.Chat.Id, ChatAction.UploadPhoto);
-                    const string file = @"C:\OregonTrailBot\bin\test.png";
-                    var fileName = file.Split('\\').Last();
-
-                    using (var fileStream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read))
-                    {
-                        var fts = new FileToSend(fileName, fileStream);
-
-                        await Bot.SendPhotoAsync(message.Chat.Id, fts, "Nice Picture");
-                    }
-                }
-                else
-                {
-                    // Instruct the program that it can pass along screen buffer when it changes.
-                    await Bot.SendTextMessageAsync(message.Chat.Id, game.SceneGraph.ScreenBuffer,
-                        replyMarkup: new ReplyKeyboardHide());
-                }
+                //    using (var fileStream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read))
+                //    {
+                //        var fts = new FileToSend(fileName, fileStream);
+                //        await Bot.SendPhotoAsync(message.Chat.Id, fts, "Nice Picture");
+                //    }
+                //}
             }
             else
             {
+                // Skip messages that are internal mode switching or empty (populating) windows and forms.
+                if (messageEventArgs.Message.Text.Contains(SceneGraph.GAMEMODE_DEFAULT_TUI) ||
+                    messageEventArgs.Message.Text.Contains(SceneGraph.GAMEMODE_EMPTY_TUI))
+                    return;
+
                 // Tell the players what we are doing.
-                await
-                    Bot.SendTextMessageAsync(message.Chat.Id,
-                        $"Creating new Oregon Trail session with token: {message.Chat.Id}",
-                        replyMarkup: new ReplyKeyboardHide());
+                await Bot.SendTextMessageAsync(message.Chat.Id,
+                    $"Creating new Oregon Trail session with token: {message.Chat.Id}",
+                    replyMarkup: new ReplyKeyboardHide());
 
                 // Create a new game session using chat room ID as key in our dictionary.
-                _sessions.Add(message.Chat.Id, new GameSimulationApp());
+                _sessions.Add(message.Chat.Id, new GameSimulationApp(message.Chat.Id));
+
+                // Hook delegate event for knowing when that simulation is updated.
+                if (_sessions.ContainsKey(message.Chat.Id))
+                    _sessions[message.Chat.Id].SceneGraph.ScreenBufferDirtyEvent += SceneGraphOnScreenBufferDirtyEvent;
+            }
+        }
+
+        private async static void SceneGraphOnScreenBufferDirtyEvent(string content, int[] commands, long gameID)
+        {
+            // Check if there are multiple commands that can be pressed (or dialog with continue only).
+            if ((commands != null && commands.Length <= 0) || commands == null)
+            {
+                // Instruct the program that it can pass along screen buffer when it changes.
+                await Bot.SendTextMessageAsync(gameID, content,
+                    replyMarkup: new ReplyKeyboardHide());
+            }
+            else if (commands.Length > 0)
+            {
+                // Get half of the commands.
+                var halfCommandCount = commands.Length / 2;
+
+                // Check if less than zero.
+                if (halfCommandCount <= 0)
+                {
+                    // Send custom keyboard.
+                    var keyboard = new ReplyKeyboardMarkup(new[]
+                    {
+                                    new[] // Single commands get a continue button.
+                                    {
+                                        new KeyboardButton("Continue")
+                                    }
+                                });
+
+                    await Bot.SendTextMessageAsync(gameID, content,
+                        replyMarkup: keyboard);
+                }
+                else
+                {
+                    // First row is first half of menu options.
+                    var topRow = new List<KeyboardButton>();
+                    for (var i = 0; i < halfCommandCount; i++)
+                        topRow.Add(new KeyboardButton(commands[i].ToDescriptionAttribute()));
+
+                    // Second row is last half of menu options.
+                    var bottomRow = new List<KeyboardButton>();
+                    for (var i = halfCommandCount; i < commands.Length; i++)
+                        bottomRow.Add(new KeyboardButton(commands[i].ToDescriptionAttribute()));
+
+                    // Send custom keyboard.
+                    var keyboard = new ReplyKeyboardMarkup(new[]
+                    {
+                                    topRow.ToArray(),
+                                    bottomRow.ToArray()
+                                });
+
+                    // Send the message to chat room.
+                    await Bot.SendTextMessageAsync(
+                        gameID,
+                        content,
+                        replyMarkup: keyboard);
+                }
             }
         }
     }

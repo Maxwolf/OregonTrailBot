@@ -33,5 +33,10 @@ namespace OregonTrail.RandomEvent
         ///     another form in the random event window.
         /// </summary>
         public string EventText { get; set; }
+
+        public override void OnPostCreate(GameSimulationApp game)
+        {
+            
+        }
     }
 }

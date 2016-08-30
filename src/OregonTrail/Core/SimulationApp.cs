@@ -13,6 +13,8 @@ namespace OregonTrail
     /// </summary>
     public abstract class SimulationApp : ITick
     {
+        private readonly long _gameID;
+
         /// <summary>
         ///     Determines if the dynamic menu system should show the command names or only numbers. If false then only numbers
         ///     will be shown.
@@ -40,9 +42,9 @@ namespace OregonTrail
         /// <summary>
         ///     Initializes a new instance of the <see cref="T:TrailGame.SimulationApp" /> class.
         /// </summary>
-        protected SimulationApp()
+        protected SimulationApp(long gameID)
         {
-            // We are not closing...
+            _gameID = gameID;
             IsClosing = false;
 
             // Date and time the simulation was started, which we use as benchmark for all future time passed.
@@ -55,7 +57,7 @@ namespace OregonTrail
             // Create modules needed for managing simulation.
             Random = new Randomizer();
             WindowManager = new WindowManager(this);
-            SceneGraph = new SceneGraph(this);
+            SceneGraph = new SceneGraph(this, gameID);
 
             // Input manager needs event hook for knowing when buffer is sent.
             InputManager = new InputManager(this);

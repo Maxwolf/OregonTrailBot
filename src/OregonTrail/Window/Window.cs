@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using OregonTrail.Form;
 using OregonTrail.Menu;
@@ -82,16 +83,15 @@ namespace OregonTrail
 
             // Create the user data object casted to correct type from generics while still adhering to common base class.
             UserData = TypeExtensions.New<TData>.Instance();
-            UserData.Game = _game;
+            UserData.Game = game;
+            UserData.OnPostCreate(game);
 
             // Determines if the menu system should show raw input names in the menu rendering or just number selections by enum value.
             ShowCommandNamesInMenu = SimulationApp.SHOW_COMMANDS;
 
             // Complain the generics implemented is not of an enum type.
             if (!typeof (TCommands).IsEnum)
-            {
                 throw new InvalidCastException("TCommands must be an enumerated type!");
-            }
 
             // Create empty list of menu choices.
             _menuCommands = new List<IMenuChoice<TCommands>>();
@@ -143,6 +143,14 @@ namespace OregonTrail
         protected TData UserData { get; }
 
         /// <summary>
+        ///     Defines the menu options in the enumeration which we have to work with for this window.
+        /// </summary>
+        public object MenuCommands
+        {
+            get { return Commands.ToArray(); }
+        }
+
+        /// <summary>
         ///     Because of how generics work in C# we need to have the ability to override a method in implementing classes to get
         ///     back the correct commands for the implementation from abstract class inheritance chain. On the bright side it
         ///     enforces the commands returned to be of the specified enum in generics.
@@ -154,15 +162,13 @@ namespace OregonTrail
         ///     Formatting list of enumeration values that can be iterated over as array.
         /// </returns>
         // ReSharper disable once UnusedMember.Local
-        private static TCommands[] Commands
+        public static TCommands[] Commands
         {
             get
             {
                 // Complain the generics implemented is not of an enum type.
                 if (!typeof (TCommands).IsEnum)
-                {
                     throw new InvalidCastException("T must be an enumerated type!");
-                }
 
                 return Enum.GetValues(typeof (TCommands)) as TCommands[];
             }

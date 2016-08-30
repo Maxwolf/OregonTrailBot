@@ -10,5 +10,9 @@ namespace OregonTrail.GameOver
     public sealed class GameOverInfo : WindowData
     {
         // Nothing to see here, move along...
+        public override void OnPostCreate(GameSimulationApp game)
+        {
+            
+        }
     }
 }

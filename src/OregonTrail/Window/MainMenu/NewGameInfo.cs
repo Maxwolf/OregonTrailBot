@@ -39,20 +39,6 @@ namespace OregonTrail.MainMenu
         private Month _startingMonth;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="T:OregonTrail.MainMenu.NewGameInfo" /> class.
-        /// </summary>
-        public NewGameInfo()
-        {
-            PlayerNameIndex = 0;
-            _playerNames = new List<string>();
-            _playerProfession = Person.Profession.Banker;
-            _startingInventory = new List<SimItem>();
-            _startingMonies = 0;
-            _startingMonth = Month.March;
-            Modified = false;
-        }
-
-        /// <summary>
         ///     Index in the list of player names we are going to be inserting into.
         /// </summary>
         public int PlayerNameIndex { get; set; }
@@ -131,5 +117,16 @@ namespace OregonTrail.MainMenu
         ///     other properties.
         /// </summary>
         private bool Modified { get; set; }
+
+        public override void OnPostCreate(GameSimulationApp game)
+        {
+            PlayerNameIndex = 0;
+            _playerNames = new List<string>();
+            _playerProfession = Person.Profession.Banker;
+            _startingInventory = new List<SimItem>();
+            _startingMonies = 0;
+            _startingMonth = Month.March;
+            Modified = false;
+        }
     }
 }

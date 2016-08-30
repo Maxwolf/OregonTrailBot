@@ -151,8 +151,6 @@
     <Compile Include="Utility\EnumerableExtensions.cs" />
     <Compile Include="Utility\StringExtensions.cs" />
     <Compile Include="Utility\TypeExtensions.cs" />
-    <Compile Include="Window\Control\MarqueeBar.cs" />
-    <Compile Include="Window\Control\SpinningPixel.cs" />
     <Compile Include="Window\Control\TextProgress.cs" />
     <Compile Include="Window\Control\TextTableExtensions.cs" />
     <Compile Include="Window\Form\Form.cs" />

@@ -177,5 +177,10 @@ namespace OregonTrail.GameOver
             // Completely resets the game to default state it was in when it first started.
             UserData.Game.Restart();
         }
+
+        public override int[] MenuCommands
+        {
+            get { return new[] {1}; }
+        }
     }
 }

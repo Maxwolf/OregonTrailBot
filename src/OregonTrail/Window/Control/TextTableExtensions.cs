@@ -82,7 +82,7 @@ namespace OregonTrail.Control
                 }
 
                 // Print end of line
-                sb.Append(" | ");
+                //sb.Append("|");
                 sb.AppendLine();
 
                 // Print splitter

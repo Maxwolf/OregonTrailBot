@@ -23,12 +23,14 @@ namespace OregonTrail
         ///     Defines the limit on the number of players for the vehicle that will be allowed. This also determines how many
         ///     names are asked for in new game Windows.
         /// </summary>
+        // ReSharper disable once InconsistentNaming
         public const int MAXPLAYERS = 4;
 
         /// <summary>
         ///     Creates new instance of game simulation. Complains if instance already exists.
         /// </summary>
-        public GameSimulationApp()
+        /// <param name="gameID">Unique identifier for this game.</param>
+        public GameSimulationApp(long gameID) : base(gameID)
         {
             OnPostCreate();
         }

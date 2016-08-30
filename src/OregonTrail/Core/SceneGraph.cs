@@ -17,31 +17,37 @@ namespace OregonTrail
         /// <summary>
         ///     Fired when the screen back buffer has changed from what is currently being shown, this forces a redraw.
         /// </summary>
-        public delegate void ScreenBufferDirty(string tuiContent);
+        public delegate void ScreenBufferDirty(string tuiContent, int[] commands, long gameID);
 
         /// <summary>
         ///     Default string used when game Windows has nothing better to say.
         /// </summary>
-        private const string GAMEMODE_DEFAULT_TUI = "[DEFAULT WINDOW TEXT]";
+        // ReSharper disable once InconsistentNaming
+        public const string GAMEMODE_DEFAULT_TUI = "[DEFAULT WINDOW TEXT]";
 
         /// <summary>
         ///     Default string used when there are no game modes at all.
         /// </summary>
-        private const string GAMEMODE_EMPTY_TUI = "[NO WINDOW ATTACHED]";
+        // ReSharper disable once InconsistentNaming
+        public const string GAMEMODE_EMPTY_TUI = "[NO WINDOW ATTACHED]";
 
         /// <summary>
         ///     Reference to simulation that is controlling the text user interface and actually filling the screen buffer with
         ///     data.
         /// </summary>
-        private readonly SimulationApp _simUnit;
+        private readonly SimulationApp _game;
+
+        private readonly long _gameID;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="SceneGraph" /> class.
         /// </summary>
-        /// <param name="simUnit">Core simulation which is controlling the window manager.</param>
-        public SceneGraph(SimulationApp simUnit)
+        /// <param name="game">Core simulation which is controlling the window manager.</param>
+        /// <param name="gameID"></param>
+        public SceneGraph(SimulationApp game, long gameID)
         {
-            _simUnit = simUnit;
+            _game = game;
+            _gameID = gameID;
             ScreenBuffer = string.Empty;
         }
 
@@ -84,7 +90,22 @@ namespace OregonTrail
 
             // Update the screen buffer with altered data.
             ScreenBuffer = tuiContent;
-            ScreenBufferDirtyEvent?.Invoke(ScreenBuffer);
+            if (_game.WindowManager.FocusedWindow != null &&
+                _game.WindowManager.FocusedWindow.AcceptsInput)
+            {
+                if (_game.WindowManager.FocusedWindow.CurrentForm != null)
+                {
+                    ScreenBufferDirtyEvent?.Invoke(ScreenBuffer,
+                        _game?.WindowManager?.FocusedWindow?.CurrentForm.MenuCommands as int[],
+                        _gameID);
+                }
+                else
+                {
+                    ScreenBufferDirtyEvent?.Invoke(ScreenBuffer,
+                                            _game?.WindowManager?.FocusedWindow?.MenuCommands as int[],
+                                            _gameID);
+                }
+            }
         }
 
         /// <summary>
@@ -97,20 +118,19 @@ namespace OregonTrail
         {
             // Spinning ticker that shows activity, lets us know if application hangs or freezes.
             var tui = new StringBuilder();
-            //tui.Append($"[ {_simUnit.TickPhase} ] - ");
 
             // Keeps track of active Windows name and active Windows current state name for debugging purposes.
-            tui.Append(_simUnit.WindowManager.FocusedWindow?.CurrentForm != null
-                ? $"Window({_simUnit.WindowManager.Count}): {_simUnit.WindowManager.FocusedWindow}({_simUnit.WindowManager.FocusedWindow.CurrentForm}) - "
-                : $"Window({_simUnit.WindowManager.Count}): {_simUnit.WindowManager.FocusedWindow}() - ");
+            tui.Append(_game.WindowManager.FocusedWindow?.CurrentForm != null
+                ? $"Window({_game.WindowManager.Count}): {_game.WindowManager.FocusedWindow}({_game.WindowManager.FocusedWindow.CurrentForm}) - "
+                : $"Window({_game.WindowManager.Count}): {_game.WindowManager.FocusedWindow}() - ");
 
             // Allows the implementing simulation to control text before window is rendered out.
-            tui.Append(_simUnit.OnPreRender());
+            tui.Append(_game.OnPreRender());
 
             // Prints game Windows specific text and options. This typically is menus from commands, or states showing some information.
             tui.Append($"{RenderWindow()}{Environment.NewLine}");
 
-            if (_simUnit.WindowManager.AcceptingInput)
+            if (_game.WindowManager.AcceptingInput)
             {
                 // Allow user to see their input from buffer.
                 //tui.Append($"What is your choice? {_simUnit.InputManager.InputBuffer}");
@@ -126,12 +146,12 @@ namespace OregonTrail
         private string RenderWindow()
         {
             // If TUI for active game Windows is not null or empty then use it.
-            var activeWindowText = _simUnit.WindowManager.FocusedWindow?.OnRenderWindow();
+            var activeWindowText = _game.WindowManager.FocusedWindow?.OnRenderWindow();
             if (!string.IsNullOrEmpty(activeWindowText) && !string.IsNullOrWhiteSpace(activeWindowText))
                 return activeWindowText;
 
             // Otherwise, display default message if null for Windows.
-            return _simUnit.WindowManager.FocusedWindow == null ? GAMEMODE_EMPTY_TUI : GAMEMODE_DEFAULT_TUI;
+            return _game.WindowManager.FocusedWindow == null ? GAMEMODE_EMPTY_TUI : GAMEMODE_DEFAULT_TUI;
         }
 
         /// <summary>

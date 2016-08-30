@@ -28,12 +28,6 @@ namespace OregonTrail.Travel.RiverCrossing
         private bool _finishedCrossingRiver;
 
         /// <summary>
-        ///     Animated sway bar that prints out as text, ping-pongs back and fourth between left and right side, moved by
-        ///     stepping it with tick.
-        /// </summary>
-        private MarqueeBar _marqueeBar;
-
-        /// <summary>
         ///     Defines the current amount of feet we have crossed of the river, this will tick up to the total length of the
         ///     river.
         /// </summary>
@@ -53,10 +47,6 @@ namespace OregonTrail.Travel.RiverCrossing
         {
             // Create the string builder for holding all our text about river crossing as it happens.
             _crossingPrompt = new StringBuilder();
-
-            // Animated sway bar.
-            _marqueeBar = new MarqueeBar();
-            _swayBarText = _marqueeBar.Step();
 
             // Sets the crossing percentage to zero.
             _riverCrossingOfTotalWidth = 0;
@@ -181,9 +171,6 @@ namespace OregonTrail.Travel.RiverCrossing
             // Stop crossing if we have finished.
             if (_finishedCrossingRiver)
                 return;
-
-            // Advance the progress bar, step it to next phase.
-            _swayBarText = _marqueeBar.Step();
 
             // Increment the amount we have floated over the river.
             _riverCrossingOfTotalWidth += UserData.Game.Random.Next(1, UserData.River.RiverWidth/4);

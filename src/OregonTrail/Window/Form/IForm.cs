@@ -32,6 +32,8 @@ namespace OregonTrail.Form
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         WindowData UserData { get; }
 
+        int[] MenuCommands { get; }
+
         /// <summary>
         ///     Returns a text only representation of the current game Windows state. Could be a statement, information, question
         ///     waiting input, etc.

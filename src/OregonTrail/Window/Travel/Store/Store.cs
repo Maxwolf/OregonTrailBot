@@ -246,8 +246,7 @@ namespace OregonTrail.Travel.Store
             }
 
             // Check if player can afford the items they have selected.
-            var totalBill = UserData.Store.TotalTransactionCost;
-            if (UserData.Game.Vehicle.Balance < totalBill)
+            if (UserData.Game.Vehicle.Balance < UserData.Store.TotalTransactionCost)
             {
                 SetForm(typeof (StoreDebtWarning));
                 return;
