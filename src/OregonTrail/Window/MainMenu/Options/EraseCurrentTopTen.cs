@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.MainMenu.Options
+namespace OregonTrail.MainMenu.Options
 {
     /// <summary>
     ///     Confirm the player wishes to the destroy the current top ten list and reset it back to the hard-coded default
@@ -66,7 +65,7 @@ namespace OregonTrail.Window.MainMenu.Options
         protected override void OnDialogResponse(DialogResponse reponse)
         {
             // Actually erase current top ten list.
-            GameSimulationApp.Instance.Scoring.Reset();
+            UserData.Game.Scoring.Reset();
 
             // Return to main menu.
             SetForm(typeof (ManagementOptions));

@@ -3,9 +3,9 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using OregonTrail.Entity.Location.Weather;
+using OregonTrail.Location.Weather;
 
-namespace OregonTrail.Entity.Location.Point
+namespace OregonTrail.Location.Point
 {
     /// <summary>
     ///     Offers the vehicle multiple different choices about where it would like to split off and begin traveling to.
@@ -23,12 +23,14 @@ namespace OregonTrail.Entity.Location.Point
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ForkInRoad" /> class. Initializes a new instance of the
-        ///     <see cref="T:OregonTrail.Entity.Location.Location" /> class.
+        ///     <see cref="T:OregonTrail.Location.Location" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="climateType">The climate Type.</param>
         /// <param name="skipChoices">The skip Choices.</param>
-        public ForkInRoad(string name, Climate climateType, IEnumerable<Location> skipChoices) : base(name, climateType)
+        /// <param name="game"></param>
+        public ForkInRoad(string name, Climate climateType, IEnumerable<Location> skipChoices, GameSimulationApp game)
+            : base(name, climateType, game)
         {
             // Offers up a decision when traveling on the trail, there are normally one of many possible outcomes.
             if (skipChoices != null)

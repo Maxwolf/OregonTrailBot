@@ -5,14 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OregonTrail.Entity.Location;
-using OregonTrail.Entity.Location.Point;
-using OregonTrail.Window.Travel.Command;
-using OregonTrail.Window.Travel.Toll;
-using WolfCurses;
-using WolfCurses.Form;
+using OregonTrail.Form;
+using OregonTrail.Location.Point;
+using OregonTrail.Travel.Command;
+using OregonTrail.Travel.Toll;
 
-namespace OregonTrail.Window.Travel.Dialog
+namespace OregonTrail.Travel.Dialog
 {
     /// <summary>
     ///     Defines a location that has the player make a choice about the next location they want to travel to, it is not a
@@ -31,7 +29,7 @@ namespace OregonTrail.Window.Travel.Dialog
         ///     Defines the skip choices as they will be selected from the fork form. The purpose for this is because we want the
         ///     index for selecting them to start at one not zero.
         /// </summary>
-        private Dictionary<int, Location> _skipChoices;
+        private Dictionary<int, Location.Location> _skipChoices;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="LocationFork" /> class.
@@ -52,12 +50,12 @@ namespace OregonTrail.Window.Travel.Dialog
             base.OnFormPostCreate();
 
             // Cast the current location as a fork in the road.
-            var forkInRoad = GameSimulationApp.Instance.Trail.CurrentLocation as ForkInRoad;
+            var forkInRoad = UserData.Game.Trail.CurrentLocation as ForkInRoad;
             if (forkInRoad == null)
                 throw new InvalidCastException("Unable to cast current location to fork in the road.");
 
             // Create a dictionary that represents all the choices with index starting at one not zero.
-            _skipChoices = new Dictionary<int, Location>();
+            _skipChoices = new Dictionary<int, Location.Location>();
             for (var index = 0; index < forkInRoad.SkipChoices.Count; index++)
             {
                 var skipChoice = forkInRoad.SkipChoices[index];
@@ -125,7 +123,7 @@ namespace OregonTrail.Window.Travel.Dialog
                 else
                 {
                     // Insert the skip location into location list after current location.
-                    GameSimulationApp.Instance.Trail.InsertLocation(_skipChoices[parsedInputNumber]);
+                    UserData.Game.Trail.InsertLocation(_skipChoices[parsedInputNumber]);
 
                     // Start going there...
                     SetForm(typeof (LocationDepart));

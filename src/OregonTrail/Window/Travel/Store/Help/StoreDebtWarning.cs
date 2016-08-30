@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.Travel.Store.Help
+namespace OregonTrail.Travel.Store.Help
 {
     /// <summary>
     ///     If the player cannot afford to leave the store because they have attempted to purchase more items than they are
@@ -43,7 +42,7 @@ namespace OregonTrail.Window.Travel.Store.Help
             storeDebt.AppendLine($"{Environment.NewLine}Whoa there partner!");
             storeDebt.AppendLine(
                 $"I see you got {UserData.Store.Transactions.Count} items worth {UserData.Store.TotalTransactionCost.ToString("C2")}.");
-            storeDebt.AppendLine($"You only got {GameSimulationApp.Instance.Vehicle.Balance.ToString("C2")}!");
+            storeDebt.AppendLine($"You only got {UserData.Game.Vehicle.Balance.ToString("C2")}!");
             storeDebt.AppendLine($"Put some items back in order to leave the store...{Environment.NewLine}");
             return storeDebt.ToString();
         }

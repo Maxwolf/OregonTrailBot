@@ -3,12 +3,10 @@
 
 using System;
 using System.Text;
-using OregonTrail.Module.Tombstone;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.Graveyard
+namespace OregonTrail.Graveyard
 {
     /// <summary>
     ///     Confirms with the user if there is any changes they would like to make to their Tombstone before it gets saved
@@ -73,7 +71,7 @@ namespace OregonTrail.Window.Graveyard
             {
                 case DialogResponse.Custom:
                 case DialogResponse.No:
-                    GameSimulationApp.Instance.Tombstone.Add(UserData.Tombstone.Clone() as Tombstone);
+                    UserData.Game.Tombstone.Add(UserData.Tombstone.Clone() as Tombstone.Tombstone);
                     SetForm(typeof (TombstoneView));
                     break;
                 case DialogResponse.Yes:

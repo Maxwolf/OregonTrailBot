@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using OregonTrail.Entity.Person;
-using WolfCurses;
-using WolfCurses.Form;
+using OregonTrail.Form;
+using OregonTrail.Person;
 
-namespace OregonTrail.Window.Travel.Command
+namespace OregonTrail.Travel.Command
 {
     /// <summary>
     ///     Allows the player to change the amount of food their party members will have access to in a given day, the purpose
@@ -42,7 +41,7 @@ namespace OregonTrail.Window.Travel.Command
             _ration = new StringBuilder();
             _ration.AppendLine($"{Environment.NewLine}Change food rations");
             _ration.AppendLine(
-                $"(currently \"{GameSimulationApp.Instance.Vehicle.Ration.ToDescriptionAttribute()}\"){Environment.NewLine}");
+                $"(currently \"{UserData.Game.Vehicle.Ration.ToDescriptionAttribute()}\"){Environment.NewLine}");
             _ration.AppendLine($"The amount of food the people in");
             _ration.AppendLine($"your party eat each day can");
             _ration.AppendLine($"change. These amounts are:{Environment.NewLine}");
@@ -73,15 +72,15 @@ namespace OregonTrail.Window.Travel.Command
             switch (input.ToUpperInvariant())
             {
                 case "1":
-                    GameSimulationApp.Instance.Vehicle.ChangeRations(RationLevel.Filling);
+                    UserData.Game.Vehicle.ChangeRations(RationLevel.Filling);
                     ClearForm();
                     break;
                 case "2":
-                    GameSimulationApp.Instance.Vehicle.ChangeRations(RationLevel.Meager);
+                    UserData.Game.Vehicle.ChangeRations(RationLevel.Meager);
                     ClearForm();
                     break;
                 case "3":
-                    GameSimulationApp.Instance.Vehicle.ChangeRations(RationLevel.BareBones);
+                    UserData.Game.Vehicle.ChangeRations(RationLevel.BareBones);
                     ClearForm();
                     break;
                 default:

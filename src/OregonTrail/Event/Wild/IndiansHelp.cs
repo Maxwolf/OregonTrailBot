@@ -2,11 +2,10 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Diagnostics.CodeAnalysis;
-using OregonTrail.Entity;
-using OregonTrail.Module.Director;
-using OregonTrail.Window.RandomEvent;
+using OregonTrail.Director;
+using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Event.Wild
+namespace OregonTrail.Wild
 {
     /// <summary>
     ///     Indians help you find some free food, this event will be called manually more often if you are low on food to
@@ -27,7 +26,7 @@ namespace OregonTrail.Event.Wild
         public override void Execute(RandomEventInfo eventExecutor)
         {
             // Cast the source entity as vehicle.
-            var vehicle = eventExecutor.SourceEntity as Entity.Vehicle.Vehicle;
+            var vehicle = eventExecutor.SourceEntity as Vehicle.Vehicle;
 
             // Indians hook you up with free food, what nice guys.
             vehicle?.Inventory[Entities.Food].AddQuantity(14);
@@ -37,9 +36,9 @@ namespace OregonTrail.Event.Wild
         ///     Fired when the simulation would like to render the event, typically this is done AFTER executing it but this could
         ///     change depending on requirements of the implementation.
         /// </summary>
-        /// <param name="userData"></param>
+        /// <param name="eventExecutor"></param>
         /// <returns>Text user interface string that can be used to explain what the event did when executed.</returns>
-        protected override string OnRender(RandomEventInfo userData)
+        protected override string OnRender(RandomEventInfo eventExecutor)
         {
             return "helpful Indians show you where to find more food";
         }

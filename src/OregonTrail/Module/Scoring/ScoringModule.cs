@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OregonTrail.Module.Scoring
+namespace OregonTrail.Scoring
 {
     /// <summary>
     ///     Keeps track of all the high scores, loads them from a default set that can always be reset to. If there are no
@@ -12,7 +12,7 @@ namespace OregonTrail.Module.Scoring
     ///     is reset instead only when manually reset from he manager module for it which can be accessed by the main menu
     ///     under options.
     /// </summary>
-    public sealed class ScoringModule : WolfCurses.Module
+    public sealed class ScoringModule : Module
     {
         /// <summary>
         ///     Keeps track of the total number of points the player has earned through the course of the game.

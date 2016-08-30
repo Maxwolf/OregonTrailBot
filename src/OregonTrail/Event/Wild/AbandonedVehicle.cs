@@ -5,11 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using OregonTrail.Entity;
-using OregonTrail.Event.Prefab;
-using OregonTrail.Module.Director;
+using OregonTrail.Director;
+using OregonTrail.Prefab;
 
-namespace OregonTrail.Event.Wild
+namespace OregonTrail.Wild
 {
     /// <summary>
     ///     Discover a vehicle on the side of the road that might have some items inside of it that will be added to the

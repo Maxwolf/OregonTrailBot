@@ -3,13 +3,12 @@
 
 using System;
 using System.Text;
-using OregonTrail.Window.MainMenu.Help;
-using WolfCurses;
-using WolfCurses.Control;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Control;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
+using OregonTrail.MainMenu.Help;
 
-namespace OregonTrail.Window.MainMenu
+namespace OregonTrail.MainMenu
 {
     /// <summary>
     ///     References the top ten players in regards to final score they earned at the end of the game, this list is by
@@ -50,7 +49,7 @@ namespace OregonTrail.Window.MainMenu
             currentTopTen.Append($"{Environment.NewLine}Current Top Ten List{Environment.NewLine}{Environment.NewLine}");
 
             // Create text table representation of default high score list.
-            var table = GameSimulationApp.Instance.Scoring.TopTen.ToStringTable(
+            var table = UserData.Game.Scoring.TopTen.ToStringTable(
                 u => u.Name,
                 u => u.Points,
                 u => u.Rating);

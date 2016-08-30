@@ -1,10 +1,11 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Event.Prefab;
-using OregonTrail.Module.Director;
+using OregonTrail.Director;
+using OregonTrail.Prefab;
+using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Event.Vehicle
+namespace OregonTrail.Vehicle
 {
     /// <summary>
     ///     Vehicle has lost the trail and ended up in the deep woods, now they need to find their way back onto the trail.
@@ -17,10 +18,11 @@ namespace OregonTrail.Event.Vehicle
         ///     Grabs the correct number of days that should be skipped by the lose time event. The event skip day form that
         ///     follows will count down the number of days to zero before letting the player continue.
         /// </summary>
+        /// <param name="eventExecutor"></param>
         /// <returns>Number of days that should be skipped in the simulation.</returns>
-        protected override int DaysToSkip()
+        protected override int DaysToSkip(RandomEventInfo eventExecutor)
         {
-            return GameSimulationApp.Instance.Random.Next(1, 3);
+            return eventExecutor.Game.Random.Next(1, 3);
         }
 
         /// <summary>

@@ -3,12 +3,11 @@
 
 using System;
 using System.Text;
-using OregonTrail.Entity.Vehicle;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
+using OregonTrail.Vehicle;
 
-namespace OregonTrail.Window.Travel.Dialog
+namespace OregonTrail.Travel.Dialog
 {
     /// <summary>
     ///     State that is attached when the event is fired for reaching a new point of interest on the trail. Default action is
@@ -37,7 +36,7 @@ namespace OregonTrail.Window.Travel.Dialog
             get
             {
                 // First location we only tell the user they are going back in time and arrived at first location on trail.
-                return GameSimulationApp.Instance.Trail.IsFirstLocation
+                return UserData.Game.Trail.IsFirstLocation
                     ? DialogType.Prompt
                     : DialogType.YesNo;
             }
@@ -52,7 +51,7 @@ namespace OregonTrail.Window.Travel.Dialog
             base.OnFormPostCreate();
 
             // Vehicle is stopped when you are looking around.
-            GameSimulationApp.Instance.Vehicle.Status = VehicleStatus.Stopped;
+            UserData.Game.Vehicle.Status = VehicleStatus.Stopped;
         }
 
         /// <summary>
@@ -64,7 +63,7 @@ namespace OregonTrail.Window.Travel.Dialog
         protected override string OnDialogPrompt()
         {
             // Grab instance of game simulation for easy reading.
-            var game = GameSimulationApp.Instance;
+            var game = UserData.Game;
             var pointReached = new StringBuilder();
 
             // Build up representation of arrival to new location, depending on location it can change.
@@ -94,7 +93,7 @@ namespace OregonTrail.Window.Travel.Dialog
         protected override void OnDialogResponse(DialogResponse reponse)
         {
             // First location we will always clear state back to location since it is starting point.
-            if (GameSimulationApp.Instance.Trail.IsFirstLocation)
+            if (UserData.Game.Trail.IsFirstLocation)
             {
                 ClearForm();
                 return;

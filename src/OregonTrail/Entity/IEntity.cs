@@ -3,9 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using WolfCurses;
 
-namespace OregonTrail.Entity
+namespace OregonTrail
 {
     /// <summary>
     ///     Base interface for all entities in the simulation, this is used as a constraint for generics in event system.

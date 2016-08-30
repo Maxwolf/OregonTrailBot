@@ -3,12 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using OregonTrail.Entity.Vehicle;
-using OregonTrail.Event;
-using OregonTrail.Event.Weather;
-using OregonTrail.Module.Time;
+using OregonTrail.Time;
+using OregonTrail.Vehicle;
+using OregonTrail.Weather;
 
-namespace OregonTrail.Entity.Location.Weather
+namespace OregonTrail.Location.Weather
 {
     /// <summary>
     ///     Controls the weather, temperature, environment for getting food, illness probability, and various other factors
@@ -20,6 +19,11 @@ namespace OregonTrail.Entity.Location.Weather
         ///     Defines the type of climate this weather manager is currently simulating.
         /// </summary>
         private readonly Climate _climateType;
+
+        /// <summary>
+        ///     Reference to running game simulation which created this class.
+        /// </summary>
+        private readonly GameSimulationApp _game;
 
         /// <summary>
         ///     Contains of all the average temperatures that we loaded from the static climate registry.
@@ -41,10 +45,12 @@ namespace OregonTrail.Entity.Location.Weather
         ///     Initializes a new instance of the <see cref="T:TrailSimulation.Core.ModuleProduct" /> class.
         /// </summary>
         /// <param name="climateType">The climate Type.</param>
-        public LocationWeather(Climate climateType)
+        /// <param name="game">Simulation instance.</param>
+        public LocationWeather(Climate climateType, GameSimulationApp game)
         {
             // Sets up the climate type which this weather manager is responsible for ticking.
             _climateType = climateType;
+            _game = game;
 
             // Select climate and determine humidity and temperature based on it.
             switch (_climateType)
@@ -100,28 +106,25 @@ namespace OregonTrail.Entity.Location.Weather
         /// </summary>
         public void Tick()
         {
-            // Grab instance of the game simulation.
-            var game = GameSimulationApp.Instance;
-
             // Fire off weather related events so this module and thus weather will affect the simulation.
-            if (_disasterChance > 0 && game.Random.NextDouble() >= _disasterChance)
+            if (_disasterChance > 0 && _game.Random.NextDouble() >= _disasterChance)
             {
                 // Only trigger weather events if the vehicle is moving and we are on the trail.
-                if (game.Vehicle.Status == VehicleStatus.Moving &&
-                    game.Trail.CurrentLocation.Status == LocationStatus.Departed)
-                    game.EventDirector.TriggerEventByType(game.Vehicle, EventCategory.Weather);
+                if (_game.Vehicle.Status == VehicleStatus.Moving &&
+                    _game.Trail.CurrentLocation.Status == LocationStatus.Departed)
+                    _game.EventDirector.TriggerEventByType(_game.Vehicle, EventCategory.Weather);
 
                 // Resets the disaster chance after firing event for it.
                 _disasterChance = 0;
                 return;
             }
 
-            var possibleClimate = GetTemperatureByMonth(game.Time.CurrentMonth);
-            var possibleTemperature = game.Random.Next((int) possibleClimate.TemperatureMin,
+            var possibleClimate = GetTemperatureByMonth(_game.Time.CurrentMonth);
+            var possibleTemperature = _game.Random.Next((int) possibleClimate.TemperatureMin,
                 (int) possibleClimate.TemperatureMax);
 
             // Make it so climate doesn't change every single day (ex. 4 days of clear skies, 2 of rain).
-            if (_nextWeatherChance > 0 && game.Random.NextDouble() >= _nextWeatherChance)
+            if (_nextWeatherChance > 0 && _game.Random.NextDouble() >= _nextWeatherChance)
                 return;
 
             // If generated temp is greater than average for this month we consider this a good day!
@@ -130,7 +133,7 @@ namespace OregonTrail.Entity.Location.Weather
             if (possibleTemperature > possibleClimate.Temperature)
             {
                 // Determine if this should be a very hot day or not for the region.
-                if (game.Random.NextBool())
+                if (_game.Random.NextBool())
                     HotDay();
                 else
                     NiceDay();
@@ -138,7 +141,7 @@ namespace OregonTrail.Entity.Location.Weather
             else
             {
                 // It was a bad day outside!
-                if (possibleClimate.Rainfall > game.Random.NextDouble())
+                if (possibleClimate.Rainfall > _game.Random.NextDouble())
                     RainyDay();
                 else
                     ColdDay();
@@ -183,7 +186,7 @@ namespace OregonTrail.Entity.Location.Weather
                 // Polar regions get a bonus for heat reduction.
                 if (_climateType == Climate.Polar)
 
-                    InsideTemperature -= GameSimulationApp.Instance.Random.Next(1, 3);
+                    InsideTemperature -= _game.Random.Next(1, 3);
                 else
                     InsideTemperature--;
             }
@@ -207,7 +210,7 @@ namespace OregonTrail.Entity.Location.Weather
                 return;
 
             // Randomly select another type to replace it with because of temp being to high!
-            switch (GameSimulationApp.Instance.Random.Next(5))
+            switch (_game.Random.Next(5))
             {
                 case 0:
                     Condition = Weather.Clear;
@@ -228,12 +231,12 @@ namespace OregonTrail.Entity.Location.Weather
                 case 4:
                     Condition = Weather.ChanceOfThunderstorm;
                     _nextWeatherChance = 0.45d;
-                    _disasterChance = GameSimulationApp.Instance.Random.NextDouble();
+                    _disasterChance = _game.Random.NextDouble();
                     break;
                 case 5:
                     Condition = Weather.ChanceOfRain;
                     _nextWeatherChance = 0.55d;
-                    _disasterChance = GameSimulationApp.Instance.Random.NextDouble();
+                    _disasterChance = _game.Random.NextDouble();
                     break;
                 default:
                     Condition = Weather.Clear;
@@ -247,7 +250,7 @@ namespace OregonTrail.Entity.Location.Weather
         /// </summary>
         private void ColdDay()
         {
-            switch (GameSimulationApp.Instance.Random.Next(5))
+            switch (_game.Random.Next(5))
             {
                 case 0:
                     Condition = Weather.Flurries;
@@ -268,9 +271,9 @@ namespace OregonTrail.Entity.Location.Weather
                 case 4:
                     Condition = Weather.Hail;
                     _nextWeatherChance = 0.95d;
-                    if (GameSimulationApp.Instance.Random.NextBool())
+                    if (_game.Random.NextBool())
                     {
-                        GameSimulationApp.Instance.EventDirector.TriggerEvent(GameSimulationApp.Instance.Vehicle,
+                        _game.EventDirector.TriggerEvent(_game.Vehicle,
                             typeof (HailStorm));
                     }
 
@@ -278,11 +281,11 @@ namespace OregonTrail.Entity.Location.Weather
                 case 5:
                     Condition = Weather.Storm;
                     _nextWeatherChance = 0.85d;
-                    _disasterChance = (float) GameSimulationApp.Instance.Random.NextDouble();
+                    _disasterChance = (float) _game.Random.NextDouble();
 
-                    if (GameSimulationApp.Instance.Random.NextBool())
+                    if (_game.Random.NextBool())
                     {
-                        GameSimulationApp.Instance.EventDirector.TriggerEvent(GameSimulationApp.Instance.Vehicle,
+                        _game.EventDirector.TriggerEvent(_game.Vehicle,
                             typeof (SevereWeather));
                     }
 
@@ -299,16 +302,16 @@ namespace OregonTrail.Entity.Location.Weather
         /// </summary>
         private void RainyDay()
         {
-            switch (GameSimulationApp.Instance.Random.Next(8))
+            switch (_game.Random.Next(8))
             {
                 case 0:
                     Condition = Weather.ScatteredThunderstorms;
                     _nextWeatherChance = 0.90d;
-                    _disasterChance = (float) GameSimulationApp.Instance.Random.NextDouble();
+                    _disasterChance = (float) _game.Random.NextDouble();
 
-                    if (GameSimulationApp.Instance.Random.NextBool())
+                    if (_game.Random.NextBool())
                     {
-                        GameSimulationApp.Instance.EventDirector.TriggerEvent(GameSimulationApp.Instance.Vehicle,
+                        _game.EventDirector.TriggerEvent(_game.Vehicle,
                             typeof (SevereWeather));
                     }
 
@@ -316,7 +319,7 @@ namespace OregonTrail.Entity.Location.Weather
                 case 1:
                     Condition = Weather.ScatteredShowers;
                     _nextWeatherChance = 0.85d;
-                    _disasterChance = (float) GameSimulationApp.Instance.Random.NextDouble();
+                    _disasterChance = (float) _game.Random.NextDouble();
                     break;
                 case 2:
                     Condition = Weather.MostlySunny;
@@ -325,11 +328,11 @@ namespace OregonTrail.Entity.Location.Weather
                 case 3:
                     Condition = Weather.Thunderstorm;
                     _nextWeatherChance = 0.90d;
-                    _disasterChance = (float) GameSimulationApp.Instance.Random.NextDouble();
+                    _disasterChance = (float) _game.Random.NextDouble();
 
-                    if (GameSimulationApp.Instance.Random.NextBool())
+                    if (_game.Random.NextBool())
                     {
-                        GameSimulationApp.Instance.EventDirector.TriggerEvent(GameSimulationApp.Instance.Vehicle,
+                        _game.EventDirector.TriggerEvent(_game.Vehicle,
                             typeof (SevereWeather));
                     }
 
@@ -342,9 +345,9 @@ namespace OregonTrail.Entity.Location.Weather
                     Condition = Weather.Fog;
                     _nextWeatherChance = 0.78d;
 
-                    if (GameSimulationApp.Instance.Random.NextBool())
+                    if (_game.Random.NextBool())
                     {
-                        GameSimulationApp.Instance.EventDirector.TriggerEvent(GameSimulationApp.Instance.Vehicle,
+                        _game.EventDirector.TriggerEvent(_game.Vehicle,
                             typeof (HeavyFog));
                     }
 
@@ -373,7 +376,7 @@ namespace OregonTrail.Entity.Location.Weather
         /// </summary>
         private void NiceDay()
         {
-            switch (GameSimulationApp.Instance.Random.Next(5))
+            switch (_game.Random.Next(5))
             {
                 case 0:
                     Condition = Weather.Clear;
@@ -394,12 +397,12 @@ namespace OregonTrail.Entity.Location.Weather
                 case 4:
                     Condition = Weather.ChanceOfThunderstorm;
                     _nextWeatherChance = 0.60d;
-                    _disasterChance = (float) GameSimulationApp.Instance.Random.NextDouble();
+                    _disasterChance = (float) _game.Random.NextDouble();
                     break;
                 case 5:
                     Condition = Weather.ChanceOfRain;
                     _nextWeatherChance = 0.56d;
-                    _disasterChance = (float) GameSimulationApp.Instance.Random.NextDouble();
+                    _disasterChance = (float) _game.Random.NextDouble();
                     break;
                 default:
                     Condition = Weather.Clear;
@@ -413,7 +416,7 @@ namespace OregonTrail.Entity.Location.Weather
         /// </summary>
         private void HotDay()
         {
-            switch (GameSimulationApp.Instance.Random.Next(5))
+            switch (_game.Random.Next(5))
             {
                 case 0:
                     Condition = Weather.Clear;
@@ -434,12 +437,12 @@ namespace OregonTrail.Entity.Location.Weather
                 case 4:
                     Condition = Weather.ChanceOfThunderstorm;
                     _nextWeatherChance = 0.30d;
-                    _disasterChance = (float) GameSimulationApp.Instance.Random.NextDouble();
+                    _disasterChance = (float) _game.Random.NextDouble();
                     break;
                 case 5:
                     Condition = Weather.ChanceOfRain;
                     _nextWeatherChance = 0.33d;
-                    _disasterChance = (float) GameSimulationApp.Instance.Random.NextDouble();
+                    _disasterChance = (float) _game.Random.NextDouble();
                     break;
                 default:
                     Condition = Weather.Clear;

@@ -1,10 +1,9 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Entity.Item;
-using WolfCurses;
+using OregonTrail.Item;
 
-namespace OregonTrail.Window.Travel.Hunt
+namespace OregonTrail.Travel.Hunt
 {
     /// <summary>
     ///     Defines a given animal the player can shoot and kill for it's meat. Depending on weather and current conditions the
@@ -13,21 +12,19 @@ namespace OregonTrail.Window.Travel.Hunt
     public sealed class PreyItem : ITick
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="T:OregonTrail.Window.Travel.Hunt.PreyItem" /> class.
+        ///     Initializes a new instance of the <see cref="T:OregonTrail.Travel.Hunt.PreyItem" /> class.
         /// </summary>
-        public PreyItem()
+        /// <param name="game">Simulation instance.</param>
+        public PreyItem(GameSimulationApp game, int preyIndex)
         {
             // Randomly generate a shooting time up to total hunting time.
             Lifetime = 0;
-            LifetimeMax = GameSimulationApp.Instance.Random.Next(HuntManager.HUNTINGTIME);
+            LifetimeMax = game.Random.Next(HuntManager.HUNTINGTIME);
 
             // Randomly generate maximum amount of time this animal will be a valid target.
             TargetTime = 0;
-            TargetTimeMax = GameSimulationApp.Instance.Random.Next(HuntManager.MINTARGETINGTIME,
+            TargetTimeMax = game.Random.Next(HuntManager.MINTARGETINGTIME,
                 HuntManager.MAXTARGETINGTIME);
-
-            // Randomly select a animal for this prey to be from default animals.
-            var preyIndex = GameSimulationApp.Instance.Random.Next(HuntManager.DefaultAnimals.Count);
 
             // Select a random animal that we can be from default animals.
             Animal = new SimItem(HuntManager.DefaultAnimals[preyIndex], 1);

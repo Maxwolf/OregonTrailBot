@@ -4,14 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OregonTrail.Entity;
-using OregonTrail.Entity.Vehicle;
-using WolfCurses;
-using WolfCurses.Control;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Control;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
+using OregonTrail.Vehicle;
 
-namespace OregonTrail.Window.Travel.Trade
+namespace OregonTrail.Travel.Trade
 {
     /// <summary>
     ///     Handles the interaction of the player party and another AI controlled party that offers up items for trading which
@@ -56,7 +54,7 @@ namespace OregonTrail.Window.Travel.Trade
         ///     Builds up representation of supplies once in constructor and then reference when asked for render.
         /// </summary>
         /// <returns>Formatted text table that shows vehicle current supplies.</returns>
-        private static string SupplyTextTable
+        private string SupplyTextTable
         {
             get
             {
@@ -67,7 +65,7 @@ namespace OregonTrail.Window.Travel.Trade
                 var suppliesList = new List<Tuple<string, string>>();
 
                 // Loop through every inventory item in the vehicle.
-                foreach (var item in GameSimulationApp.Instance.Vehicle.Inventory)
+                foreach (var item in UserData.Game.Vehicle.Inventory)
                 {
                     // Apply number formatting to quantities so they have thousand separators.
                     var itemFormattedQuantity = item.Value.Quantity.ToString("N0");
@@ -167,7 +165,7 @@ namespace OregonTrail.Window.Travel.Trade
         private void UpdateTrade()
         {
             // Tick the people, but not the trail or the day.
-            GameSimulationApp.Instance.TakeTurn(false);
+            UserData.Game.TakeTurn(false);
 
             // Grabs all the data for the player current vehicle inventory.
             supplyPrompt.Clear();
@@ -177,11 +175,11 @@ namespace OregonTrail.Window.Travel.Trade
             GenerateTrades();
 
             // Generate a random number based on trade count and what our trade will be.
-            tradeIndex = GameSimulationApp.Instance.Random.Next(trades.Count);
+            tradeIndex = UserData.Game.Random.Next(trades.Count);
 
             // Check if the player has the item in question the trader wants.
             playerCanTrade = trades.Count > 0 &&
-                             GameSimulationApp.Instance.Vehicle.ContainsItem(trades[tradeIndex].WantedItem);
+                             UserData.Game.Vehicle.ContainsItem(trades[tradeIndex].WantedItem);
 
             // Select one of the trades to use, or say there are none if none generated.
             if (trades.Count > 0)
@@ -212,7 +210,7 @@ namespace OregonTrail.Window.Travel.Trade
             trades = new List<TradeOffer>();
 
             // Figure out how many trades, if any we will have this time the player checks.
-            var totalTrades = GameSimulationApp.Instance.Random.Next(0, GameSimulationApp.Instance.Random.Next(1, 100));
+            var totalTrades = UserData.Game.Random.Next(0, UserData.Game.Random.Next(1, 100));
 
             // Check if we just stop here.
             if (totalTrades <= 0)
@@ -221,7 +219,7 @@ namespace OregonTrail.Window.Travel.Trade
             // Creates as many trade offers as generator says we should.
             for (var i = 0; i < totalTrades; i++)
             {
-                trades.Add(new TradeOffer());
+                trades.Add(new TradeOffer(UserData.Game));
             }
 
             // Cleanup the generated trades.
@@ -250,16 +248,16 @@ namespace OregonTrail.Window.Travel.Trade
                 case DialogResponse.Yes:
                 {
                     // Remove the quantity of item from the vehicle inventory the trader wants.
-                    GameSimulationApp.Instance.Vehicle.Inventory[trades[tradeIndex].WantedItem.Category].ReduceQuantity(
+                    UserData.Game.Vehicle.Inventory[trades[tradeIndex].WantedItem.Category].ReduceQuantity(
                         trades[tradeIndex].WantedItem.Quantity);
 
                     // Give the vehicle the item the trade said he would.
-                    GameSimulationApp.Instance.Vehicle.Inventory[trades[tradeIndex].OfferedItem.Category].AddQuantity(
+                    UserData.Game.Vehicle.Inventory[trades[tradeIndex].OfferedItem.Category].AddQuantity(
                         trades[tradeIndex].OfferedItem.Quantity);
 
                     // Checks if the player has animals to pull their vehicle.
-                    GameSimulationApp.Instance.Vehicle.Status =
-                        GameSimulationApp.Instance.Vehicle.Inventory[Entities.Animal].Quantity <= 0
+                    UserData.Game.Vehicle.Status =
+                        UserData.Game.Vehicle.Inventory[Entities.Animal].Quantity <= 0
                             ? VehicleStatus.Disabled
                             : VehicleStatus.Moving;
 

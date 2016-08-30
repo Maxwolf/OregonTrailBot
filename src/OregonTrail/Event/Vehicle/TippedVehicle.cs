@@ -4,11 +4,10 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using OregonTrail.Entity;
-using OregonTrail.Event.Prefab;
-using OregonTrail.Module.Director;
+using OregonTrail.Director;
+using OregonTrail.Prefab;
 
-namespace OregonTrail.Event.Vehicle
+namespace OregonTrail.Vehicle
 {
     /// <summary>
     ///     Vehicle was going around a bend, hit a bump, rough trail, or any of the following it now tipped over and supplies
@@ -20,12 +19,13 @@ namespace OregonTrail.Event.Vehicle
     {
         /// <summary>Fired by the item destroyer event prefab before items are destroyed.</summary>
         /// <param name="destroyedItems">Items that were destroyed from the players inventory.</param>
+        /// <param name="game"></param>
         /// <returns>The <see cref="string" />.</returns>
-        protected override string OnPostDestroyItems(IDictionary<Entities, int> destroyedItems)
+        protected override string OnPostDestroyItems(IDictionary<Entities, int> destroyedItems, GameSimulationApp game)
         {
             // Change event text depending on if items were destroyed or not.
             return destroyedItems.Count > 0
-                ? TryKillPassengers("crushed")
+                ? TryKillPassengers("crushed", game)
                 : "no loss of items.";
         }
 

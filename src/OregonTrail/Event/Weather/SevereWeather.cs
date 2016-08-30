@@ -3,11 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using OregonTrail.Entity;
-using OregonTrail.Event.Prefab;
-using OregonTrail.Module.Director;
+using OregonTrail.Director;
+using OregonTrail.Prefab;
 
-namespace OregonTrail.Event.Weather
+namespace OregonTrail.Weather
 {
     /// <summary>
     ///     Severe weather will cause destruction of items and waste your time, but nobody will get killed.
@@ -17,8 +16,9 @@ namespace OregonTrail.Event.Weather
     {
         /// <summary>Fired by the item destroyer event prefab before items are destroyed.</summary>
         /// <param name="destroyedItems">Items that were destroyed from the players inventory.</param>
+        /// <param name="game"></param>
         /// <returns>The <see cref="string" />.</returns>
-        protected override string OnPostDestroyItems(IDictionary<Entities, int> destroyedItems)
+        protected override string OnPostDestroyItems(IDictionary<Entities, int> destroyedItems, GameSimulationApp game)
         {
             return destroyedItems.Count > 0
                 ? $"time and supplies lost:{Environment.NewLine}"

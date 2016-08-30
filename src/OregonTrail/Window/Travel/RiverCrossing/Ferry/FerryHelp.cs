@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.Travel.RiverCrossing.Ferry
+namespace OregonTrail.Travel.RiverCrossing.Ferry
 {
     /// <summary>
     ///     The ferry help.

@@ -2,12 +2,11 @@
 // Timestamp 02/01/2016@11:23 PM
 
 using System;
-using OregonTrail.Entity.Vehicle;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
+using OregonTrail.Vehicle;
 
-namespace OregonTrail.Window.RandomEvent
+namespace OregonTrail.RandomEvent
 {
     /// <summary>
     ///     Special form to communicate to the player the vehicle has no spare parts in the inventory which can be used to
@@ -52,7 +51,7 @@ namespace OregonTrail.Window.RandomEvent
         protected override string OnDialogPrompt()
         {
             return
-                $"{Environment.NewLine}Since you don't have a spare {GameSimulationApp.Instance.Vehicle.BrokenPart.Name.ToLowerInvariant()}" +
+                $"{Environment.NewLine}Since you don't have a spare {UserData.Game.Vehicle.BrokenPart.Name.ToLowerInvariant()}" +
                 $" you must trade for one.{Environment.NewLine}{Environment.NewLine}";
         }
 
@@ -64,7 +63,7 @@ namespace OregonTrail.Window.RandomEvent
         protected override void OnDialogResponse(DialogResponse reponse)
         {
             // Check to make sure the source entity is a vehicle.
-            var vehicle = UserData.SourceEntity as Vehicle;
+            var vehicle = UserData.SourceEntity as Vehicle.Vehicle;
             if (vehicle == null)
                 return;
 

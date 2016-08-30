@@ -3,12 +3,11 @@
 
 using System;
 using System.Text;
-using OregonTrail.Window.Travel.Command;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
+using OregonTrail.Travel.Command;
 
-namespace OregonTrail.Window.Travel.Dialog
+namespace OregonTrail.Travel.Dialog
 {
     /// <summary>
     ///     Shows information about what the different pace settings mean in terms for the simulation and how they will affect

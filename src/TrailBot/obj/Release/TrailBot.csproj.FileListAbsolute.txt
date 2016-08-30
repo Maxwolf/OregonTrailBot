@@ -1,0 +1,6 @@
+C:\OregonTrailBot\bin\TrailBot.exe.config
+C:\OregonTrailBot\bin\TrailBot.exe
+C:\OregonTrailBot\bin\TrailBot.pdb
+C:\OregonTrailBot\src\TrailBot\obj\Release\TrailBot.csprojResolveAssemblyReference.cache
+C:\OregonTrailBot\src\TrailBot\obj\Release\TrailBot.exe
+C:\OregonTrailBot\src\TrailBot\obj\Release\TrailBot.pdb

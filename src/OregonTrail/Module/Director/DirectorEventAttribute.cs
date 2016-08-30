@@ -2,9 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
-using OregonTrail.Event;
 
-namespace OregonTrail.Module.Director
+namespace OregonTrail.Director
 {
     /// <summary>
     ///     Used to tag the base event item class so we can grab all inheriting types that use it.

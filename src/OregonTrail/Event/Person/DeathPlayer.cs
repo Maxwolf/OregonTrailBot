@@ -3,10 +3,10 @@
 
 using System;
 using System.Text;
-using OregonTrail.Module.Director;
-using OregonTrail.Window.RandomEvent;
+using OregonTrail.Director;
+using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Event.Person
+namespace OregonTrail.Person
 {
     /// <summary>
     ///     Party leader has died! This will end the entire simulation since the others cannot go on without the leader.
@@ -42,7 +42,7 @@ namespace OregonTrail.Event.Person
         public override void Execute(RandomEventInfo eventExecutor)
         {
             // Cast the source entity as a player.
-            var sourcePerson = eventExecutor.SourceEntity as Entity.Person.Person;
+            var sourcePerson = eventExecutor.SourceEntity as Person;
             if (sourcePerson == null)
                 throw new ArgumentNullException(nameof(eventExecutor), "Could not cast source entity as player.");
 
@@ -57,9 +57,9 @@ namespace OregonTrail.Event.Person
         ///     Fired when the simulation would like to render the event, typically this is done AFTER executing it but this could
         ///     change depending on requirements of the implementation.
         /// </summary>
-        /// <param name="userData"></param>
+        /// <param name="eventExecutor"></param>
         /// <returns>Text user interface string that can be used to explain what the event did when executed.</returns>
-        protected override string OnRender(RandomEventInfo userData)
+        protected override string OnRender(RandomEventInfo eventExecutor)
         {
             return _leaderDeath.ToString();
         }

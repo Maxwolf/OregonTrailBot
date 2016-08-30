@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.MainMenu.Profession
+namespace OregonTrail.MainMenu.Profession
 {
     /// <summary>
     ///     Shows information about what the player leader professions mean and how it affects the party, vehicle, game

@@ -3,12 +3,10 @@
 
 using System;
 using System.Text;
-using OregonTrail.Entity;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.Travel.Hunt
+namespace OregonTrail.Travel.Hunt
 {
     /// <summary>
     ///     Tabulates results about the hunting session after it ends, depending on the performance of the player and how many
@@ -47,7 +45,7 @@ namespace OregonTrail.Window.Travel.Hunt
             base.OnFormPostCreate();
 
             // After hunting we roll the dice on the party and player and skip a day.
-            GameSimulationApp.Instance.TakeTurn(false);
+            UserData.Game.TakeTurn(false);
         }
 
         /// <summary>
@@ -105,7 +103,7 @@ namespace OregonTrail.Window.Travel.Hunt
         {
             // Transfers the total finalized kill weight we calculated to vehicle inventory as food in pounds.
             if (_finalKillWeight > 0)
-                GameSimulationApp.Instance.Vehicle.Inventory[Entities.Food].AddQuantity(_finalKillWeight);
+                UserData.Game.Vehicle.Inventory[Entities.Food].AddQuantity(_finalKillWeight);
 
             // Destroys all hunting related data now that we are done with it.
             UserData.DestroyHunt();

@@ -3,14 +3,12 @@
 
 using System;
 using System.Text;
-using OregonTrail.Entity;
-using OregonTrail.Entity.Vehicle;
-using OregonTrail.Window.Travel.Rest;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
+using OregonTrail.Travel.Rest;
+using OregonTrail.Vehicle;
 
-namespace OregonTrail.Window.Travel.RiverCrossing.Ferry
+namespace OregonTrail.Travel.RiverCrossing.Ferry
 {
     /// <summary>
     ///     Explains to the user how many monies and days they will be charged to cross the river using the ferry and to
@@ -66,7 +64,7 @@ namespace OregonTrail.Window.Travel.RiverCrossing.Ferry
             {
                 case DialogResponse.Yes:
                     if (UserData.River.FerryCost >=
-                        GameSimulationApp.Instance.Vehicle.Inventory[Entities.Cash].TotalValue)
+                        UserData.Game.Vehicle.Inventory[Entities.Cash].TotalValue)
                     {
                         // Tell the player they do not have enough money to cross the river using the ferry.
                         SetForm(typeof (FerryNoMonies));
@@ -76,7 +74,7 @@ namespace OregonTrail.Window.Travel.RiverCrossing.Ferry
                     // Check if the ferry operator wants player to wait a certain amount of days before they can cross.
                     if (UserData.River.FerryDelayInDays > 0)
                     {
-                        GameSimulationApp.Instance.Vehicle.Status = VehicleStatus.Stopped;
+                        UserData.Game.Vehicle.Status = VehicleStatus.Stopped;
                         UserData.DaysToRest = UserData.River.FerryDelayInDays;
                         SetForm(typeof (Resting));
                         return;

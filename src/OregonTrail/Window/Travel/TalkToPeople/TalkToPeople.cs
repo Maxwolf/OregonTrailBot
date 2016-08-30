@@ -4,12 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OregonTrail.Entity.Location.Point;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
+using OregonTrail.Location.Point;
 
-namespace OregonTrail.Window.Travel.TalkToPeople
+namespace OregonTrail.Travel.TalkToPeople
 {
     /// <summary>
     ///     Attaches a game state that will loop through random advice that is associated with the given point of interest.
@@ -36,32 +35,29 @@ namespace OregonTrail.Window.Travel.TalkToPeople
         /// </returns>
         protected override string OnDialogPrompt()
         {
-            // Grab instance of game simulation.
-            var game = GameSimulationApp.Instance;
-
             // Figure out what type of advice we want.
             List<Advice> advice;
-            if (game.Trail.IsFirstLocation)
+            if (UserData.Game.Trail.IsFirstLocation)
             {
                 // First location gives tutorial like advice about possible pitfalls.
                 advice = new List<Advice>(AdviceRegistry.Tutorial);
             }
-            else if (game.Trail.CurrentLocation is ForkInRoad)
+            else if (UserData.Game.Trail.CurrentLocation is ForkInRoad)
             {
                 // Fork in road is always considered mountainous area.
                 advice = new List<Advice>(AdviceRegistry.Mountain);
             }
-            else if (game.Trail.CurrentLocation is Landmark)
+            else if (UserData.Game.Trail.CurrentLocation is Landmark)
             {
                 // Landmarks have people that miss civilization and been on road for a while.
                 advice = new List<Advice>(AdviceRegistry.Landmark);
             }
-            else if (game.Trail.CurrentLocation is Settlement)
+            else if (UserData.Game.Trail.CurrentLocation is Settlement)
             {
                 // Settlements have shops, more people, and lots of people scared about stories they hear.
                 advice = new List<Advice>(AdviceRegistry.Settlement);
             }
-            else if (game.Trail.CurrentLocation is Entity.Location.Point.RiverCrossing)
+            else if (UserData.Game.Trail.CurrentLocation is Location.Point.RiverCrossing)
             {
                 // Can talk to people working near the river as operators or as people about to cross.
                 advice = new List<Advice>(AdviceRegistry.River);

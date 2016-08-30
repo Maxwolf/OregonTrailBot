@@ -3,12 +3,11 @@
 
 using System;
 using System.Text;
-using OregonTrail.Entity.Vehicle;
-using OregonTrail.Window.Travel.Dialog;
-using WolfCurses;
-using WolfCurses.Form;
+using OregonTrail.Form;
+using OregonTrail.Travel.Dialog;
+using OregonTrail.Vehicle;
 
-namespace OregonTrail.Window.Travel.Command
+namespace OregonTrail.Travel.Command
 {
     /// <summary>
     ///     Allows the player to alter how many 'miles' their vehicle will attempt to travel in a given day, this also changes
@@ -43,7 +42,7 @@ namespace OregonTrail.Window.Travel.Command
             _pace = new StringBuilder();
             _pace.Append($"{Environment.NewLine}Change pace{Environment.NewLine}");
             _pace.Append(
-                $"(currently \"{GameSimulationApp.Instance.Vehicle.Pace}\"){Environment.NewLine}{Environment.NewLine}");
+                $"(currently \"{UserData.Game.Vehicle.Pace}\"){Environment.NewLine}{Environment.NewLine}");
             _pace.Append($"The pace at which you travel{Environment.NewLine}");
             _pace.Append($"can change. Your choices are:{Environment.NewLine}{Environment.NewLine}");
             _pace.Append($"1. a steady pace{Environment.NewLine}");
@@ -72,15 +71,15 @@ namespace OregonTrail.Window.Travel.Command
             switch (input.ToUpperInvariant())
             {
                 case "1":
-                    GameSimulationApp.Instance.Vehicle.ChangePace(TravelPace.Steady);
+                    UserData.Game.Vehicle.ChangePace(TravelPace.Steady);
                     ClearForm();
                     break;
                 case "2":
-                    GameSimulationApp.Instance.Vehicle.ChangePace(TravelPace.Strenuous);
+                    UserData.Game.Vehicle.ChangePace(TravelPace.Strenuous);
                     ClearForm();
                     break;
                 case "3":
-                    GameSimulationApp.Instance.Vehicle.ChangePace(TravelPace.Grueling);
+                    UserData.Game.Vehicle.ChangePace(TravelPace.Grueling);
                     ClearForm();
                     break;
                 case "4":

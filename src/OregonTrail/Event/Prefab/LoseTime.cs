@@ -1,10 +1,10 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Module.Director;
-using OregonTrail.Window.RandomEvent;
+using OregonTrail.Director;
+using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Event.Prefab
+namespace OregonTrail.Prefab
 {
     /// <summary>
     ///     Forces the player to advance time in the date, this will make it so they will have to face harsher weather
@@ -23,7 +23,7 @@ namespace OregonTrail.Event.Prefab
         public override void Execute(RandomEventInfo eventExecutor)
         {
             // Add to the days to skip since multiple events in a chain could keep adding to the total.
-            eventExecutor.DaysToSkip += DaysToSkip();
+            eventExecutor.DaysToSkip += DaysToSkip(eventExecutor);
         }
 
         /// <summary>
@@ -47,19 +47,20 @@ namespace OregonTrail.Event.Prefab
         ///     Grabs the correct number of days that should be skipped by the lose time event. The event skip day form that
         ///     follows will count down the number of days to zero before letting the player continue.
         /// </summary>
+        /// <param name="eventExecutor"></param>
         /// <returns>Number of days that should be skipped in the simulation.</returns>
-        protected abstract int DaysToSkip();
+        protected abstract int DaysToSkip(RandomEventInfo eventExecutor);
 
         /// <summary>
         ///     Fired when the simulation would like to render the event, typically this is done AFTER executing it but this could
         ///     change depending on requirements of the implementation.
         /// </summary>
-        /// <param name="userData">
+        /// <param name="eventExecutor">
         ///     Entities which the event is going to directly affect. This way there is no confusion about
         ///     what entity the event is for. Will require casting to correct instance type from interface instance.
         /// </param>
         /// <returns>Text user interface string that can be used to explain what the event did when executed.</returns>
-        protected override string OnRender(RandomEventInfo userData)
+        protected override string OnRender(RandomEventInfo eventExecutor)
         {
             return OnLostTimeReason();
         }

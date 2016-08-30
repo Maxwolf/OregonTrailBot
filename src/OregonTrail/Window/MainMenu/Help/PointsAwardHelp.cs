@@ -4,14 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OregonTrail.Entity.Item;
-using OregonTrail.Module.Scoring;
-using WolfCurses;
-using WolfCurses.Control;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Control;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
+using OregonTrail.Item;
+using OregonTrail.Scoring;
 
-namespace OregonTrail.Window.MainMenu.Help
+namespace OregonTrail.MainMenu.Help
 {
     /// <summary>
     ///     Second panel on point information, shows how the number of resources you end the game with contribute to your final

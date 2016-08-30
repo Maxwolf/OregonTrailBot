@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using OregonTrail.Entity.Vehicle;
-using WolfCurses;
-using WolfCurses.Form;
+using OregonTrail.Form;
+using OregonTrail.Vehicle;
 
-namespace OregonTrail.Window.RandomEvent
+namespace OregonTrail.RandomEvent
 {
     /// <summary>
     ///     Skips over a set amount of time that an event would like to move past. The days will be ticked normally, and not
@@ -107,8 +106,8 @@ namespace OregonTrail.Window.RandomEvent
             base.OnFormPostCreate();
 
             // Only change the vehicle status to stopped if it is moving, it could just be stuck.
-            if (GameSimulationApp.Instance.Vehicle.Status == VehicleStatus.Moving)
-                GameSimulationApp.Instance.Vehicle.Status = VehicleStatus.Stopped;
+            if (UserData.Game.Vehicle.Status == VehicleStatus.Moving)
+                UserData.Game.Vehicle.Status = VehicleStatus.Stopped;
 
             UpdateDaysLeft();
         }
@@ -143,7 +142,7 @@ namespace OregonTrail.Window.RandomEvent
             UserData.DaysToSkip--;
 
             // Simulate the days to rest in time and event system, this will trigger another random event if needed.
-            GameSimulationApp.Instance.TakeTurn(false);
+            UserData.Game.TakeTurn(false);
 
             // Updates the text user interface about the event skipping time and days left.
             UpdateDaysLeft();

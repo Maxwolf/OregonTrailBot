@@ -1,10 +1,9 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Entity.Item;
-using OregonTrail.Entity.Vehicle;
+using OregonTrail.Item;
 
-namespace OregonTrail.Window.Travel.Trade
+namespace OregonTrail.Travel.Trade
 {
     /// <summary>
     ///     Represents an offer that automatically generates itself when constructor is called. Randomly selects a want, and
@@ -14,15 +13,16 @@ namespace OregonTrail.Window.Travel.Trade
     public sealed class TradeOffer
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="T:OregonTrail.Window.Travel.Trade.TradeOffer" /> class.
+        ///     Initializes a new instance of the <see cref="T:OregonTrail.Travel.Trade.TradeOffer" /> class.
         /// </summary>
-        public TradeOffer()
+        /// <param name="game"></param>
+        public TradeOffer(GameSimulationApp game)
         {
             // Select a random item default inventory might have which the emigrant wants.
-            WantedItem = Vehicle.CreateRandomItem();
+            WantedItem = game.Vehicle.CreateRandomItem();
 
             // Select random item from default inventory which the emigrant offers up in exchange.
-            OfferedItem = Vehicle.CreateRandomItem();
+            OfferedItem = game.Vehicle.CreateRandomItem();
         }
 
         /// <summary>

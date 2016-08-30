@@ -2,10 +2,10 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Text;
-using OregonTrail.Module.Director;
-using OregonTrail.Window.RandomEvent;
+using OregonTrail.Director;
+using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Event.Vehicle
+namespace OregonTrail.Vehicle
 {
     /// <summary>
     ///     Manually triggered event for when the player decides to not and repair their vehicle and instead opts to use spare
@@ -31,17 +31,17 @@ namespace OregonTrail.Event.Vehicle
         ///     Fired when the simulation would like to render the event, typically this is done AFTER executing it but this could
         ///     change depending on requirements of the implementation.
         /// </summary>
-        /// <param name="userData">
+        /// <param name="eventExecutor">
         ///     Entities which the event is going to directly affect. This way there is no confusion about
         ///     what entity the event is for. Will require casting to correct instance type from interface instance.
         /// </param>
         /// <returns>Text user interface string that can be used to explain what the event did when executed.</returns>
-        protected override string OnRender(RandomEventInfo userData)
+        protected override string OnRender(RandomEventInfo eventExecutor)
         {
             var repairPrompt = new StringBuilder();
             repairPrompt.AppendLine("You did not repair the broken ");
             repairPrompt.AppendLine(
-                $"{GameSimulationApp.Instance.Vehicle.BrokenPart.Name.ToLowerInvariant()}. You must replace it with a ");
+                $"{eventExecutor.Game.Vehicle.BrokenPart.Name.ToLowerInvariant()}. You must replace it with a ");
             repairPrompt.Append("spare part.");
             return repairPrompt.ToString();
         }
@@ -53,7 +53,7 @@ namespace OregonTrail.Event.Vehicle
         internal override bool OnPostExecute(EventExecutor eventExecutor)
         {
             // Check to make sure the source entity is a vehicle.
-            var vehicle = eventExecutor.UserData.SourceEntity as Entity.Vehicle.Vehicle;
+            var vehicle = eventExecutor.UserData.SourceEntity as Vehicle;
 
             // Skip if the vehicle is null.
             if (vehicle == null)

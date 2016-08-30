@@ -2,9 +2,9 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
-using OregonTrail.Entity.Item;
+using OregonTrail.Item;
 
-namespace OregonTrail.Module.Scoring
+namespace OregonTrail.Scoring
 {
     /// <summary>
     ///     Represents a given type of point that can take in a object of a given type in the concrete handler and we will
@@ -30,7 +30,7 @@ namespace OregonTrail.Module.Scoring
         /// </summary>
         private readonly int _perAmount;
 
-        /// <summary>Initializes a new instance of the <see cref="T:OregonTrail.Module.Scoring.Points" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="T:OregonTrail.Scoring.Points" /> class.</summary>
         /// <param name="resource">The resource.</param>
         /// <param name="optionalDisplayName">The optional Display Name.</param>
         public Points(SimItem resource, string optionalDisplayName = DEFAULT_DISPLAY_NAME)

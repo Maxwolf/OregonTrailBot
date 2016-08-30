@@ -2,10 +2,10 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Diagnostics.CodeAnalysis;
-using OregonTrail.Event.Prefab;
-using OregonTrail.Module.Director;
+using OregonTrail.Director;
+using OregonTrail.Prefab;
 
-namespace OregonTrail.Event.Person
+namespace OregonTrail.Person
 {
     /// <summary>
     ///     Infection of the intestines resulting in severe diarrhea with the presence of blood and mucus in the feces.
@@ -17,7 +17,7 @@ namespace OregonTrail.Event.Person
         /// <summary>Fired after the event has executed and the infection flag set on the person.</summary>
         /// <param name="person">Person whom is now infected by whatever you say they are here.</param>
         /// <returns>Name or type of infection the person is currently affected with.</returns>
-        protected override string OnPostInfection(Entity.Person.Person person)
+        protected override string OnPostInfection(Person person)
         {
             return $"{person.Name} has dysentery.";
         }

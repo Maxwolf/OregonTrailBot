@@ -3,31 +3,32 @@
 
 using System;
 using System.Text;
-using OregonTrail.Entity;
-using OregonTrail.Entity.Location;
-using OregonTrail.Entity.Location.Point;
-using OregonTrail.Window.Travel.Command;
-using OregonTrail.Window.Travel.Dialog;
-using OregonTrail.Window.Travel.Hunt.Help;
-using OregonTrail.Window.Travel.Rest;
-using OregonTrail.Window.Travel.RiverCrossing.Help;
-using OregonTrail.Window.Travel.Store.Help;
-using OregonTrail.Window.Travel.Trade;
-using WolfCurses;
+using OregonTrail.Location;
+using OregonTrail.Location.Point;
+using OregonTrail.Travel.Command;
+using OregonTrail.Travel.Dialog;
+using OregonTrail.Travel.Hunt.Help;
+using OregonTrail.Travel.Rest;
+using OregonTrail.Travel.RiverCrossing.Help;
+using OregonTrail.Travel.Store.Help;
+using OregonTrail.Travel.Trade;
 
-namespace OregonTrail.Window.Travel
+namespace OregonTrail.Travel
 {
     /// <summary>
     ///     Primary game Windows used for advancing simulation down the trail.
     /// </summary>
     public sealed class Travel : Window<TravelCommands, TravelInfo>
     {
+        private readonly GameSimulationApp _game;
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="Window{TCommands,TData}" /> class.
         /// </summary>
-        /// <param name="simUnit">Core simulation which is controlling the form factory.</param>
-        public Travel(SimulationApp simUnit) : base(simUnit)
+        /// <param name="game">Core simulation which is controlling the form factory.</param>
+        public Travel(GameSimulationApp game) : base(game)
         {
+            _game = game;
         }
 
         /// <summary>
@@ -57,25 +58,25 @@ namespace OregonTrail.Window.Travel
         internal void ContinueOnTrail()
         {
             // Check if player has already departed and we are just moving along again.
-            if (GameSimulationApp.Instance.Trail.CurrentLocation.Status == LocationStatus.Departed)
+            if (_game.Trail.CurrentLocation.Status == LocationStatus.Departed)
             {
                 SetForm(typeof (ContinueOnTrail));
                 return;
             }
 
             // Depending on what kind of location we are heading towards we will invoke different forms.
-            if (GameSimulationApp.Instance.Trail.CurrentLocation is Landmark ||
-                GameSimulationApp.Instance.Trail.CurrentLocation is Settlement ||
-                GameSimulationApp.Instance.Trail.CurrentLocation is TollRoad)
+            if (_game.Trail.CurrentLocation is Landmark ||
+                _game.Trail.CurrentLocation is Settlement ||
+                _game.Trail.CurrentLocation is TollRoad)
             {
                 // Toll road logic is done from fork in the road, good game design dictates we only offer this as a choice, never forced.
                 SetForm(typeof (LocationDepart));
             }
-            else if (GameSimulationApp.Instance.Trail.CurrentLocation is Entity.Location.Point.RiverCrossing)
+            else if (_game.Trail.CurrentLocation is Location.Point.RiverCrossing)
             {
                 SetForm(typeof (RiverCrossHelp));
             }
-            else if (GameSimulationApp.Instance.Trail.CurrentLocation is ForkInRoad)
+            else if (_game.Trail.CurrentLocation is ForkInRoad)
             {
                 SetForm(typeof (LocationFork));
             }
@@ -138,7 +139,7 @@ namespace OregonTrail.Window.Travel
         private void HuntForFood()
         {
             // Check if the player even has enough bullets to go hunting.
-            SetForm(GameSimulationApp.Instance.Vehicle.Inventory[Entities.Ammo].Quantity > 0
+            SetForm(_game.Vehicle.Inventory[Entities.Ammo].Quantity > 0
                 ? typeof (HuntingPrompt)
                 : typeof (NoAmmo));
         }
@@ -150,12 +151,12 @@ namespace OregonTrail.Window.Travel
         {
             // Header text for above menu comes from travel info object.
             var headerText = new StringBuilder();
-            headerText.Append(TravelInfo.TravelStatus);
+            headerText.Append(UserData.TravelStatus);
             headerText.Append("You may:");
             MenuHeader = headerText.ToString();
 
             // Get a reference to current location on the trail so we can query it to build our menu.
-            var location = GameSimulationApp.Instance.Trail.CurrentLocation;
+            var location = _game.Trail.CurrentLocation;
 
             // Reset and calculate what commands are allowed at this current point of interest on the trail.
             ClearCommands();
@@ -211,8 +212,8 @@ namespace OregonTrail.Window.Travel
             UpdateLocation();
 
             // Starting store that is shown after setting up player names, profession, and starting month.
-            if (GameSimulationApp.Instance.Trail.IsFirstLocation &&
-                GameSimulationApp.Instance.Trail.CurrentLocation?.Status == LocationStatus.Unreached)
+            if (_game.Trail.IsFirstLocation &&
+                _game.Trail.CurrentLocation?.Status == LocationStatus.Unreached)
             {
                 // Calculate initial distance to next point.
                 SetForm(typeof (StoreWelcome));
@@ -233,11 +234,8 @@ namespace OregonTrail.Window.Travel
         /// </summary>
         private void ArriveAtLocation()
         {
-            // Grab instance of game simulation for easy reading.
-            var game = GameSimulationApp.Instance;
-
             // Skip ticking logic for travel mode if game is closing.
-            if (game.IsClosing)
+            if (_game.IsClosing)
                 return;
 
             // Skip if we have already ended the game.
@@ -245,18 +243,18 @@ namespace OregonTrail.Window.Travel
                 return;
 
             // Check if passengers in the vehicle are dead, or player reached end of the trail.
-            if (game.Trail.CurrentLocation.LastLocation || game.Vehicle.PassengersDead)
+            if (_game.Trail.CurrentLocation.LastLocation || _game.Vehicle.PassengersDead)
             {
                 GameOver = true;
-                game.WindowManager.Add(typeof (GameOver.GameOver));
+                _game.WindowManager.Add(typeof (GameOver.GameOver), _game);
                 return;
             }
 
             // Check if player is just arriving at a new location.
-            if (game.Trail.CurrentLocation.Status == LocationStatus.Arrived && !game.Trail.CurrentLocation.ArrivalFlag &&
+            if (_game.Trail.CurrentLocation.Status == LocationStatus.Arrived && !_game.Trail.CurrentLocation.ArrivalFlag &&
                 !GameOver)
             {
-                game.Trail.CurrentLocation.ArrivalFlag = true;
+                _game.Trail.CurrentLocation.ArrivalFlag = true;
                 SetForm(typeof (LocationArrive));
                 return;
             }

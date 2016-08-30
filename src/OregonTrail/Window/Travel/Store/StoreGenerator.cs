@@ -3,12 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using OregonTrail.Entity;
-using OregonTrail.Entity.Item;
-using OregonTrail.Entity.Location;
-using OregonTrail.Entity.Vehicle;
+using OregonTrail.Item;
+using OregonTrail.Location;
 
-namespace OregonTrail.Window.Travel.Store
+namespace OregonTrail.Travel.Store
 {
     /// <summary>
     ///     Before any items are removed, or added to the store all the interactions are stored in receipt info object. When
@@ -17,6 +15,8 @@ namespace OregonTrail.Window.Travel.Store
     /// </summary>
     public sealed class StoreGenerator
     {
+        private readonly GameSimulationApp _game;
+
         /// <summary>
         ///     Keeps track of all the pending transactions that need to be made.
         /// </summary>
@@ -26,8 +26,10 @@ namespace OregonTrail.Window.Travel.Store
         ///     Initializes a new instance of the <see cref="StoreGenerator" /> class.
         ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
-        public StoreGenerator()
+        /// <param name="game"></param>
+        public StoreGenerator(GameSimulationApp game)
         {
+            _game = game;
             Reset();
         }
 
@@ -71,8 +73,8 @@ namespace OregonTrail.Window.Travel.Store
         {
             get
             {
-                return GameSimulationApp.Instance.Trail.IsFirstLocation &&
-                       GameSimulationApp.Instance.Trail.CurrentLocation?.Status == LocationStatus.Unreached &&
+                return _game.Trail.IsFirstLocation &&
+                       _game.Trail.CurrentLocation?.Status == LocationStatus.Unreached &&
                        _totalTransactions[Entities.Animal].Quantity <= 0;
             }
         }
@@ -86,14 +88,14 @@ namespace OregonTrail.Window.Travel.Store
             var totalBill = TotalTransactionCost;
 
             // Throws exception if player cannot afford items. Developer calling this at wrong time!
-            if (GameSimulationApp.Instance.Vehicle.Balance < totalBill)
+            if (_game.Vehicle.Balance < totalBill)
                 throw new InvalidOperationException(
                     "Attempted to purchase items the player does not have enough monies for!");
 
             // Loop through all the pending transaction and buy them out.
             foreach (var transaction in _totalTransactions)
             {
-                GameSimulationApp.Instance.Vehicle.Purchase(transaction.Value);
+                _game.Vehicle.Purchase(transaction.Value);
             }
 
             // Remove all the transactions now that we have processed them.
@@ -105,7 +107,7 @@ namespace OregonTrail.Window.Travel.Store
         /// </summary>
         private void Reset()
         {
-            _totalTransactions = new Dictionary<Entities, SimItem>(Vehicle.DefaultInventory);
+            _totalTransactions = new Dictionary<Entities, SimItem>(Vehicle.Vehicle.DefaultInventory);
         }
 
         /// <summary>Adds an SimItem to the list of pending transactions. If it already exists it will be replaced.</summary>

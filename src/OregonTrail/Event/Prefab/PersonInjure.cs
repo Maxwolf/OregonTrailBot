@@ -1,10 +1,10 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Module.Director;
-using OregonTrail.Window.RandomEvent;
+using OregonTrail.Director;
+using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Event.Prefab
+namespace OregonTrail.Prefab
 {
     /// <summary>
     ///     Event prefab that is intended to be used to indicate physical harm has come to a person in the vehicle. As such
@@ -24,7 +24,7 @@ namespace OregonTrail.Event.Prefab
         public override void Execute(RandomEventInfo eventExecutor)
         {
             // Cast the source entity as person.
-            var person = eventExecutor.SourceEntity as Entity.Person.Person;
+            var person = eventExecutor.SourceEntity as Person.Person;
 
             // Sets flag on person making them more susceptible to further complications.
             person?.Injure();
@@ -34,12 +34,12 @@ namespace OregonTrail.Event.Prefab
         ///     Fired when the simulation would like to render the event, typically this is done AFTER executing it but this could
         ///     change depending on requirements of the implementation.
         /// </summary>
-        /// <param name="userData"></param>
+        /// <param name="eventExecutor"></param>
         /// <returns>Text user interface string that can be used to explain what the event did when executed.</returns>
-        protected override string OnRender(RandomEventInfo userData)
+        protected override string OnRender(RandomEventInfo eventExecutor)
         {
             // Cast the source entity as person.
-            var person = userData.SourceEntity as Entity.Person.Person;
+            var person = eventExecutor.SourceEntity as Person.Person;
 
             // Skip if the source entity is not a person.
             return person == null ? string.Empty : OnPostInjury(person);
@@ -48,6 +48,6 @@ namespace OregonTrail.Event.Prefab
         /// <summary>Fired after the event has executed and the injury flag set on the person.</summary>
         /// <param name="person">Person whom is now injured by whatever you say they are here.</param>
         /// <returns>Describes what type of physical injury has come to the person.</returns>
-        protected abstract string OnPostInjury(Entity.Person.Person person);
+        protected abstract string OnPostInjury(Person.Person person);
     }
 }

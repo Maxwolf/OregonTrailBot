@@ -3,15 +3,14 @@
 
 using System;
 using System.Text;
-using OregonTrail.Entity.Location;
-using OregonTrail.Entity.Location.Point;
-using OregonTrail.Window.Travel.Dialog;
-using WolfCurses;
-using WolfCurses.Control;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Control;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
+using OregonTrail.Location;
+using OregonTrail.Location.Point;
+using OregonTrail.Travel.Dialog;
 
-namespace OregonTrail.Window.Travel.Command
+namespace OregonTrail.Travel.Command
 {
     /// <summary>
     ///     Shows the player their vehicle and list of all the points in the trail they could possibly travel to. It marks the
@@ -42,11 +41,11 @@ namespace OregonTrail.Window.Travel.Command
             var _map = new StringBuilder();
             _map.AppendLine($"{Environment.NewLine}Trail progress{Environment.NewLine}");
             _map.AppendLine(TextProgress.DrawProgressBar(
-                GameSimulationApp.Instance.Trail.LocationIndex + 1,
-                GameSimulationApp.Instance.Trail.Locations.Count, 32) + Environment.NewLine);
+                UserData.Game.Trail.LocationIndex + 1,
+                UserData.Game.Trail.Locations.Count, 32) + Environment.NewLine);
 
             // Build up a table of location names and if the player has visited them.
-            var locationTable = GameSimulationApp.Instance.Trail.Locations.ToStringTable(
+            var locationTable = UserData.Game.Trail.Locations.ToStringTable(
                 new[] {"Visited", "Location Name"},
                 u => u.Status >= LocationStatus.Arrived,
                 u => u.Name
@@ -64,7 +63,7 @@ namespace OregonTrail.Window.Travel.Command
         protected override void OnDialogResponse(DialogResponse reponse)
         {
             // Check if current location is a fork in the road, if so we will return to that form.
-            if (GameSimulationApp.Instance.Trail.CurrentLocation is ForkInRoad)
+            if (UserData.Game.Trail.CurrentLocation is ForkInRoad)
             {
                 SetForm(typeof (LocationFork));
                 return;

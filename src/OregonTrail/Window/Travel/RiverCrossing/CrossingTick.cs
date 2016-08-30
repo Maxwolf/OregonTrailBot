@@ -3,15 +3,12 @@
 
 using System;
 using System.Text;
-using OregonTrail.Entity;
-using OregonTrail.Entity.Vehicle;
-using OregonTrail.Event;
-using OregonTrail.Event.River;
-using WolfCurses;
-using WolfCurses.Control;
-using WolfCurses.Form;
+using OregonTrail.Control;
+using OregonTrail.Form;
+using OregonTrail.River;
+using OregonTrail.Vehicle;
 
-namespace OregonTrail.Window.Travel.RiverCrossing
+namespace OregonTrail.Travel.RiverCrossing
 {
     /// <summary>
     ///     Runs the player over the river based on the crossing information. Depending on what happens a message will be
@@ -93,17 +90,14 @@ namespace OregonTrail.Window.Travel.RiverCrossing
         {
             base.OnFormPostCreate();
 
-            // Grab instance of the game simulation.
-            var game = GameSimulationApp.Instance;
-
             // Park the vehicle if it is not somehow by now.
-            game.Vehicle.Status = VehicleStatus.Stopped;
+            UserData.Game.Vehicle.Status = VehicleStatus.Stopped;
 
             // Check if ferry operator wants players monies for trip across river.
             if (UserData.River.FerryCost > 0 &&
-                game.Vehicle.Inventory[Entities.Cash].TotalValue > UserData.River.FerryCost)
+                UserData.Game.Vehicle.Inventory[Entities.Cash].TotalValue > UserData.River.FerryCost)
             {
-                game.Vehicle.Inventory[Entities.Cash].ReduceQuantity((int) UserData.River.FerryCost);
+                UserData.Game.Vehicle.Inventory[Entities.Cash].ReduceQuantity((int) UserData.River.FerryCost);
 
                 // Clear out the cost for the ferry since it has been paid for now.
                 UserData.River.FerryCost = 0;
@@ -111,9 +105,9 @@ namespace OregonTrail.Window.Travel.RiverCrossing
 
             // Check if the Indian guide wants his clothes for the trip that you agreed to.
             if (UserData.River.IndianCost > 0 &&
-                game.Vehicle.Inventory[Entities.Clothes].Quantity > UserData.River.IndianCost)
+                UserData.Game.Vehicle.Inventory[Entities.Clothes].Quantity > UserData.River.IndianCost)
             {
-                game.Vehicle.Inventory[Entities.Clothes].ReduceQuantity(UserData.River.IndianCost);
+                UserData.Game.Vehicle.Inventory[Entities.Clothes].ReduceQuantity(UserData.River.IndianCost);
 
                 // Clear out the cost for the ferry since it has been paid for now.
                 UserData.River.IndianCost = 0;
@@ -135,20 +129,17 @@ namespace OregonTrail.Window.Travel.RiverCrossing
             // Ping-pong progress bar to show that we are moving.
             _crossingPrompt.AppendLine($"{Environment.NewLine}{_swayBarText}");
 
-            // Get instance of game simulation.
-            var game = GameSimulationApp.Instance;
-
             // Shows basic status of vehicle and total river crossing percentage.
             _crossingPrompt.AppendLine(
                 "--------------------------------");
             _crossingPrompt.AppendLine(
-                $"{game.Trail.CurrentLocation.Name}");
+                $"{UserData.Game.Trail.CurrentLocation.Name}");
             _crossingPrompt.AppendLine(
-                $"{game.Time.Date}");
+                $"{UserData.Game.Time.Date}");
             _crossingPrompt.AppendLine(
-                $"Weather: {game.Trail.CurrentLocation.Weather.ToDescriptionAttribute()}");
+                $"Weather: {UserData.Game.Trail.CurrentLocation.Weather.ToDescriptionAttribute()}");
             _crossingPrompt.AppendLine(
-                $"Health: {game.Vehicle.PassengerHealthStatus.ToDescriptionAttribute()}");
+                $"Health: {UserData.Game.Vehicle.PassengerHealthStatus.ToDescriptionAttribute()}");
             _crossingPrompt.AppendLine(
                 $"Crossing By: {UserData.River.CrossingType}");
             _crossingPrompt.AppendLine(
@@ -191,14 +182,11 @@ namespace OregonTrail.Window.Travel.RiverCrossing
             if (_finishedCrossingRiver)
                 return;
 
-            // Grab instance of game simulation for easy reading.
-            var game = GameSimulationApp.Instance;
-
             // Advance the progress bar, step it to next phase.
             _swayBarText = _marqueeBar.Step();
 
             // Increment the amount we have floated over the river.
-            _riverCrossingOfTotalWidth += game.Random.Next(1, UserData.River.RiverWidth/4);
+            _riverCrossingOfTotalWidth += UserData.Game.Random.Next(1, UserData.River.RiverWidth/4);
 
             // Check to see if we will finish crossing river before crossing more.
             if (_riverCrossingOfTotalWidth >= UserData.River.RiverWidth)
@@ -209,7 +197,7 @@ namespace OregonTrail.Window.Travel.RiverCrossing
             }
 
             // River crossing will allow ticking of people, vehicle, and other important events but others like consuming food are disabled.
-            GameSimulationApp.Instance.TakeTurn(true);
+            UserData.Game.TakeTurn(true);
 
             // Attempt to throw a random event related to some failure happening with river crossing.
             switch (UserData.River.CrossingType)
@@ -219,33 +207,33 @@ namespace OregonTrail.Window.Travel.RiverCrossing
                         _riverCrossingOfTotalWidth >= (UserData.River.RiverWidth/2))
                     {
                         UserData.River.DisasterHappened = true;
-                        game.EventDirector.TriggerEvent(game.Vehicle, typeof (VehicleWashOut));
+                        UserData.Game.EventDirector.TriggerEvent(UserData.Game.Vehicle, typeof (VehicleWashOut));
                     }
                     else
                     {
                         // Check that we don't flood the user twice, that is just annoying.
-                        game.EventDirector.TriggerEventByType(game.Vehicle, EventCategory.RiverCross);
+                        UserData.Game.EventDirector.TriggerEventByType(UserData.Game.Vehicle, EventCategory.RiverCross);
                     }
 
                     break;
                 case RiverCrossChoice.Float:
                     if (UserData.River.RiverDepth > 5 && !UserData.River.DisasterHappened &&
                         _riverCrossingOfTotalWidth >= (UserData.River.RiverWidth/2) &&
-                        game.Random.NextBool())
+                        UserData.Game.Random.NextBool())
                     {
                         UserData.River.DisasterHappened = true;
-                        game.EventDirector.TriggerEvent(game.Vehicle, typeof (VehicleFloods));
+                        UserData.Game.EventDirector.TriggerEvent(UserData.Game.Vehicle, typeof (VehicleFloods));
                     }
                     else
                     {
                         // Check that we don't flood the user twice, that is just annoying.
-                        game.EventDirector.TriggerEventByType(game.Vehicle, EventCategory.RiverCross);
+                        UserData.Game.EventDirector.TriggerEventByType(UserData.Game.Vehicle, EventCategory.RiverCross);
                     }
 
                     break;
                 case RiverCrossChoice.Ferry:
                 case RiverCrossChoice.Indian:
-                    game.EventDirector.TriggerEventByType(game.Vehicle, EventCategory.RiverCross);
+                    UserData.Game.EventDirector.TriggerEventByType(UserData.Game.Vehicle, EventCategory.RiverCross);
                     break;
                 case RiverCrossChoice.None:
                 case RiverCrossChoice.WaitForWeather:

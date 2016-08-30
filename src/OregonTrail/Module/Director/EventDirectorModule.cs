@@ -2,17 +2,14 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
-using OregonTrail.Entity;
-using OregonTrail.Event;
-using OregonTrail.Window.RandomEvent;
 
-namespace OregonTrail.Module.Director
+namespace OregonTrail.Director
 {
     /// <summary>
     ///     Numbers events and allows them to propagate through it and to other parts of the simulation. Lives inside of the
     ///     game simulation normally.
     /// </summary>
-    public sealed class EventDirectorModule : WolfCurses.Module
+    public sealed class EventDirectorModule : Module
     {
         /// <summary>
         ///     Fired when an event has been triggered by the director.
@@ -25,13 +22,21 @@ namespace OregonTrail.Module.Director
         private EventFactory _eventFactory;
 
         /// <summary>
+        ///     Reference to running game simulation which created this class.
+        /// </summary>
+        private GameSimulationApp _game;
+
+        /// <summary>
         ///     Initializes a new instance of the <see cref="EventDirectorModule" /> class.
         ///     Initializes a new instance of the <see cref="T:TrailSimulation.Core.ModuleProduct" /> class.
         /// </summary>
-        public EventDirectorModule()
+        /// <param name="game">Simulation instance.</param>
+        public EventDirectorModule(GameSimulationApp game)
         {
+            _game = game;
+
             // Creates a new event factory, and event history list. 
-            _eventFactory = new EventFactory();
+            _eventFactory = new EventFactory(game);
         }
 
         /// <summary>
@@ -57,7 +62,7 @@ namespace OregonTrail.Module.Director
         public void TriggerEventByType(IEntity sourceEntity, EventCategory eventCategory)
         {
             // Roll the dice here to determine if the event is triggered at all.
-            var diceRoll = GameSimulationApp.Instance.Random.Next(100);
+            var diceRoll = _game.Random.Next(100);
             if (diceRoll > 0)
                 return;
 
@@ -96,7 +101,7 @@ namespace OregonTrail.Module.Director
         private void ExecuteEvent(IEntity sourceEntity, EventProduct directorEvent)
         {
             // Attach random event game Windows before triggering event since it will listen for it using event delegate.
-            GameSimulationApp.Instance.WindowManager.Add(typeof (RandomEvent));
+            _game.WindowManager.Add(typeof (RandomEvent.RandomEvent), _game);
 
             // Fire off event so primary game simulation knows we executed an event with an event.
             OnEventTriggered?.Invoke(sourceEntity, directorEvent);

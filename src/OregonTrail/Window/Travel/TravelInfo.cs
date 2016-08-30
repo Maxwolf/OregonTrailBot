@@ -2,16 +2,14 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Text;
-using OregonTrail.Entity;
-using OregonTrail.Entity.Location;
-using OregonTrail.Entity.Location.Point;
-using OregonTrail.Window.Travel.Hunt;
-using OregonTrail.Window.Travel.RiverCrossing;
-using OregonTrail.Window.Travel.Store;
-using OregonTrail.Window.Travel.Toll;
-using WolfCurses;
+using OregonTrail.Location;
+using OregonTrail.Location.Point;
+using OregonTrail.Travel.Hunt;
+using OregonTrail.Travel.RiverCrossing;
+using OregonTrail.Travel.Store;
+using OregonTrail.Travel.Toll;
 
-namespace OregonTrail.Window.Travel
+namespace OregonTrail.Travel
 {
     /// <summary>
     ///     Holds all the information about traveling that we want to know, such as how long we need to go until next point,
@@ -26,7 +24,7 @@ namespace OregonTrail.Window.Travel
         public TravelInfo()
         {
             // Store so player can buy food, clothes, ammo, etc.
-            Store = new StoreGenerator();
+            Store = new StoreGenerator(Game);
         }
 
         /// <summary>
@@ -55,15 +53,12 @@ namespace OregonTrail.Window.Travel
         /// <summary>
         ///     Used when the player is traveling on the trail between locations. Also known as drive state in travel game Windows.
         /// </summary>
-        public static string DriveStatus
+        public string DriveStatus
         {
             get
             {
-                // Grab instance of game simulation.
-                var game = GameSimulationApp.Instance;
-
                 // GetModule the current food item from vehicle inventory.
-                var foodItem = game.Vehicle.Inventory[Entities.Food];
+                var foodItem = Game.Vehicle.Inventory[Entities.Food];
 
                 // Set default food status text, update to actual food item total weight if it exists.
                 var foodStatus = "0 pounds";
@@ -73,13 +68,13 @@ namespace OregonTrail.Window.Travel
                 // Build up the status for the vehicle as it moves through the simulation.
                 var driveStatus = new StringBuilder();
                 driveStatus.AppendLine("--------------------------------");
-                driveStatus.AppendLine($"Date: {game.Time.Date}");
+                driveStatus.AppendLine($"Date: {Game.Time.Date}");
                 driveStatus.AppendLine(
-                    $"Weather: {game.Trail.CurrentLocation.Weather.ToDescriptionAttribute()}");
-                driveStatus.AppendLine($"Health: {game.Vehicle.PassengerHealthStatus.ToDescriptionAttribute()}");
+                    $"Weather: {Game.Trail.CurrentLocation.Weather.ToDescriptionAttribute()}");
+                driveStatus.AppendLine($"Health: {Game.Vehicle.PassengerHealthStatus.ToDescriptionAttribute()}");
                 driveStatus.AppendLine($"Food: {foodStatus}");
-                driveStatus.AppendLine($"Next landmark: {game.Trail.DistanceToNextLocation} miles");
-                driveStatus.AppendLine($"Miles traveled: {game.Vehicle.Odometer} miles");
+                driveStatus.AppendLine($"Next landmark: {Game.Trail.DistanceToNextLocation} miles");
+                driveStatus.AppendLine($"Miles traveled: {Game.Vehicle.Odometer} miles");
                 driveStatus.AppendLine("--------------------------------");
                 return driveStatus.ToString();
             }
@@ -95,29 +90,26 @@ namespace OregonTrail.Window.Travel
         ///     difference this state has from others is showing the name of the location, when between points we don't show this
         ///     since we already know the next point but don't want the player to know that.
         /// </summary>
-        public static string TravelStatus
+        public string TravelStatus
         {
             get
             {
-                // Grab instance of game simulation.
-                var game = GameSimulationApp.Instance;
-
-                var showLocationName = game.Trail.CurrentLocation.Status == LocationStatus.Arrived;
+                var showLocationName = Game.Trail.CurrentLocation.Status == LocationStatus.Arrived;
                 var locationStatus = new StringBuilder();
                 locationStatus.AppendLine("--------------------------------");
 
                 // Only add the location name if we are on the next point, otherwise we should not show this.
                 locationStatus.AppendLine(showLocationName
-                    ? game.Trail.CurrentLocation.Name
-                    : $"{game.Trail.DistanceToNextLocation.ToString("N0")} miles to {game.Trail.NextLocation.Name}");
+                    ? Game.Trail.CurrentLocation.Name
+                    : $"{Game.Trail.DistanceToNextLocation.ToString("N0")} miles to {Game.Trail.NextLocation.Name}");
 
-                locationStatus.AppendLine($"{game.Time.Date}");
+                locationStatus.AppendLine($"{Game.Time.Date}");
                 locationStatus.AppendLine("--------------------------------");
                 locationStatus.AppendLine(
-                    $"Weather: {game.Trail.CurrentLocation.Weather.ToDescriptionAttribute()}");
-                locationStatus.AppendLine($"Health: {game.Vehicle.PassengerHealthStatus.ToDescriptionAttribute()}");
-                locationStatus.AppendLine($"Pace: {game.Vehicle.Pace.ToDescriptionAttribute()}");
-                locationStatus.AppendLine($"Rations: {game.Vehicle.Ration.ToDescriptionAttribute()}");
+                    $"Weather: {Game.Trail.CurrentLocation.Weather.ToDescriptionAttribute()}");
+                locationStatus.AppendLine($"Health: {Game.Vehicle.PassengerHealthStatus.ToDescriptionAttribute()}");
+                locationStatus.AppendLine($"Pace: {Game.Vehicle.Pace.ToDescriptionAttribute()}");
+                locationStatus.AppendLine($"Rations: {Game.Vehicle.Ration.ToDescriptionAttribute()}");
                 locationStatus.AppendLine("--------------------------------");
                 return locationStatus.ToString();
             }
@@ -131,7 +123,7 @@ namespace OregonTrail.Window.Travel
             if (Hunt != null)
                 return;
 
-            Hunt = new HuntManager();
+            Hunt = new HuntManager(Game);
         }
 
         /// <summary>
@@ -156,7 +148,7 @@ namespace OregonTrail.Window.Travel
             if (Toll != null)
                 return;
 
-            Toll = new TollGenerator(tollRoad);
+            Toll = new TollGenerator(tollRoad, Game);
         }
 
         /// <summary>
@@ -181,7 +173,7 @@ namespace OregonTrail.Window.Travel
                 return;
 
             // Creates a new river.
-            River = new RiverGenerator();
+            River = new RiverGenerator(Game);
         }
 
         /// <summary>

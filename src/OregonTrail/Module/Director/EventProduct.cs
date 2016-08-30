@@ -1,9 +1,9 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Window.RandomEvent;
+using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Module.Director
+namespace OregonTrail.Director
 {
     /// <summary>
     ///     Represents an event that can be triggered by the event director when vehicle is traveling along the trail.
@@ -47,12 +47,12 @@ namespace OregonTrail.Module.Director
         ///     Fired when the simulation would like to render the event, typically this is done AFTER executing it but this could
         ///     change depending on requirements of the implementation.
         /// </summary>
-        /// <param name="userData">
+        /// <param name="eventExecutor">
         ///     Entities which the event is going to directly affect. This way there is no confusion about
         ///     what entity the event is for. Will require casting to correct instance type from interface instance.
         /// </param>
         /// <returns>Text user interface string that can be used to explain what the event did when executed.</returns>
-        protected abstract string OnRender(RandomEventInfo userData);
+        protected abstract string OnRender(RandomEventInfo eventExecutor);
 
         /// <summary>
         ///     Fired when the event is closed by the user or system after being executed and rendered out on text user interface.

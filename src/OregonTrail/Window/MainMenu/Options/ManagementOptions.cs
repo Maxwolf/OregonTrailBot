@@ -4,10 +4,9 @@
 using System;
 using System.Reflection;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
+using OregonTrail.Form;
 
-namespace OregonTrail.Window.MainMenu.Options
+namespace OregonTrail.MainMenu.Options
 {
     /// <summary>
     ///     Glorified options menu for the game that allows player to remove top ten high scores, remove saved games, erase

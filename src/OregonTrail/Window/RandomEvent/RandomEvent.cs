@@ -1,11 +1,9 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Entity;
-using OregonTrail.Module.Director;
-using WolfCurses;
+using OregonTrail.Director;
 
-namespace OregonTrail.Window.RandomEvent
+namespace OregonTrail.RandomEvent
 {
     /// <summary>
     ///     Random event window is attached by the event director which then listens for the event it will throw at it over
@@ -13,12 +11,15 @@ namespace OregonTrail.Window.RandomEvent
     /// </summary>
     public sealed class RandomEvent : Window<RandomEventCommands, RandomEventInfo>
     {
+        private readonly GameSimulationApp _game;
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="Window{TCommands,TData}" /> class.
         /// </summary>
-        /// <param name="simUnit">Core simulation which is controlling the form factory.</param>
-        public RandomEvent(SimulationApp simUnit) : base(simUnit)
+        /// <param name="game">Core simulation which is controlling the form factory.</param>
+        public RandomEvent(GameSimulationApp game) : base(game)
         {
+            _game = game;
         }
 
         /// <summary>
@@ -27,7 +28,7 @@ namespace OregonTrail.Window.RandomEvent
         public override void OnWindowPostCreate()
         {
             // Event director has event to know when events are triggered.
-            GameSimulationApp.Instance.EventDirector.OnEventTriggered += Director_OnEventTriggered;
+            _game.EventDirector.OnEventTriggered += Director_OnEventTriggered;
         }
 
         /// <summary>
@@ -61,6 +62,7 @@ namespace OregonTrail.Window.RandomEvent
             // Attached the random event state when we intercept an event it would like us to trigger.
             UserData.DirectorEvent = directorEvent;
             UserData.SourceEntity = simEntity;
+            UserData.Game = _game;
             SetForm(typeof (EventExecutor));
         }
 
@@ -70,8 +72,8 @@ namespace OregonTrail.Window.RandomEvent
             base.OnModeRemoved();
 
             // Event director has event for when he triggers events.
-            if (GameSimulationApp.Instance.EventDirector != null)
-                GameSimulationApp.Instance.EventDirector.OnEventTriggered -= Director_OnEventTriggered;
+            if (_game.EventDirector != null)
+                _game.EventDirector.OnEventTriggered -= Director_OnEventTriggered;
         }
     }
 }

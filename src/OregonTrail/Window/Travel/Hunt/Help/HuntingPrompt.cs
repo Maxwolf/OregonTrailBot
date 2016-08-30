@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.Travel.Hunt.Help
+namespace OregonTrail.Travel.Hunt.Help
 {
     /// <summary>
     ///     Prompt that proceeds the hunting mode when accessed from the travel menu. Explains to the player how the controls

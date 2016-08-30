@@ -3,10 +3,9 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
+using OregonTrail.Form;
 
-namespace OregonTrail.Window.Travel.Store.Help
+namespace OregonTrail.Travel.Store.Help
 {
     /// <summary>
     ///     Offers up some free information about what items are important to the player and what they mean for the during the

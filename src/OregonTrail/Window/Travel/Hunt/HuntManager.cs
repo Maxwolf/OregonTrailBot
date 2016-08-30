@@ -5,12 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OregonTrail.Entity;
-using OregonTrail.Entity.Item;
-using OregonTrail.Entity.Location;
-using WolfCurses;
+using OregonTrail.Item;
+using OregonTrail.Location;
 
-namespace OregonTrail.Window.Travel.Hunt
+namespace OregonTrail.Travel.Hunt
 {
     /// <summary>
     ///     Represents all of the data related to a hunt where the player wants to kill the prey with bullets and then collect
@@ -54,6 +52,11 @@ namespace OregonTrail.Window.Travel.Hunt
         public const int MINTARGETINGTIME = 3;
 
         /// <summary>
+        ///     Reference to running game simulation which created this class.
+        /// </summary>
+        private static GameSimulationApp _game;
+
+        /// <summary>
         ///     Reference list for all of the prey that was killed by the player using their bullets.
         /// </summary>
         private List<PreyItem> _killedPrey;
@@ -84,10 +87,13 @@ namespace OregonTrail.Window.Travel.Hunt
         private PreyItem _target;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="T:OregonTrail.Window.Travel.Hunt.HuntManager" /> class.
+        ///     Initializes a new instance of the <see cref="T:OregonTrail.Travel.Hunt.HuntManager" /> class.
         /// </summary>
-        public HuntManager()
+        /// <param name="game">Simulation instance.</param>
+        public HuntManager(GameSimulationApp game)
         {
+            _game = game;
+
             // Clears out any previous killed prey.
             _killedPrey = new List<PreyItem>();
             _sortedPrey = new List<PreyItem>();
@@ -115,9 +121,6 @@ namespace OregonTrail.Window.Travel.Hunt
         {
             get
             {
-                // Grab instance of game simulation.
-                var game = GameSimulationApp.Instance;
-
                 // Will hole on the string data representing hunting status.
                 var huntStatus = new StringBuilder();
 
@@ -125,16 +128,16 @@ namespace OregonTrail.Window.Travel.Hunt
                 huntStatus.AppendLine($"{Environment.NewLine}--------------------------------");
 
                 // Title displays some basic info about the area.
-                huntStatus.AppendLine(game.Trail.CurrentLocation.Status != LocationStatus.Departed
-                    ? $"Hunting outside {game.Trail.CurrentLocation.Name}"
-                    : $"Hunting near {game.Trail.NextLocation.Name}");
+                huntStatus.AppendLine(_game.Trail.CurrentLocation.Status != LocationStatus.Departed
+                    ? $"Hunting outside {_game.Trail.CurrentLocation.Name}"
+                    : $"Hunting near {_game.Trail.NextLocation.Name}");
 
                 // Represent seconds remaining as daylight left percentage.
                 var daylightPercentage = _secondsRemaining/(decimal) HUNTINGTIME;
                 huntStatus.AppendLine($"Daylight Remaining: {(daylightPercentage*100).ToString("N0")}%");
 
                 // Current weather on the planes.
-                huntStatus.AppendLine($"Weather: {game.Trail.CurrentLocation.Weather.ToDescriptionAttribute()}");
+                huntStatus.AppendLine($"Weather: {_game.Trail.CurrentLocation.Weather.ToDescriptionAttribute()}");
                 huntStatus.AppendLine("--------------------------------");
 
                 // Show the player their current shooting word and target they are aiming at.
@@ -178,6 +181,78 @@ namespace OregonTrail.Window.Travel.Hunt
         }
 
         /// <summary>
+        ///     Gets the bear.
+        /// </summary>
+        public static SimItem Bear
+        {
+            get { return new SimItem(Entities.Food, "Bear", "pounds", "pound", 2000, 0); }
+        }
+
+        /// <summary>
+        ///     You must use *all* the buffalo...
+        /// </summary>
+        public static SimItem Buffalo
+        {
+            get
+            {
+                return new SimItem(Entities.Food, "Buffalo", "pounds", "pound", 2000, 0,
+                    _game.Random.Next(350, 500));
+            }
+        }
+
+        /// <summary>
+        ///     Gets the caribou.
+        /// </summary>
+        public static SimItem Caribou
+        {
+            get
+            {
+                return new SimItem(Entities.Food, "Caribou", "pounds", "pound", 2000, 0,
+                    _game.Random.Next(300, 350));
+            }
+        }
+
+        /// <summary>
+        ///     Gets the deer.
+        /// </summary>
+        public static SimItem Deer
+        {
+            get { return new SimItem(Entities.Food, "Deer", "pounds", "pound", 2000, 0, 50); }
+        }
+
+        /// <summary>
+        ///     Gets the duck.
+        /// </summary>
+        public static SimItem Duck
+        {
+            get { return new SimItem(Entities.Food, "Duck", "pounds", "pound", 2000, 0); }
+        }
+
+        /// <summary>
+        ///     Gets the goose.
+        /// </summary>
+        public static SimItem Goose
+        {
+            get { return new SimItem(Entities.Food, "Goose", "pounds", "pound", 2000, 0, 2); }
+        }
+
+        /// <summary>
+        ///     Gets the rabbit.
+        /// </summary>
+        public static SimItem Rabbit
+        {
+            get { return new SimItem(Entities.Food, "Rabbit", "pounds", "pound", 2000, 0, 2); }
+        }
+
+        /// <summary>
+        ///     Gets the squirrel.
+        /// </summary>
+        public static SimItem Squirrel
+        {
+            get { return new SimItem(Entities.Food, "Squirrel", "pounds", "pound", 2000, 0); }
+        }
+
+        /// <summary>
         ///     Reference dictionary for all the animals in the game, used to help hunting mode determine what types of animals
         ///     will spawn when the player is out looking for them.
         /// </summary>
@@ -188,14 +263,14 @@ namespace OregonTrail.Window.Travel.Hunt
                 // Create inventory of items with default starting amounts.
                 var defaultAnimals = new List<SimItem>
                 {
-                    Animals.Bear,
-                    Animals.Buffalo,
-                    Animals.Caribou,
-                    Animals.Deer,
-                    Animals.Duck,
-                    Animals.Goose,
-                    Animals.Rabbit,
-                    Animals.Squirrel
+                    Bear,
+                    Buffalo,
+                    Caribou,
+                    Deer,
+                    Duck,
+                    Goose,
+                    Rabbit,
+                    Squirrel
                 };
 
                 // Zero out all of the quantities by removing their max quantity.
@@ -338,7 +413,7 @@ namespace OregonTrail.Window.Travel.Hunt
                 return;
 
             // There is a change we will not tick awareness this time.
-            if (GameSimulationApp.Instance.Random.NextBool())
+            if (_game.Random.NextBool())
                 return;
 
             // Check target ticking if not null and shooting word not none.
@@ -372,7 +447,7 @@ namespace OregonTrail.Window.Travel.Hunt
             ShootingWord = HuntWord.None;
 
             // Clear the input buffer.
-            GameSimulationApp.Instance.InputManager.ClearBuffer();
+            _game.InputManager.ClearBuffer();
         }
 
         /// <summary>
@@ -391,11 +466,11 @@ namespace OregonTrail.Window.Travel.Hunt
                 return;
 
             // There is a chance that you will not get prey this tick.
-            if (GameSimulationApp.Instance.Random.NextBool())
+            if (_game.Random.NextBool())
                 return;
 
             // Randomly select one of the hunting words from the list.
-            var tempShootWord = (HuntWord) GameSimulationApp.Instance.Random.Next(_shootWords.Count);
+            var tempShootWord = (HuntWord) _game.Random.Next(_shootWords.Count);
 
             // Check if we are already trying to hunt a particular animal.
             if (tempShootWord == HuntWord.None || tempShootWord == ShootingWord)
@@ -405,7 +480,7 @@ namespace OregonTrail.Window.Travel.Hunt
             ShootingWord = tempShootWord;
 
             // Randomly select one of the prey from the list.
-            var randomPreyIndex = GameSimulationApp.Instance.Random.Next(_sortedPrey.Count);
+            var randomPreyIndex = _game.Random.Next(_sortedPrey.Count);
             var randomPrey = _sortedPrey[randomPreyIndex];
 
             // Check the prey to make sure it is still alive.
@@ -425,7 +500,7 @@ namespace OregonTrail.Window.Travel.Hunt
         private void GeneratePrey()
         {
             // Check to make sure spawn count is above zero.
-            var preySpawnCount = GameSimulationApp.Instance.Random.Next(MAXPREY);
+            var preySpawnCount = _game.Random.Next(MAXPREY);
             if (preySpawnCount <= 0)
                 return;
 
@@ -433,7 +508,7 @@ namespace OregonTrail.Window.Travel.Hunt
             var unsortedPrey = new List<PreyItem>();
             for (var i = 0; i < preySpawnCount; i++)
             {
-                unsortedPrey.Add(new PreyItem());
+                unsortedPrey.Add(new PreyItem(_game, _game.Random.Next(preySpawnCount)));
             }
 
             // Sort the list of references in memory without creating duplicate objects.
@@ -456,11 +531,8 @@ namespace OregonTrail.Window.Travel.Hunt
             if (_target == null)
                 return false;
 
-            // Grab game instance to make check logic legible.
-            var game = GameSimulationApp.Instance;
-
             // Check if the player outright missed their target, banker is way worse than farmer.
-            if (100*game.Random.Next() < ((int) game.Vehicle.PassengerLeader.Profession - 13)*_target.TargetTime)
+            if (100*_game.Random.Next() < ((int) _game.Vehicle.PassengerLeader.Profession - 13)*_target.TargetTime)
             {
                 _preyEscaped.Add(_target);
                 ClearTarget();
@@ -476,11 +548,11 @@ namespace OregonTrail.Window.Travel.Hunt
             }
 
             // Calculate the total cost of this shot in bullets.
-            var bulletCost = (int) game.Vehicle.Inventory[Entities.Ammo].TotalValue - 10 -
-                             game.Random.Next()*4;
+            var bulletCost = (int) _game.Vehicle.Inventory[Entities.Ammo].TotalValue - 10 -
+                             _game.Random.Next()*4;
 
             // Remove the amount of bullets from vehicle inventory.
-            game.Vehicle.Inventory[Entities.Ammo].ReduceQuantity(bulletCost);
+            _game.Vehicle.Inventory[Entities.Ammo].ReduceQuantity(bulletCost);
 
             // Add the target to the list of animals that have been killed.
             _killedPrey.Add(_target);

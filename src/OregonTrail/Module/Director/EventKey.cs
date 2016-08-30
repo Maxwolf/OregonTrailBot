@@ -3,9 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using OregonTrail.Event;
 
-namespace OregonTrail.Module.Director
+namespace OregonTrail.Director
 {
     /// <summary>
     ///     Acts like a unique identifier for each event that is to be registered in the system and defines several special
@@ -14,7 +13,7 @@ namespace OregonTrail.Module.Director
     public sealed class EventKey : IComparer<EventKey>, IComparable<EventKey>, IEquatable<EventKey>,
         IEqualityComparer<EventKey>
     {
-        /// <summary>Initializes a new instance of the <see cref="T:OregonTrail.Module.Director.EventKey" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="T:OregonTrail.Director.EventKey" /> class.</summary>
         /// <param name="category">The category.</param>
         /// <param name="name">The name.</param>
         /// <param name="executionType">The execution Type.</param>

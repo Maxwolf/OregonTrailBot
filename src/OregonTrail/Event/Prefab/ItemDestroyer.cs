@@ -5,13 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OregonTrail.Entity;
-using OregonTrail.Entity.Person;
-using OregonTrail.Entity.Vehicle;
-using OregonTrail.Module.Director;
-using OregonTrail.Window.RandomEvent;
+using OregonTrail.Director;
+using OregonTrail.Person;
+using OregonTrail.RandomEvent;
+using OregonTrail.Vehicle;
 
-namespace OregonTrail.Event.Prefab
+namespace OregonTrail.Prefab
 {
     /// <summary>
     ///     Prefab class that is used to destroy some items at random from the vehicle inventory. Will return a list of items
@@ -43,18 +42,19 @@ namespace OregonTrail.Event.Prefab
         ///     applied next to their name.
         /// </summary>
         /// <param name="killVerb">Action verb that describes how the person died such as burned, frozen, drowned, etc.</param>
+        /// <param name="game"></param>
         /// <returns>Formatted string that can be displayed on render for event item destruction.</returns>
-        internal static string TryKillPassengers(string killVerb)
+        internal static string TryKillPassengers(string killVerb, GameSimulationApp game)
         {
             // Change event text depending on if items were destroyed or not.
             var postDestroy = new StringBuilder();
             postDestroy.AppendLine($"the loss of:{Environment.NewLine}");
 
             // Attempts to kill the living passengers of the vehicle.
-            var drownedPassengers = GameSimulationApp.Instance.Vehicle.Passengers.TryKill();
+            var drownedPassengers = game.Vehicle.Passengers.TryKill(game);
 
             // If the killed passenger list contains any entries we print them out.
-            var passengers = drownedPassengers as IList<Entity.Person.Person> ?? drownedPassengers.ToList();
+            var passengers = drownedPassengers as IList<Person.Person> ?? drownedPassengers.ToList();
             foreach (var person in passengers)
             {
                 // Only proceed if person is actually dead.
@@ -91,10 +91,10 @@ namespace OregonTrail.Event.Prefab
                 _eventText.AppendLine(preDestoyPrompt);
 
             // Destroy some items at random and get a list back of what and how much.
-            var _destroyedItems = GameSimulationApp.Instance.Vehicle.DestroyRandomItems();
+            var _destroyedItems = eventExecutor.Game.Vehicle.DestroyRandomItems();
 
             // Show the post item destruction text if it exists.
-            var postDestroyPrompt = OnPostDestroyItems(_destroyedItems);
+            var postDestroyPrompt = OnPostDestroyItems(_destroyedItems, eventExecutor.Game);
             if (!string.IsNullOrEmpty(postDestroyPrompt))
                 _eventText.AppendLine(postDestroyPrompt);
 
@@ -119,8 +119,8 @@ namespace OregonTrail.Event.Prefab
 
         /// <summary>Fired by the item destroyer event prefab before items are destroyed.</summary>
         /// <param name="destroyedItems">Items that were destroyed from the players inventory.</param>
-        /// <returns>The <see cref="string" />.</returns>
-        protected abstract string OnPostDestroyItems(IDictionary<Entities, int> destroyedItems);
+        /// <param name="game">Simulation instance.</param>
+        protected abstract string OnPostDestroyItems(IDictionary<Entities, int> destroyedItems, GameSimulationApp game);
 
         /// <summary>
         ///     Fired by the item destroyer event prefab after items are destroyed.
@@ -134,9 +134,9 @@ namespace OregonTrail.Event.Prefab
         ///     Fired when the simulation would like to render the event, typically this is done AFTER executing it but this could
         ///     change depending on requirements of the implementation.
         /// </summary>
-        /// <param name="userData"></param>
+        /// <param name="eventExecutor"></param>
         /// <returns>Text user interface string that can be used to explain what the event did when executed.</returns>
-        protected override string OnRender(RandomEventInfo userData)
+        protected override string OnRender(RandomEventInfo eventExecutor)
         {
             return _eventText.ToString();
         }

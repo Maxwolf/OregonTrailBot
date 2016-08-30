@@ -3,12 +3,11 @@
 
 using System;
 using System.Text;
-using OregonTrail.Window.Travel.RiverCrossing.Ferry;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
+using OregonTrail.Travel.RiverCrossing.Ferry;
 
-namespace OregonTrail.Window.Travel.RiverCrossing.Help
+namespace OregonTrail.Travel.RiverCrossing.Help
 {
     /// <summary>
     ///     The caulk river help.

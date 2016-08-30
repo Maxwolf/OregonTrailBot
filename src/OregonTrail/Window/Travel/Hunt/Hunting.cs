@@ -2,11 +2,10 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
-using OregonTrail.Window.Travel.Hunt.Help;
-using WolfCurses;
-using WolfCurses.Form;
+using OregonTrail.Form;
+using OregonTrail.Travel.Hunt.Help;
 
-namespace OregonTrail.Window.Travel.Hunt
+namespace OregonTrail.Travel.Hunt
 {
     /// <summary>
     ///     Used to allow the players party to hunt for wild animals, shooting bullet items into the animals will successfully

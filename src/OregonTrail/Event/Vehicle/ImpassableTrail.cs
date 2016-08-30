@@ -2,10 +2,11 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Diagnostics.CodeAnalysis;
-using OregonTrail.Event.Prefab;
-using OregonTrail.Module.Director;
+using OregonTrail.Director;
+using OregonTrail.Prefab;
+using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Event.Vehicle
+namespace OregonTrail.Vehicle
 {
     /// <summary>
     ///     Wastes the players time by forcing them to go around a section of the trail that has been blocked by some natural
@@ -19,10 +20,11 @@ namespace OregonTrail.Event.Vehicle
         ///     Grabs the correct number of days that should be skipped by the lose time event. The event skip day form that
         ///     follows will count down the number of days to zero before letting the player continue.
         /// </summary>
+        /// <param name="eventExecutor"></param>
         /// <returns>Number of days that should be skipped in the simulation.</returns>
-        protected override int DaysToSkip()
+        protected override int DaysToSkip(RandomEventInfo eventExecutor)
         {
-            return GameSimulationApp.Instance.Random.Next(2, 6);
+            return eventExecutor.Game.Random.Next(2, 6);
         }
 
         /// <summary>

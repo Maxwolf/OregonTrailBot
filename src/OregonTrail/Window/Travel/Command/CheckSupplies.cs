@@ -4,13 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OregonTrail.Entity;
-using WolfCurses;
-using WolfCurses.Control;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Control;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.Travel.Command
+namespace OregonTrail.Travel.Command
 {
     /// <summary>
     ///     Shows all the players supplies that they currently have in their vehicle inventory, along with the amount of money
@@ -38,7 +36,7 @@ namespace OregonTrail.Window.Travel.Command
         protected override string OnDialogPrompt()
         {
             // Tick the people, but not the trail or the day.
-            GameSimulationApp.Instance.TakeTurn(true);
+            UserData.Game.TakeTurn(true);
 
             // Build up representation of supplies once in constructor and then reference when asked for render.
             var supplies = new StringBuilder();
@@ -48,7 +46,7 @@ namespace OregonTrail.Window.Travel.Command
             var suppliesList = new List<Tuple<string, string>>();
 
             // Loop through every inventory item in the vehicle.
-            foreach (var item in GameSimulationApp.Instance.Vehicle.Inventory)
+            foreach (var item in UserData.Game.Vehicle.Inventory)
             {
                 // Apply number formatting to quantities so they have thousand separators.
                 var itemFormattedQuantity = item.Value.Quantity.ToString("N0");

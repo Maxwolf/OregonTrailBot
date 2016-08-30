@@ -3,12 +3,10 @@
 
 using System;
 using System.Text;
-using OregonTrail.Entity;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.Travel.RiverCrossing.Indian
+namespace OregonTrail.Travel.RiverCrossing.Indian
 {
     /// <summary>
     ///     Prompts the player with a yes or no question regarding if they would like to use the services offered by the Indian
@@ -44,7 +42,7 @@ namespace OregonTrail.Window.Travel.RiverCrossing.Indian
         {
             get
             {
-                return GameSimulationApp.Instance.Vehicle.Inventory[Entities.Clothes].Quantity >=
+                return UserData.Game.Vehicle.Inventory[Entities.Clothes].Quantity >=
                        UserData.River.IndianCost;
             }
         }

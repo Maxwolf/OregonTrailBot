@@ -2,10 +2,9 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
-using WolfCurses;
-using WolfCurses.Form;
+using OregonTrail.Form;
 
-namespace OregonTrail.Window.Travel.Rest
+namespace OregonTrail.Travel.Rest
 {
     /// <summary>
     ///     Attaches a state that will ask the player how long they would like to rest in the number of days, zero is a valid

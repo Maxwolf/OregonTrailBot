@@ -5,10 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using OregonTrail.Event;
-using WolfCurses;
 
-namespace OregonTrail.Module.Director
+namespace OregonTrail.Director
 {
     /// <summary>
     ///     Factory pattern for creating director event items from type references.
@@ -16,10 +14,17 @@ namespace OregonTrail.Module.Director
     public sealed class EventFactory
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="T:OregonTrail.Module.Director.EventFactory" /> class.
+        ///     Reference to running game simulation which created this class.
         /// </summary>
-        public EventFactory()
+        private readonly GameSimulationApp _game;
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="T:OregonTrail.Director.EventFactory" /> class.
+        /// </summary>
+        /// <param name="game">Simulation instance.</param>
+        public EventFactory(GameSimulationApp game)
         {
+            _game = game;
             // Create dictionaries for storing event reference types, history of execution, and execution count.
             EventReference = new Dictionary<EventKey, Type>();
 
@@ -92,7 +97,7 @@ namespace OregonTrail.Module.Director
         }
 
         /// <summary>Gathers all of the events by specified type and picks one of them at random to return.</summary>
-        /// <param name="eventCategory">Enum value of the type of event such as medical, person, vehicle, etc.</param>
+        /// <param name="eventCategory">Enumeration value of the type of event such as medical, person, vehicle, etc.</param>
         /// <returns>Created event product based on enum value.</returns>
         public EventProduct CreateRandomByType(EventCategory eventCategory)
         {
@@ -111,7 +116,7 @@ namespace OregonTrail.Module.Director
                 return null;
 
             // Roll the dice against the event reference ceiling count to see which one we use.
-            var diceRoll = GameSimulationApp.Instance.Random.Next(groupedEventList.Count);
+            var diceRoll = _game.Random.Next(groupedEventList.Count);
 
             // Create the event we decided to execute from these types of event types.
             var randomEvent = CreateInstance(groupedEventList[diceRoll]);

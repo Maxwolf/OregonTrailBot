@@ -1,9 +1,7 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using WolfCurses;
-
-namespace OregonTrail.Window.Graveyard
+namespace OregonTrail.Graveyard
 {
     /// <summary>
     ///     Displays the name of a previous player whom traveled the trail and died at a given mile marker. There is also an
@@ -14,8 +12,8 @@ namespace OregonTrail.Window.Graveyard
         /// <summary>
         ///     Initializes a new instance of the <see cref="Window{TCommands,TData}" /> class.
         /// </summary>
-        /// <param name="simUnit">Core simulation which is controlling the form factory.</param>
-        public Graveyard(SimulationApp simUnit) : base(simUnit)
+        /// <param name="game">Core simulation which is controlling the form factory.</param>
+        public Graveyard(GameSimulationApp game) : base(game)
         {
         }
 
@@ -27,7 +25,7 @@ namespace OregonTrail.Window.Graveyard
             base.OnWindowPostCreate();
 
             // Depending on the living status of passengers in current player vehicle we will attach a different form.
-            SetForm(GameSimulationApp.Instance.Vehicle.PassengerLivingCount <= 0
+            SetForm(UserData.Game.Vehicle.PassengerLivingCount <= 0
                 ? typeof (EpitaphQuestion)
                 : typeof (TombstoneView));
         }

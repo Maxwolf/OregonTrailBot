@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.Travel.RiverCrossing.Indian
+namespace OregonTrail.Travel.RiverCrossing.Indian
 {
     /// <summary>
     ///     Confirms with the player the decision they made about crossing the riving using the Indian guide in exchange for a

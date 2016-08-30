@@ -1,9 +1,7 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using WolfCurses;
-
-namespace OregonTrail.Window.GameOver
+namespace OregonTrail.GameOver
 {
     /// <summary>
     ///     Controls the process of ending the current game simulation depending on if the player won or lost. This window can
@@ -15,8 +13,8 @@ namespace OregonTrail.Window.GameOver
         /// <summary>
         ///     Initializes a new instance of the <see cref="Window{TCommands,TData}" /> class.
         /// </summary>
-        /// <param name="simUnit">Core simulation which is controlling the form factory.</param>
-        public GameOver(SimulationApp simUnit) : base(simUnit)
+        /// <param name="game">Core simulation which is controlling the form factory.</param>
+        public GameOver(GameSimulationApp game) : base(game)
         {
         }
 
@@ -28,14 +26,14 @@ namespace OregonTrail.Window.GameOver
             base.OnWindowPostCreate();
 
             // Check if passengers in the vehicle are dead.
-            if (GameSimulationApp.Instance.Trail.CurrentLocation.LastLocation)
+            if (UserData.Game.Trail.CurrentLocation.LastLocation)
             {
                 SetForm(typeof (GameWin));
                 return;
             }
 
             // Check if player reached end of the trail.
-            if (GameSimulationApp.Instance.Vehicle.PassengersDead)
+            if (UserData.Game.Vehicle.PassengersDead)
             {
                 SetForm(typeof (GameFail));
                 return;

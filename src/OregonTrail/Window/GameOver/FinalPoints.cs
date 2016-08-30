@@ -4,16 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OregonTrail.Entity;
-using OregonTrail.Entity.Item;
-using OregonTrail.Entity.Person;
-using OregonTrail.Module.Scoring;
-using WolfCurses;
-using WolfCurses.Control;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Control;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
+using OregonTrail.Item;
+using OregonTrail.Person;
+using OregonTrail.Scoring;
 
-namespace OregonTrail.Window.GameOver
+namespace OregonTrail.GameOver
 {
     /// <summary>
     ///     Shows point tabulation based on current simulation statistics. This way if the player dies or finishes the game we
@@ -50,7 +48,7 @@ namespace OregonTrail.Window.GameOver
             _pointsPrompt.AppendLine($"{Environment.NewLine}Points for arriving in Oregon{Environment.NewLine}");
 
             // Shortcut to the game simulation instance to make code easier to read.
-            var game = GameSimulationApp.Instance;
+            var game = UserData.Game;
 
             // Calculate the total points of all spare parts for the tuple list below ahead of time.
             var spareAxles = new Tuple<int, string, int>(
@@ -164,7 +162,7 @@ namespace OregonTrail.Window.GameOver
             }
 
             // Add the score to the current listing that will get saved.
-            GameSimulationApp.Instance.Scoring.Add(new Highscore(leaderPerson.Name, totalPointsWithBonus));
+            UserData.Game.Scoring.Add(new Highscore(leaderPerson.Name, totalPointsWithBonus));
 
             return _pointsPrompt.ToString();
         }
@@ -177,7 +175,7 @@ namespace OregonTrail.Window.GameOver
         protected override void OnDialogResponse(DialogResponse reponse)
         {
             // Completely resets the game to default state it was in when it first started.
-            GameSimulationApp.Instance.Restart();
+            UserData.Game.Restart();
         }
     }
 }

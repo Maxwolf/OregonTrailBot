@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.MainMenu.Help
+namespace OregonTrail.MainMenu.Help
 {
     /// <summary>
     ///     Introduces the player to the concept of a store as being run by a person by the name of Matt.

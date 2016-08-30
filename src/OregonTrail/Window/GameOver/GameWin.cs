@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.GameOver
+namespace OregonTrail.GameOver
 {
     /// <summary>
     ///     Attached when the party leader dies, or the vehicle reaches the end of the trail.

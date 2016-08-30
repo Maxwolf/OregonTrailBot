@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.Graveyard
+namespace OregonTrail.Graveyard
 {
     /// <summary>
     ///     Asks the user if they would like to write a custom message on their Tombstone for other users to see when the
@@ -66,7 +65,7 @@ namespace OregonTrail.Window.Graveyard
                     break;
                 case DialogResponse.No:
                 case DialogResponse.Custom:
-                    GameSimulationApp.Instance.Tombstone.Add(UserData.Tombstone);
+                    UserData.Game.Tombstone.Add(UserData.Tombstone);
                     SetForm(typeof (TombstoneView));
                     break;
                 default:

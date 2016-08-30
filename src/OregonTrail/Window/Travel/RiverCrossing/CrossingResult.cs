@@ -3,13 +3,12 @@
 
 using System;
 using System.Text;
-using OregonTrail.Event.Vehicle;
-using OregonTrail.Window.Travel.Dialog;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
+using OregonTrail.Travel.Dialog;
+using OregonTrail.Vehicle;
 
-namespace OregonTrail.Window.Travel.RiverCrossing
+namespace OregonTrail.Travel.RiverCrossing
 {
     /// <summary>
     ///     Displays the final crossing result for the river crossing location. No matter what choice the player made, what
@@ -50,7 +49,7 @@ namespace OregonTrail.Window.Travel.RiverCrossing
             switch (UserData.River.CrossingType)
             {
                 case RiverCrossChoice.Ford:
-                    if (GameSimulationApp.Instance.Random.NextBool())
+                    if (UserData.Game.Random.NextBool())
                     {
                         // No loss in time, but warning to let the player know it's dangerous.
                         _crossingResult.AppendLine($"{Environment.NewLine}It was a muddy crossing,");
@@ -61,7 +60,7 @@ namespace OregonTrail.Window.Travel.RiverCrossing
                     {
                         // Triggers event for muddy shore that makes player lose a day, forces end of crossing also.
                         FinishCrossing();
-                        GameSimulationApp.Instance.EventDirector.TriggerEvent(GameSimulationApp.Instance.Vehicle,
+                        UserData.Game.EventDirector.TriggerEvent(UserData.Game.Vehicle,
                             typeof (StuckInMud));
                     }
 
@@ -141,7 +140,7 @@ namespace OregonTrail.Window.Travel.RiverCrossing
             UserData.DestroyRiver();
 
             // River crossing takes you a day.
-            GameSimulationApp.Instance.TakeTurn(false);
+            UserData.Game.TakeTurn(false);
 
             // Start going there...
             SetForm(typeof (LocationDepart));

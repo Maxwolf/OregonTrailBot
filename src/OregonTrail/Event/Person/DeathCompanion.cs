@@ -3,10 +3,10 @@
 
 using System;
 using System.Text;
-using OregonTrail.Module.Director;
-using OregonTrail.Window.RandomEvent;
+using OregonTrail.Director;
+using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Event.Person
+namespace OregonTrail.Person
 {
     /// <summary>
     ///     Called when one of your party members dies that is not the leader of the group, the game will still be able to
@@ -43,7 +43,7 @@ namespace OregonTrail.Event.Person
         public override void Execute(RandomEventInfo eventExecutor)
         {
             // Cast the source entity as a passenger from vehicle.
-            var sourcePerson = eventExecutor.SourceEntity as Entity.Person.Person;
+            var sourcePerson = eventExecutor.SourceEntity as Person;
             if (sourcePerson == null)
                 throw new ArgumentNullException(nameof(eventExecutor),
                     "Could not cast source entity as passenger of vehicle.");
@@ -59,9 +59,9 @@ namespace OregonTrail.Event.Person
         ///     Fired when the simulation would like to render the event, typically this is done AFTER executing it but this could
         ///     change depending on requirements of the implementation.
         /// </summary>
-        /// <param name="userData"></param>
+        /// <param name="eventExecutor"></param>
         /// <returns>Text user interface string that can be used to explain what the event did when executed.</returns>
-        protected override string OnRender(RandomEventInfo userData)
+        protected override string OnRender(RandomEventInfo eventExecutor)
         {
             return _passengerDeath.ToString();
         }

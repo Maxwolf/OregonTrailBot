@@ -3,7 +3,7 @@
 
 using System;
 
-namespace OregonTrail.Module.Tombstone
+namespace OregonTrail.Tombstone
 {
     /// <summary>
     ///     Facilitates a tombstone base class that supports shallow copies of itself to be created.
@@ -14,10 +14,11 @@ namespace OregonTrail.Module.Tombstone
         ///     Initializes a new instance of the <see cref="Tombstone" /> class.
         ///     Creates a shallow copy of the tombstone, generates a new tombstone ID in the process.
         /// </summary>
-        public Tombstone()
+        /// <param name="game">Simulation instance.</param>
+        public Tombstone(GameSimulationApp game)
         {
             // Loop through all the vehicle passengers and find the leader.
-            foreach (var passenger in GameSimulationApp.Instance.Vehicle.Passengers)
+            foreach (var passenger in game.Vehicle.Passengers)
             {
                 // Skip if not the leader.
                 if (!passenger.Leader)
@@ -29,7 +30,7 @@ namespace OregonTrail.Module.Tombstone
             }
 
             // Grabs the current mile marker where the player died on the trail for the Tombstone to sit at.
-            MileMarker = GameSimulationApp.Instance.Vehicle.Odometer;
+            MileMarker = game.Vehicle.Odometer;
 
             // Epitaph is left empty by default and ready to be filled in.
             Epitaph = string.Empty;

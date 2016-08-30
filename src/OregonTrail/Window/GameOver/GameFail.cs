@@ -1,10 +1,9 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using WolfCurses;
-using WolfCurses.Form;
+using OregonTrail.Form;
 
-namespace OregonTrail.Window.GameOver
+namespace OregonTrail.GameOver
 {
     /// <summary>
     ///     Fired when the simulation has determined the player has died. It specifically only attaches at this time. The flow
@@ -52,7 +51,7 @@ namespace OregonTrail.Window.GameOver
         public override string OnRenderForm()
         {
             // Jump right to tombstone game window, it will reset the game.
-            GameSimulationApp.Instance.WindowManager.Add(typeof (Graveyard.Graveyard));
+            UserData.Game.WindowManager.Add(typeof (Graveyard.Graveyard), UserData.Game);
             return string.Empty;
         }
 

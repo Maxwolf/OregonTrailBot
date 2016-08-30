@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.MainMenu.Start_Month
+namespace OregonTrail.MainMenu.Start_Month
 {
     /// <summary>
     ///     Shows the player information about what the various starting months mean.

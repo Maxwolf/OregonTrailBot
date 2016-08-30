@@ -3,10 +3,9 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
+using OregonTrail.Form;
 
-namespace OregonTrail.Window.MainMenu.Names
+namespace OregonTrail.MainMenu.Names
 {
     /// <summary>
     ///     Gets the name of a player for a particular index in the player name user data object. This will also offer the user
@@ -40,7 +39,7 @@ namespace OregonTrail.Window.MainMenu.Names
             base.OnFormPostCreate();
 
             // Pass the game data to the simulation for each new game Windows state.
-            GameSimulationApp.Instance.SetStartInfo(UserData);
+            UserData.Game.SetStartInfo(UserData);
 
             // Create string builder so we only build up this data once.
             _inputNamesHelp = new StringBuilder();
@@ -142,7 +141,7 @@ namespace OregonTrail.Window.MainMenu.Names
         /// <returns>
         ///     The <see cref="string" />.
         /// </returns>
-        private static string GetPlayerName()
+        private string GetPlayerName()
         {
             string[] names =
             {
@@ -150,7 +149,7 @@ namespace OregonTrail.Window.MainMenu.Names
                 "Kristy", "Sharice", "Joanna", "Chrystal", "Genevie", "Angela", "Ruthann", "Viva", "Iris", "Anderson",
                 "Siobhan", "Karey", "Jolie", "Carlene", "Lekisha", "Buck"
             };
-            return names[GameSimulationApp.Instance.Random.Next(names.Length)];
+            return names[UserData.Game.Random.Next(names.Length)];
         }
     }
 }

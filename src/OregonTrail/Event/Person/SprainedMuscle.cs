@@ -2,10 +2,10 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Diagnostics.CodeAnalysis;
-using OregonTrail.Event.Prefab;
-using OregonTrail.Module.Director;
+using OregonTrail.Director;
+using OregonTrail.Prefab;
 
-namespace OregonTrail.Event.Person
+namespace OregonTrail.Person
 {
     /// <summary>
     ///     The most common soft tissues injured are muscles, tendons, and ligaments.
@@ -17,7 +17,7 @@ namespace OregonTrail.Event.Person
         /// <summary>Fired after the event has executed and the injury flag set on the person.</summary>
         /// <param name="person">Person whom is now injured by whatever you say they are here.</param>
         /// <returns>Describes what type of physical injury has come to the person.</returns>
-        protected override string OnPostInjury(Entity.Person.Person person)
+        protected override string OnPostInjury(Person person)
         {
             return $"{person.Name} has sprained a muscle.";
         }

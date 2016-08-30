@@ -1,11 +1,10 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Entity;
-using OregonTrail.Module.Director;
-using OregonTrail.Window.RandomEvent;
+using OregonTrail.Director;
+using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Event.Prefab
+namespace OregonTrail.Prefab
 {
     /// <summary>
     ///     Destroys a random amount of food from the vehicles inventory, the amount of food destroyed typically will be about
@@ -24,7 +23,7 @@ namespace OregonTrail.Event.Prefab
         public override void Execute(RandomEventInfo eventExecutor)
         {
             // Cast the source entity as vehicle.
-            var vehicle = eventExecutor.SourceEntity as Entity.Vehicle.Vehicle;
+            var vehicle = eventExecutor.SourceEntity as Vehicle.Vehicle;
 
             // Skip if the source entity is not a vehicle.
             if (vehicle == null)
@@ -42,16 +41,16 @@ namespace OregonTrail.Event.Prefab
             var spoiledFood = vehicle.Inventory[Entities.Food].Quantity/4;
 
             // Remove some random amount of food, the minimum being three pieces.
-            vehicle.Inventory[Entities.Food].ReduceQuantity(GameSimulationApp.Instance.Random.Next(3, spoiledFood));
+            vehicle.Inventory[Entities.Food].ReduceQuantity(eventExecutor.Game.Random.Next(3, spoiledFood));
         }
 
         /// <summary>
         ///     Fired when the simulation would like to render the event, typically this is done AFTER executing it but this could
         ///     change depending on requirements of the implementation.
         /// </summary>
-        /// <param name="userData"></param>
+        /// <param name="eventExecutor"></param>
         /// <returns>Text user interface string that can be used to explain what the event did when executed.</returns>
-        protected override string OnRender(RandomEventInfo userData)
+        protected override string OnRender(RandomEventInfo eventExecutor)
         {
             return OnFoodSpoilReason();
         }

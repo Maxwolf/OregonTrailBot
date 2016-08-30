@@ -3,15 +3,14 @@
 
 using System;
 using System.Text;
-using OregonTrail.Entity.Location;
-using OregonTrail.Entity.Location.Point;
-using OregonTrail.Entity.Vehicle;
-using OregonTrail.Window.Travel.Dialog;
-using OregonTrail.Window.Travel.RiverCrossing;
-using WolfCurses;
-using WolfCurses.Form;
+using OregonTrail.Form;
+using OregonTrail.Location;
+using OregonTrail.Location.Point;
+using OregonTrail.Travel.Dialog;
+using OregonTrail.Travel.RiverCrossing;
+using OregonTrail.Vehicle;
 
-namespace OregonTrail.Window.Travel.Rest
+namespace OregonTrail.Travel.Rest
 {
     /// <summary>
     ///     Keeps track of a set number of days and every time the game Windows is ticked a day is simulated and days to rest
@@ -21,7 +20,7 @@ namespace OregonTrail.Window.Travel.Rest
     public sealed class Resting : Form<TravelInfo>
     {
         /// <summary>
-        ///     References the number of days the player has reseted, this ticks up each time we rest a day and will be used for
+        ///     References the number of days the player has reset, this ticks up each time we rest a day and will be used for
         ///     display purposes to user.
         /// </summary>
         private int _daysRested;
@@ -79,17 +78,17 @@ namespace OregonTrail.Window.Travel.Rest
             // Check if we are at a river crossing and need to subtract from ferry days also.
             if (UserData.River != null &&
                 UserData.River.FerryDelayInDays > 0 &&
-                GameSimulationApp.Instance.Trail.CurrentLocation is Entity.Location.Point.RiverCrossing)
+                UserData.Game.Trail.CurrentLocation is Location.Point.RiverCrossing)
                 UserData.River.FerryDelayInDays--;
 
             // Decrease number of days needed to rest, increment number of days rested.
             UserData.DaysToRest--;
 
-            // Increment the number of days reseted.
+            // Increment the number of days reset.
             _daysRested++;
 
             // Simulate the days to rest in time and event system, this will trigger random event game Windows if required.
-            GameSimulationApp.Instance.TakeTurn(false);
+            UserData.Game.TakeTurn(false);
         }
 
         /// <summary>
@@ -101,8 +100,8 @@ namespace OregonTrail.Window.Travel.Rest
             base.OnFormPostCreate();
 
             // Only change the vehicle status to stopped if it is moving, it could just be stuck.
-            if (GameSimulationApp.Instance.Vehicle.Status == VehicleStatus.Moving)
-                GameSimulationApp.Instance.Vehicle.Status = VehicleStatus.Stopped;
+            if (UserData.Game.Vehicle.Status == VehicleStatus.Moving)
+                UserData.Game.Vehicle.Status = VehicleStatus.Stopped;
         }
 
         /// <summary>
@@ -118,7 +117,7 @@ namespace OregonTrail.Window.Travel.Rest
             _restMessage.Clear();
 
             // Change up resting prompt depending on location category to give it some context.
-            if (GameSimulationApp.Instance.Trail.CurrentLocation is ForkInRoad)
+            if (UserData.Game.Trail.CurrentLocation is ForkInRoad)
             {
                 if (_daysRested > 1)
                 {
@@ -179,20 +178,20 @@ namespace OregonTrail.Window.Travel.Rest
             }
 
             // Check if we have already departed from current location, so we just return to travel menu.
-            if (GameSimulationApp.Instance.Trail.CurrentLocation.ArrivalFlag &&
-                GameSimulationApp.Instance.Trail.CurrentLocation.Status == LocationStatus.Departed)
+            if (UserData.Game.Trail.CurrentLocation.ArrivalFlag &&
+                UserData.Game.Trail.CurrentLocation.Status == LocationStatus.Departed)
             {
                 ClearForm();
                 return;
             }
 
             // Locations can return to a special state if required based on the category of the location.
-            if (GameSimulationApp.Instance.Trail.CurrentLocation is Landmark ||
-                GameSimulationApp.Instance.Trail.CurrentLocation is Settlement)
+            if (UserData.Game.Trail.CurrentLocation is Landmark ||
+                UserData.Game.Trail.CurrentLocation is Settlement)
             {
                 ClearForm();
             }
-            else if (GameSimulationApp.Instance.Trail.CurrentLocation is Entity.Location.Point.RiverCrossing)
+            else if (UserData.Game.Trail.CurrentLocation is Location.Point.RiverCrossing)
             {
                 UserData.DaysToRest = 0;
 
@@ -211,7 +210,7 @@ namespace OregonTrail.Window.Travel.Rest
                     SetForm(typeof (RiverCross));
                 }
             }
-            else if (GameSimulationApp.Instance.Trail.CurrentLocation is ForkInRoad)
+            else if (UserData.Game.Trail.CurrentLocation is ForkInRoad)
             {
                 SetForm(typeof (LocationFork));
             }

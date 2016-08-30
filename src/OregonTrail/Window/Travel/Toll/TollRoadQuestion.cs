@@ -3,14 +3,12 @@
 
 using System;
 using System.Text;
-using OregonTrail.Entity;
-using OregonTrail.Entity.Location.Point;
-using OregonTrail.Window.Travel.Dialog;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
+using OregonTrail.Location.Point;
+using OregonTrail.Travel.Dialog;
 
-namespace OregonTrail.Window.Travel.Toll
+namespace OregonTrail.Travel.Toll
 {
     /// <summary>
     ///     Prompts the user with a question about the toll road location they are attempting to progress to. Depending on
@@ -64,10 +62,7 @@ namespace OregonTrail.Window.Travel.Toll
         {
             var tollPrompt = new StringBuilder();
 
-            // Grab instance of the game simulation.
-            var game = GameSimulationApp.Instance;
-
-            canAffordToll = game.Vehicle.Inventory[Entities.Cash].TotalValue >= UserData.Toll.Cost;
+            canAffordToll = UserData.Game.Vehicle.Inventory[Entities.Cash].TotalValue >= UserData.Toll.Cost;
 
             // First portion of the message changes based on varying conditions.
             if (UserData.Toll.Road != null)
@@ -77,18 +72,18 @@ namespace OregonTrail.Window.Travel.Toll
                     $"{Environment.NewLine}You must pay {UserData.Toll.Cost.ToString("C0")} to travel the");
                 tollPrompt.AppendLine($"{UserData.Toll.Road.Name}.");
             }
-            else if (game.Trail.CurrentLocation != null)
+            else if (UserData.Game.Trail.CurrentLocation != null)
             {
                 // Toll road was placed in-line on the trail, and will block player if they are broke.
                 tollPrompt.AppendLine(
                     $"{Environment.NewLine}You must pay {UserData.Toll.Cost.ToString("C0")} to travel the");
-                tollPrompt.AppendLine($"{game.Trail.CurrentLocation.Name}.");
+                tollPrompt.AppendLine($"{UserData.Game.Trail.CurrentLocation.Name}.");
             }
-            else if (game.Trail.NextLocation != null)
+            else if (UserData.Game.Trail.NextLocation != null)
             {
                 tollPrompt.AppendLine(
                     $"{Environment.NewLine}You must pay {UserData.Toll.Cost.ToString("C0")} to travel the");
-                tollPrompt.AppendLine($"{game.Trail.NextLocation.Name}.");
+                tollPrompt.AppendLine($"{UserData.Game.Trail.NextLocation.Name}.");
             }
             else
             {
@@ -98,7 +93,7 @@ namespace OregonTrail.Window.Travel.Toll
             }
 
             // Check if the player has enough money to pay for the toll road.
-            if (game.Vehicle.Inventory[Entities.Cash].TotalValue >= UserData.Toll.Cost)
+            if (UserData.Game.Vehicle.Inventory[Entities.Cash].TotalValue >= UserData.Toll.Cost)
             {
                 tollPrompt.AppendLine($"{Environment.NewLine}Are you willing");
                 tollPrompt.Append("to do this? Y/N");
@@ -131,13 +126,13 @@ namespace OregonTrail.Window.Travel.Toll
             {
                 case DialogResponse.Yes:
                     // Remove monies for the cost of the trip on toll road.
-                    GameSimulationApp.Instance.Vehicle.Inventory[Entities.Cash].ReduceQuantity(UserData.Toll.Cost);
+                    UserData.Game.Vehicle.Inventory[Entities.Cash].ReduceQuantity(UserData.Toll.Cost);
 
                     // Only insert the location if there is one to actually insert.
                     if (UserData.Toll.Road != null)
                     {
                         // Insert the skip location into location list after current location.
-                        GameSimulationApp.Instance.Trail.InsertLocation(UserData.Toll.Road);
+                        UserData.Game.Trail.InsertLocation(UserData.Toll.Road);
                     }
 
                     // Destroy the toll road data now that we are done with it.
@@ -148,7 +143,7 @@ namespace OregonTrail.Window.Travel.Toll
                     break;
                 case DialogResponse.No:
                 case DialogResponse.Custom:
-                    if (GameSimulationApp.Instance.Trail.CurrentLocation is ForkInRoad)
+                    if (UserData.Game.Trail.CurrentLocation is ForkInRoad)
                     {
                         SetForm(typeof (LocationFork));
                     }

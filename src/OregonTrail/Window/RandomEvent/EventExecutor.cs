@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.RandomEvent
+namespace OregonTrail.RandomEvent
 {
     /// <summary>
     ///     Used when the event director fires event that game simulation subscribes to which passes along events that should

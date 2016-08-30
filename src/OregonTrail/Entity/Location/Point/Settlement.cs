@@ -1,9 +1,9 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Entity.Location.Weather;
+using OregonTrail.Location.Weather;
 
-namespace OregonTrail.Entity.Location.Point
+namespace OregonTrail.Location.Point
 {
     /// <summary>
     ///     Civilized area where many other people from different vehicles congregate together and share resources.
@@ -12,11 +12,12 @@ namespace OregonTrail.Entity.Location.Point
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="Settlement" /> class. Initializes a new instance of the
-        ///     <see cref="T:OregonTrail.Entity.Location.Location" /> class.
+        ///     <see cref="T:OregonTrail.Location.Location" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="climateType">The climate Type.</param>
-        public Settlement(string name, Climate climateType) : base(name, climateType)
+        /// <param name="game"></param>
+        public Settlement(string name, Climate climateType, GameSimulationApp game) : base(name, climateType, game)
         {
         }
 

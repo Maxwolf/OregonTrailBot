@@ -3,12 +3,10 @@
 
 using System;
 using System.Text;
-using OregonTrail.Module.Tombstone;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.Graveyard
+namespace OregonTrail.Graveyard
 {
     /// <summary>
     ///     Form that is used to show data about a tombstone. It will look for a tombstone at the current vehicle odometer, if
@@ -38,12 +36,12 @@ namespace OregonTrail.Window.Graveyard
             var _tombstone = new StringBuilder();
 
             // Finding a tombstone at the current vehicle odometer means we use that reference.
-            if (GameSimulationApp.Instance.Vehicle.PassengerLivingCount > 0)
+            if (UserData.Game.Vehicle.PassengerLivingCount > 0)
             {
                 // Grab the current Tombstone based on players progress on the trail so far.
-                Tombstone foundTombstone;
-                GameSimulationApp.Instance.Tombstone.FindTombstone(
-                    GameSimulationApp.Instance.Vehicle.Odometer,
+                Tombstone.Tombstone foundTombstone;
+                UserData.Game.Tombstone.FindTombstone(
+                    UserData.Game.Vehicle.Odometer,
                     out foundTombstone);
 
                 _tombstone.AppendLine($"{Environment.NewLine}{foundTombstone}");
@@ -70,11 +68,11 @@ namespace OregonTrail.Window.Graveyard
         protected override void OnDialogResponse(DialogResponse reponse)
         {
             // Determine if we are showing the player a tombstone because they died.
-            if (GameSimulationApp.Instance.Vehicle.PassengerLivingCount <= 0)
+            if (UserData.Game.Vehicle.PassengerLivingCount <= 0)
             {
                 // Completely resets the game to default state it was in when it first started.
                 UserData.ClearTombstone();
-                GameSimulationApp.Instance.Restart();
+                UserData.Game.Restart();
                 return;
             }
 

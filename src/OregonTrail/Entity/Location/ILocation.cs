@@ -1,7 +1,7 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-namespace OregonTrail.Entity.Location
+namespace OregonTrail.Location
 {
     /// <summary>
     ///     Base interface used for all locations on the trail, the purpose of which is to abstract the functionality of the

@@ -3,13 +3,12 @@
 
 using System;
 using System.Text;
-using OregonTrail.Module.Scoring;
-using WolfCurses;
-using WolfCurses.Control;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Control;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
+using OregonTrail.Scoring;
 
-namespace OregonTrail.Window.MainMenu.Options
+namespace OregonTrail.MainMenu.Options
 {
     /// <summary>
     ///     Shows the player hard-coded top ten list as it is known internally in static list.

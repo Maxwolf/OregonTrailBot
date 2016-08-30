@@ -3,12 +3,11 @@
 
 using System;
 using System.Text;
-using OregonTrail.Event.Vehicle;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
+using OregonTrail.Vehicle;
 
-namespace OregonTrail.Window.RandomEvent
+namespace OregonTrail.RandomEvent
 {
     /// <summary>
     ///     Called by the event system when one of the events damages the vehicle in a permanent way that requires the player
@@ -45,7 +44,7 @@ namespace OregonTrail.Window.RandomEvent
         {
             var brokenPrompt = new StringBuilder();
             brokenPrompt.AppendLine(
-                $"{Environment.NewLine}Broken {GameSimulationApp.Instance.Vehicle.BrokenPart.Name.ToLowerInvariant()}. Would you");
+                $"{Environment.NewLine}Broken {UserData.Game.Vehicle.BrokenPart.Name.ToLowerInvariant()}. Would you");
             brokenPrompt.Append("like to try and repair it? Y/N");
             return brokenPrompt.ToString();
         }
@@ -58,7 +57,7 @@ namespace OregonTrail.Window.RandomEvent
         protected override void OnDialogResponse(DialogResponse reponse)
         {
             // Get game instance to improve readability.
-            var game = GameSimulationApp.Instance;
+            var game = UserData.Game;
 
             switch (reponse)
             {

@@ -1,16 +1,16 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Entity.Person;
+using OregonTrail.Person;
 
-namespace OregonTrail.Module.Scoring
+namespace OregonTrail.Scoring
 {
     /// <summary>
     ///     Little class that will help me build a nice looking table in the scoring help states in the management options.
     /// </summary>
     public sealed class HealthScoring
     {
-        /// <summary>Initializes a new instance of the <see cref="T:OregonTrail.Module.Scoring.HealthScoring" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="T:OregonTrail.Scoring.HealthScoring" /> class.</summary>
         /// <param name="partyHealthStatus">The party Health Level.</param>
         /// <param name="pointsPerPerson">The points Per Person.</param>
         public HealthScoring(HealthStatus partyHealthStatus, int pointsPerPerson)

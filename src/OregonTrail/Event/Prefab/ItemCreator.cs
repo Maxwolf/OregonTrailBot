@@ -4,11 +4,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OregonTrail.Entity;
-using OregonTrail.Module.Director;
-using OregonTrail.Window.RandomEvent;
+using OregonTrail.Director;
+using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Event.Prefab
+namespace OregonTrail.Prefab
 {
     /// <summary>
     ///     Prefab class that is used to destroy some items at random from the vehicle inventory. Will return a list of items
@@ -54,7 +53,7 @@ namespace OregonTrail.Event.Prefab
                 _eventText.AppendLine(preCreatePrompt);
 
             // Create some items at random and get a list back of what and how much.
-            var createdItems = GameSimulationApp.Instance.Vehicle.CreateRandomItems();
+            var createdItems = eventExecutor.Game.Vehicle.CreateRandomItems();
 
             // Add the post create message if it exists.
             var postCreatePrompt = OnPostCreateItems(createdItems);
@@ -97,9 +96,9 @@ namespace OregonTrail.Event.Prefab
         ///     Fired when the simulation would like to render the event, typically this is done AFTER executing it but this could
         ///     change depending on requirements of the implementation.
         /// </summary>
-        /// <param name="userData"></param>
+        /// <param name="eventExecutor"></param>
         /// <returns>Text user interface string that can be used to explain what the event did when executed.</returns>
-        protected override string OnRender(RandomEventInfo userData)
+        protected override string OnRender(RandomEventInfo eventExecutor)
         {
             return _eventText.ToString();
         }

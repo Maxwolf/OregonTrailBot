@@ -3,14 +3,13 @@
 
 using System;
 using System.Text;
-using OregonTrail.Entity.Location;
-using OregonTrail.Entity.Vehicle;
-using OregonTrail.Window.Travel.Dialog;
-using WolfCurses;
-using WolfCurses.Control;
-using WolfCurses.Form;
+using OregonTrail.Control;
+using OregonTrail.Form;
+using OregonTrail.Location;
+using OregonTrail.Travel.Dialog;
+using OregonTrail.Vehicle;
 
-namespace OregonTrail.Window.Travel.Command
+namespace OregonTrail.Travel.Command
 {
     /// <summary>
     ///     Attached to the travel Windows when the player requests to continue on the trail. This shows a ping-pong progress
@@ -63,7 +62,7 @@ namespace OregonTrail.Window.Travel.Command
             base.OnFormPostCreate();
 
             // Get instance of game simulation for easy reading.
-            var game = GameSimulationApp.Instance;
+            var game = UserData.Game;
 
             // We don't create it in the constructor, will update with ticks.
             _drive = new StringBuilder();
@@ -94,7 +93,7 @@ namespace OregonTrail.Window.Travel.Command
             _drive.AppendLine($"{Environment.NewLine}{_swayBarText}");
 
             // Basic information about simulation.
-            _drive.AppendLine(TravelInfo.DriveStatus);
+            _drive.AppendLine(UserData.DriveStatus);
 
             // Don't add the RETURN KEY text here if we are not actually at a point.
             _drive.Append("Press ENTER to size up the situation");
@@ -126,7 +125,7 @@ namespace OregonTrail.Window.Travel.Command
                 return;
 
             // Get instance of game simulation for easy reading.
-            var game = GameSimulationApp.Instance;
+            var game = UserData.Game;
 
             // Checks if the vehicle is stuck or broken, if not it is set to moving state.
             game.Vehicle.CheckStatus();
@@ -167,8 +166,8 @@ namespace OregonTrail.Window.Travel.Command
                 return;
 
             // Stop ticks and close this state.
-            if (GameSimulationApp.Instance.Vehicle.Status == VehicleStatus.Moving)
-                GameSimulationApp.Instance.Vehicle.Status = VehicleStatus.Stopped;
+            if (UserData.Game.Vehicle.Status == VehicleStatus.Moving)
+                UserData.Game.Vehicle.Status = VehicleStatus.Stopped;
 
             // Remove the this form.
             ClearForm();

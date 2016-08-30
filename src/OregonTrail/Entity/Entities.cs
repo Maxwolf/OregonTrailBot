@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace OregonTrail.Entity
+namespace OregonTrail
 {
     /// <summary>
     ///     Defines all the possible types of items, used for sorting and quickly being able to determine type when iterating
@@ -17,49 +17,42 @@ namespace OregonTrail.Entity
         ///     helping to pull it along. In a manner of speaking you could treat the animal like the fuel in a vehicle, if it
         ///     drains completely it will be considered broken and can no longer assist in pulling the vehicle along the trail.
         /// </summary>
-        [Description("Oxen              @AMT@")]
-        Animal = 1,
+        [Description("Oxen              @AMT@")] Animal = 1,
 
         /// <summary>
         ///     Food from hunting or stores. Represented in pounds of meat. Can typically take back only 250 pounds to vehicle from
         ///     hunting. Consumed by the party members at the end of each day of the simulation. Depending on ration level the
         ///     amount of food in pounds eaten each day can vary.
         /// </summary>
-        [Description("Food              @AMT@")]
-        Food = 2,
+        [Description("Food              @AMT@")] Food = 2,
 
         /// <summary>
         ///     Clothing is used by the party members to keep them warm when the climate simulation lowers the ambient temperature.
         ///     Without proper shielding against the elements the risk for disease and critical failures increase exponentially.
         /// </summary>
-        [Description("Clothing          @AMT@")]
-        Clothes = 3,
+        [Description("Clothing          @AMT@")] Clothes = 3,
 
         /// <summary>
         ///     Used in hunting and for killing wild animals, can be purchased from stores and also traded with other travelers on
         ///     the trail.
         /// </summary>
-        [Description("Ammunition        @AMT@")]
-        Ammo = 4,
+        [Description("Ammunition        @AMT@")] Ammo = 4,
 
         /// <summary>
         ///     Part on vehicle that must be kept track of, if it breaks the user will have to use another one to fix it.
         /// </summary>
-        [Description("Vehicle wheels    @AMT@")]
-        Wheel = 5,
+        [Description("Vehicle wheels    @AMT@")] Wheel = 5,
 
         /// <summary>
         ///     Axle that connects the vehicle to wheels, if this part is broken it must be repaired or the total possible mileage
         ///     for the current two-week block the simulation is running.
         /// </summary>
-        [Description("Vehicle axles     @AMT@")]
-        Axle = 6,
+        [Description("Vehicle axles     @AMT@")] Axle = 6,
 
         /// <summary>
         ///     Tongue for the vehicle which connects it to animals that are pulling (typically this is oxen).
         /// </summary>
-        [Description("Vehicle tongues   @AMT@")]
-        Tongue = 7,
+        [Description("Vehicle tongues   @AMT@")] Tongue = 7,
 
         /// <summary>
         ///     Defines the vessel in which the party members, their inventory, monies, hopes and dreams, and everything else

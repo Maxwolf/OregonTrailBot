@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrailBot", "TrailBot\TrailB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OregonTrail", "OregonTrail\OregonTrail.csproj", "{5C5F2E3F-248C-4994-A8C6-4FBC25C7E3C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WolfCurses", "WolfCurses\WolfCurses.csproj", "{5D81B5E4-DCF6-442B-9644-6ACF2ED48438}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{5C5F2E3F-248C-4994-A8C6-4FBC25C7E3C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C5F2E3F-248C-4994-A8C6-4FBC25C7E3C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C5F2E3F-248C-4994-A8C6-4FBC25C7E3C0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5D81B5E4-DCF6-442B-9644-6ACF2ED48438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D81B5E4-DCF6-442B-9644-6ACF2ED48438}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D81B5E4-DCF6-442B-9644-6ACF2ED48438}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D81B5E4-DCF6-442B-9644-6ACF2ED48438}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

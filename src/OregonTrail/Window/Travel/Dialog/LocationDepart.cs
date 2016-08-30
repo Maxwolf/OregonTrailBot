@@ -3,12 +3,11 @@
 
 using System;
 using System.Text;
-using OregonTrail.Window.Travel.Command;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
+using OregonTrail.Travel.Command;
 
-namespace OregonTrail.Window.Travel.Dialog
+namespace OregonTrail.Travel.Dialog
 {
     /// <summary>
     ///     Attached when the player wants to continue on the trail, and doing so will force them to leave that point and be
@@ -38,9 +37,9 @@ namespace OregonTrail.Window.Travel.Dialog
         {
             // Tell player how far it is to next location before attaching drive state.
             var prompt = new StringBuilder();
-            var nextPoint = GameSimulationApp.Instance.Trail.NextLocation;
+            var nextPoint = UserData.Game.Trail.NextLocation;
             prompt.AppendLine(
-                $"{Environment.NewLine}From {GameSimulationApp.Instance.Trail.CurrentLocation.Name} it is {GameSimulationApp.Instance.Trail.DistanceToNextLocation}");
+                $"{Environment.NewLine}From {UserData.Game.Trail.CurrentLocation.Name} it is {UserData.Game.Trail.DistanceToNextLocation}");
             prompt.AppendLine($"miles to {nextPoint.Name}{Environment.NewLine}");
             return prompt.ToString();
         }

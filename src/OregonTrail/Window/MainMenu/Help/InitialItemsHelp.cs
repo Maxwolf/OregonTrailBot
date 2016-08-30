@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.MainMenu.Help
+namespace OregonTrail.MainMenu.Help
 {
     /// <summary>
     ///     Spawns a new game Windows in the game simulation while maintaining the state of previous one so when we bounce back
@@ -25,7 +24,7 @@ namespace OregonTrail.Window.MainMenu.Help
         public InitialItemsHelp(IWindow window) : base(window)
         {
             // Pass the game data to the simulation for each new game Windows state.
-            GameSimulationApp.Instance.SetStartInfo(UserData);
+            UserData.Game.SetStartInfo(UserData);
         }
 
         /// <summary>

@@ -4,13 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OregonTrail.Entity.Person;
-using WolfCurses;
-using WolfCurses.Control;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Control;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
+using OregonTrail.Person;
 
-namespace OregonTrail.Window.MainMenu.Help
+namespace OregonTrail.MainMenu.Help
 {
     /// <summary>
     ///     First panel on point information, shows how health of party members contributes to final score.

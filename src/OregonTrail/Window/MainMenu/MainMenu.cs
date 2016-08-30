@@ -3,12 +3,11 @@
 
 using System;
 using System.Text;
-using OregonTrail.Window.MainMenu.Help;
-using OregonTrail.Window.MainMenu.Options;
-using OregonTrail.Window.MainMenu.Profession;
-using WolfCurses;
+using OregonTrail.MainMenu.Help;
+using OregonTrail.MainMenu.Options;
+using OregonTrail.MainMenu.Profession;
 
-namespace OregonTrail.Window.MainMenu
+namespace OregonTrail.MainMenu
 {
     /// <summary>
     ///     Allows the configuration of party names, player profession, and purchasing initial items for trip.
@@ -29,8 +28,8 @@ namespace OregonTrail.Window.MainMenu
         /// <summary>
         ///     Initializes a new instance of the <see cref="Window{TCommands,TData}" /> class.
         /// </summary>
-        /// <param name="simUnit">Core simulation which is controlling the form factory.</param>
-        public MainMenu(SimulationApp simUnit) : base(simUnit)
+        /// <param name="game">Core simulation which is controlling the form factory.</param>
+        public MainMenu(GameSimulationApp game) : base(game)
         {
         }
 
@@ -54,9 +53,9 @@ namespace OregonTrail.Window.MainMenu
         /// <summary>
         ///     Does exactly what it says on the tin, closes the simulation and releases all memory.
         /// </summary>
-        private static void CloseSimulation()
+        private void CloseSimulation()
         {
-            GameSimulationApp.Instance.Destroy();
+            UserData.Game.Destroy();
         }
 
         /// <summary>

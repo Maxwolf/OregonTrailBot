@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.Travel.Store.Help
+namespace OregonTrail.Travel.Store.Help
 {
     /// <summary>
     ///     Informs the player they need to purchase at least a single one of the specified SimItem in order to

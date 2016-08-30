@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.Travel.Dialog
+namespace OregonTrail.Travel.Dialog
 {
     /// <summary>
     ///     Something has happened with the players vehicle and they are no longer able to continue on the trail. This form is
@@ -47,13 +46,13 @@ namespace OregonTrail.Window.Travel.Dialog
             var stuckPrompt = new StringBuilder();
 
             // Check if we are dealing with lack of oxen to pull or broken vehicle parts.
-            var brokenVehicle = GameSimulationApp.Instance.Vehicle.BrokenPart != null;
+            var brokenVehicle = UserData.Game.Vehicle.BrokenPart != null;
 
             if (brokenVehicle)
             {
                 stuckPrompt.AppendLine($"{Environment.NewLine}You are unable to continue");
                 stuckPrompt.AppendLine(
-                    $"your journey. You're {GameSimulationApp.Instance.Vehicle.BrokenPart.Name.ToLowerInvariant()}");
+                    $"your journey. You're {UserData.Game.Vehicle.BrokenPart.Name.ToLowerInvariant()}");
                 stuckPrompt.AppendLine($"is broken.{Environment.NewLine}");
             }
             else

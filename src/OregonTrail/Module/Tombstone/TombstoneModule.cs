@@ -3,14 +3,14 @@
 
 using System.Collections.Generic;
 
-namespace OregonTrail.Module.Tombstone
+namespace OregonTrail.Tombstone
 {
     /// <summary>
     ///     Keeps track of all the tombstones in a nice collection and also supports saving them to disk and loading them again
     ///     using JSON. Finally it also has all the needed methods to check for a Tombstone at a particular spot on the
     ///     trail.
     /// </summary>
-    public sealed class TombstoneModule : WolfCurses.Module
+    public sealed class TombstoneModule : Module
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="TombstoneModule" /> class.

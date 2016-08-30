@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.Travel.Hunt.Help
+namespace OregonTrail.Travel.Hunt.Help
 {
     /// <summary>
     ///     Called when the player successfully hits an animal with the bullet and the animal was added to growing list of

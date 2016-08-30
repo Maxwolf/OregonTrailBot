@@ -1,20 +1,28 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-namespace OregonTrail.Module.Time
+namespace OregonTrail.Time
 {
     /// <summary>
     ///     Simulates the linear progression of time from one fixed date to another, requires being ticked to advance the time
     ///     simulation by one day. There are also other options and events for checking state, and changing state.
     /// </summary>
-    public sealed class TimeModule : WolfCurses.Module
+    public sealed class TimeModule : Module
     {
+        /// <summary>
+        ///     Reference to running game simulation which created this class.
+        /// </summary>
+        private GameSimulationApp _game;
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="TimeModule" /> class.
         ///     Initializes a new instance of the <see cref="T:TrailSimulation.Core.ModuleProduct" /> class.
         /// </summary>
-        public TimeModule()
+        /// <param name="game">Simulation instance.</param>
+        public TimeModule(GameSimulationApp game)
         {
+            _game = game;
+
             // Create a new time object for our simulation.
             CurrentYear = 1848;
             CurrentMonth = Month.March;
@@ -145,7 +153,7 @@ namespace OregonTrail.Module.Time
         private void OnTickDay(bool skipDay)
         {
             // Move towards the next location on the trail. Ticks vehicle, location, people, weather, etc.
-            GameSimulationApp.Instance.Trail.OnTick(false, skipDay);
+            _game.Trail.OnTick(false, skipDay);
         }
 
         /// <summary>Changes the time simulations current month, this also will reset the day back to the first of that month.</summary>

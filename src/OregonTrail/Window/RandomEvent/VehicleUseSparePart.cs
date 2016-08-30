@@ -2,12 +2,11 @@
 // Timestamp 02/01/2016@11:23 PM
 
 using System;
-using OregonTrail.Entity.Vehicle;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
+using OregonTrail.Vehicle;
 
-namespace OregonTrail.Window.RandomEvent
+namespace OregonTrail.RandomEvent
 {
     /// <summary>
     ///     Special form used by random event system when communicating to the user they were able to use a spare part in the
@@ -52,7 +51,7 @@ namespace OregonTrail.Window.RandomEvent
         protected override string OnDialogPrompt()
         {
             return $"{Environment.NewLine}You were able to repair the " +
-                   $"{GameSimulationApp.Instance.Vehicle.BrokenPart.Name.ToLowerInvariant()} using your spare.{Environment.NewLine}{Environment.NewLine}";
+                   $"{UserData.Game.Vehicle.BrokenPart.Name.ToLowerInvariant()} using your spare.{Environment.NewLine}{Environment.NewLine}";
         }
 
         /// <summary>
@@ -63,7 +62,7 @@ namespace OregonTrail.Window.RandomEvent
         protected override void OnDialogResponse(DialogResponse reponse)
         {
             // Check to make sure the source entity is a vehicle.
-            var vehicle = UserData.SourceEntity as Vehicle;
+            var vehicle = UserData.SourceEntity as Vehicle.Vehicle;
             if (vehicle == null)
                 return;
 

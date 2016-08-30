@@ -5,12 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using OregonTrail.Entity.Item;
-using OregonTrail.Entity.Person;
-using OregonTrail.Event;
-using WolfCurses;
+using OregonTrail.Item;
+using OregonTrail.Person;
 
-namespace OregonTrail.Entity.Vehicle
+namespace OregonTrail.Vehicle
 {
     /// <summary>
     ///     Vessel that holds all the players, their inventory, money, and keeps track of total miles traveled in the form of
@@ -18,6 +16,11 @@ namespace OregonTrail.Entity.Vehicle
     /// </summary>
     public sealed class Vehicle : IEntity
     {
+        /// <summary>
+        ///     Reference to running game simulation which created this class.
+        /// </summary>
+        private GameSimulationApp _game;
+
         /// <summary>
         ///     References the vehicle itself, it is important to remember the vehicle is not an entity and not an item.
         /// </summary>
@@ -36,8 +39,10 @@ namespace OregonTrail.Entity.Vehicle
         /// <summary>
         ///     Initializes a new instance of the <see cref="T:TrailEntities.Entities.Vehicle" /> class.
         /// </summary>
-        public Vehicle()
+        /// <param name="game">Simulation instance.</param>
+        public Vehicle(GameSimulationApp game)
         {
+            _game = game;
             ResetVehicle();
             Name = "Vehicle";
             Pace = TravelPace.Steady;
@@ -153,7 +158,7 @@ namespace OregonTrail.Entity.Vehicle
                 {
                     Parts.Wheel,
                     Parts.Axle,
-                    Parts.Tongue,
+                    Parts.Tongue
                 };
 
                 // Set proper quantities for each entity item type.
@@ -240,7 +245,7 @@ namespace OregonTrail.Entity.Vehicle
                 var cost_animals = Inventory[Entities.Animal].TotalValue;
 
                 // Variables that will hold the distance we should travel in the next day.
-                var total_miles = Mileage + (cost_animals - 110)/2.5 + 10*GameSimulationApp.Instance.Random.NextDouble();
+                var total_miles = Mileage + (cost_animals - 110)/2.5 + 10*_game.Random.NextDouble();
 
                 return (int) Math.Abs(total_miles);
             }
@@ -454,11 +459,11 @@ namespace OregonTrail.Entity.Vehicle
             Mileage = RandomMileage;
 
             // Sometimes things just go slow on the trail, cut mileage in half if above zero randomly.
-            if (GameSimulationApp.Instance.Random.NextBool() && Mileage > 0)
+            if (_game.Random.NextBool() && Mileage > 0)
                 Mileage = Mileage/2;
 
             // Check for random events that might trigger regardless of calculations made.
-            GameSimulationApp.Instance.EventDirector.TriggerEventByType(this, EventCategory.Vehicle);
+            _game.EventDirector.TriggerEventByType(this, EventCategory.Vehicle);
 
             // Check to make sure mileage is never below or at zero.
             if (Mileage <= 0)
@@ -500,7 +505,7 @@ namespace OregonTrail.Entity.Vehicle
                 return;
 
             // Randomly select one of the parts to break in the vehicle.
-            var randomPartIndex = GameSimulationApp.Instance.Random.Next(_parts.Count);
+            var randomPartIndex = _game.Random.Next(_parts.Count);
 
             // Sets the broken part for other processes to deal with.
             BrokenPart = _parts[randomPartIndex];
@@ -607,13 +612,13 @@ namespace OregonTrail.Entity.Vehicle
         ///     quantity it desires for the item within the bounds of the minimum and maximum quantities.
         /// </summary>
         /// <returns>Returns a randomly created item with random quantity. Returns NULL if anything bad happens.</returns>
-        public static SimItem CreateRandomItem()
+        public SimItem CreateRandomItem()
         {
             // Loop through the inventory and decide which items to give free copies of.
             foreach (var itemPair in DefaultInventory)
             {
                 // Determine if we will be making more of this item, if it's the last one then we have to.
-                if (GameSimulationApp.Instance.Random.NextBool())
+                if (_game.Random.NextBool())
                     continue;
 
                 // Skip certain items that cannot be traded.
@@ -641,7 +646,7 @@ namespace OregonTrail.Entity.Vehicle
                             amountToMake = 1;
 
                         // Add some random amount of the item from one to total amount.
-                        var createdAmount = GameSimulationApp.Instance.Random.Next(1, amountToMake);
+                        var createdAmount = _game.Random.Next(1, amountToMake);
 
                         // Create a new item with generated quantity.
                         var createdItem = new SimItem(itemPair.Value, createdAmount);
@@ -682,11 +687,11 @@ namespace OregonTrail.Entity.Vehicle
                     continue;
 
                 // Determine if we will be making more of this item.
-                if (GameSimulationApp.Instance.Random.NextBool())
+                if (_game.Random.NextBool())
                     continue;
 
                 // Add some random amount of the item from one to total amount.
-                var createdAmount = GameSimulationApp.Instance.Random.Next(1, itemPair.Value.MaxQuantity/4);
+                var createdAmount = _game.Random.Next(1, itemPair.Value.MaxQuantity/4);
 
                 // Add the amount ahead of time so we can figure out of it is above maximum.
                 var simulatedAmountAdd = itemPair.Value.Quantity + createdAmount;
@@ -731,11 +736,11 @@ namespace OregonTrail.Entity.Vehicle
                     continue;
 
                 // Determine if we will be destroying this item.
-                if (GameSimulationApp.Instance.Random.NextBool())
+                if (_game.Random.NextBool())
                     continue;
 
                 // Destroy some random amount of the item from one to total amount.
-                var destroyAmount = GameSimulationApp.Instance.Random.Next(1, itemPair.Value.Quantity);
+                var destroyAmount = _game.Random.Next(1, itemPair.Value.Quantity);
 
                 // Remove the amount we destroyed from the actual inventory.
                 Inventory[itemPair.Key].ReduceQuantity(destroyAmount);

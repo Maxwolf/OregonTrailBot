@@ -5,11 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OregonTrail.Window.MainMenu.Names;
-using WolfCurses;
-using WolfCurses.Form;
+using OregonTrail.Form;
+using OregonTrail.MainMenu.Names;
 
-namespace OregonTrail.Window.MainMenu.Profession
+namespace OregonTrail.MainMenu.Profession
 {
     /// <summary>
     ///     Facilitates the ability for a user to select a given profession for the party leader. This will determine the
@@ -51,11 +50,11 @@ namespace OregonTrail.Window.MainMenu.Profession
             base.OnFormPostCreate();
 
             // Set the profession to default value in case we are retrying this.
-            UserData.PlayerProfession = Entity.Person.Profession.Banker;
+            UserData.PlayerProfession = Person.Profession.Banker;
             UserData.StartingMonies = 1600;
 
             // Pass the game data to the simulation for each new game Windows state.
-            GameSimulationApp.Instance.SetStartInfo(UserData);
+            UserData.Game.SetStartInfo(UserData);
 
             // String builder that will hold our representation of all possible professions player can choose from.
             _professionChooser = new StringBuilder();
@@ -64,7 +63,8 @@ namespace OregonTrail.Window.MainMenu.Profession
             _professionChooser.AppendLine($"You may:{Environment.NewLine}");
 
             // Loop through all the profession enumeration values and grab their description attribute for selection purposes.
-            var professions = new List<Entity.Person.Profession>(Enum.GetValues(typeof (Entity.Person.Profession)).Cast<Entity.Person.Profession>());
+            var professions =
+                new List<Person.Profession>(Enum.GetValues(typeof (Person.Profession)).Cast<Person.Profession>());
             for (var index = 0; index < professions.Count; index++)
             {
                 // Get the current profession choice enumeration value we casted into list.
@@ -107,32 +107,32 @@ namespace OregonTrail.Window.MainMenu.Profession
                 return;
 
             // Attempt to cast string to enum value, can be characters or integer.
-            Entity.Person.Profession professionChoice;
+            Person.Profession professionChoice;
             Enum.TryParse(input, out professionChoice);
 
             // Once a profession is selected, we need to confirm that is what the user wanted.
             switch (professionChoice)
             {
-                case Entity.Person.Profession.Banker:
-                    UserData.PlayerProfession = Entity.Person.Profession.Banker;
+                case Person.Profession.Banker:
+                    UserData.PlayerProfession = Person.Profession.Banker;
                     UserData.StartingMonies = 1600;
                     UserData.PlayerNameIndex = 0;
                     SetForm(typeof (InputPlayerNames));
                     break;
-                case Entity.Person.Profession.Carpenter:
-                    UserData.PlayerProfession = Entity.Person.Profession.Carpenter;
+                case Person.Profession.Carpenter:
+                    UserData.PlayerProfession = Person.Profession.Carpenter;
                     UserData.StartingMonies = 800;
                     UserData.PlayerNameIndex = 0;
                     SetForm(typeof (InputPlayerNames));
                     break;
-                case Entity.Person.Profession.Farmer:
-                    UserData.PlayerProfession = Entity.Person.Profession.Farmer;
+                case Person.Profession.Farmer:
+                    UserData.PlayerProfession = Person.Profession.Farmer;
                     UserData.StartingMonies = 400;
                     UserData.PlayerNameIndex = 0;
                     SetForm(typeof (InputPlayerNames));
                     break;
                 default:
-                    UserData.PlayerProfession = Entity.Person.Profession.Banker;
+                    UserData.PlayerProfession = Person.Profession.Banker;
                     UserData.StartingMonies = 1600;
                     UserData.PlayerNameIndex = 0;
                     SetForm(typeof (ProfessionHelp));

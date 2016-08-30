@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace OregonTrail.Entity.Location.Weather
+namespace OregonTrail.Location.Weather
 {
     /// <summary>
     ///     Determines what the environment is like and goes into helping calculate roll chance. For example, experiencing
@@ -14,139 +14,116 @@ namespace OregonTrail.Entity.Location.Weather
         /// <summary>
         ///     The partly sunny.
         /// </summary>
-        [Description("Partly Sunny")]
-        PartlySunny,
+        [Description("Partly Sunny")] PartlySunny,
 
         /// <summary>
         ///     The scattered thunderstorms.
         /// </summary>
-        [Description("Scattered Thunderstorms")]
-        ScatteredThunderstorms,
+        [Description("Scattered Thunderstorms")] ScatteredThunderstorms,
 
         /// <summary>
         ///     The scattered showers.
         /// </summary>
-        [Description("Scattered Showers")]
-        ScatteredShowers,
+        [Description("Scattered Showers")] ScatteredShowers,
 
         /// <summary>
         ///     The overcast.
         /// </summary>
-        [Description("Overcast")]
-        Overcast,
+        [Description("Overcast")] Overcast,
 
         /// <summary>
         ///     The light snow.
         /// </summary>
-        [Description("Light Snow")]
-        LightSnow,
+        [Description("Light Snow")] LightSnow,
 
         /// <summary>
         ///     The freezing drizzle.
         /// </summary>
-        [Description("Freezing Drizzle")]
-        FreezingDrizzle,
+        [Description("Freezing Drizzle")] FreezingDrizzle,
 
         /// <summary>
         ///     The chance of rain.
         /// </summary>
-        [Description("Chance Of Rain")]
-        ChanceOfRain,
+        [Description("Chance Of Rain")] ChanceOfRain,
 
         /// <summary>
         ///     The sunny.
         /// </summary>
-        [Description("Sunny")]
-        Sunny,
+        [Description("Sunny")] Sunny,
 
         /// <summary>
         ///     The clear.
         /// </summary>
-        [Description("Clear")]
-        Clear,
+        [Description("Clear")] Clear,
 
         /// <summary>
         ///     The mostly sunny.
         /// </summary>
-        [Description("Mostly Sunny")]
-        MostlySunny,
+        [Description("Mostly Sunny")] MostlySunny,
 
         /// <summary>
         ///     The rain.
         /// </summary>
-        [Description("Rain")]
-        Rain,
+        [Description("Rain")] Rain,
 
         /// <summary>
         ///     The cloudy.
         /// </summary>
-        [Description("Cloudy")]
-        Cloudy,
+        [Description("Cloudy")] Cloudy,
 
         /// <summary>
         ///     The storm.
         /// </summary>
-        [Description("Storm")]
-        Storm,
+        [Description("Storm")] Storm,
 
         /// <summary>
         ///     The thunderstorm.
         /// </summary>
-        [Description("Thunderstorm")]
-        Thunderstorm,
+        [Description("Thunderstorm")] Thunderstorm,
 
         /// <summary>
         ///     The chance of thunderstorm.
         /// </summary>
-        [Description("Chance Of Thunderstorm")]
-        ChanceOfThunderstorm,
+        [Description("Chance Of Thunderstorm")] ChanceOfThunderstorm,
 
         /// <summary>
         ///     The sleet.
         /// </summary>
-        [Description("Sleet")]
-        Sleet,
+        [Description("Sleet")] Sleet,
 
         /// <summary>
         ///     The snow.
         /// </summary>
-        [Description("Snow")]
-        Snow,
+        [Description("Snow")] Snow,
 
         /// <summary>
         ///     The icy.
         /// </summary>
-        [Description("Icy")]
-        Icy,
+        [Description("Icy")] Icy,
 
         /// <summary>
         ///     The fog.
         /// </summary>
-        [Description("Fog")]
-        Fog,
+        [Description("Fog")] Fog,
 
         /// <summary>
         ///     The haze.
         /// </summary>
-        [Description("Haze")]
-        Haze,
+        [Description("Haze")] Haze,
 
         /// <summary>
         ///     The flurries.
         /// </summary>
-        [Description("Flurries")]
-        Flurries,
+        [Description("Flurries")] Flurries,
 
         /// <summary>
         ///     The snow showers.
         /// </summary>
-        [Description("Snow Showers")]
-        SnowShowers,
+        [Description("Snow Showers")] SnowShowers,
 
         /// <summary>
         ///     The hail.
         /// </summary>
-        [Description("Hail")]
-        Hail
+        [Description("Hail")] Hail
     }
 }

@@ -4,11 +4,10 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using OregonTrail.Entity;
-using OregonTrail.Event.Prefab;
-using OregonTrail.Module.Director;
+using OregonTrail.Director;
+using OregonTrail.Prefab;
 
-namespace OregonTrail.Event.Wild
+namespace OregonTrail.Wild
 {
     /// <summary>
     ///     Deals with a random event that involves strangers approaching your vehicle. Once they do this the player is given
@@ -21,16 +20,16 @@ namespace OregonTrail.Event.Wild
     {
         /// <summary>Fired by the item destroyer event prefab before items are destroyed.</summary>
         /// <param name="destroyedItems">Items that were destroyed from the players inventory.</param>
+        /// <param name="game"></param>
         /// <returns>The <see cref="string" />.</returns>
-        protected override string OnPostDestroyItems(IDictionary<Entities, int> destroyedItems)
+        protected override string OnPostDestroyItems(IDictionary<Entities, int> destroyedItems, GameSimulationApp game)
         {
             // Ammo used to kill the bandits is randomly generated.
-            GameSimulationApp.Instance.Vehicle.Inventory[Entities.Ammo].ReduceQuantity(
-                GameSimulationApp.Instance.Random.Next(3, 15));
+            game.Vehicle.Inventory[Entities.Ammo].ReduceQuantity(game.Random.Next(3, 15));
 
             // Change event text depending on if items were destroyed or not.
             return destroyedItems.Count > 0
-                ? TryKillPassengers("murdered")
+                ? TryKillPassengers("murdered", game)
                 : "no loss of items. You drove them off!";
         }
 

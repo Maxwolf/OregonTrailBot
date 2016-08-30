@@ -3,12 +3,11 @@
 
 using System.Collections.Generic;
 using System.Text;
-using OregonTrail.Entity;
-using OregonTrail.Event.Prefab;
-using OregonTrail.Module.Director;
-using OregonTrail.Window.RandomEvent;
+using OregonTrail.Director;
+using OregonTrail.Prefab;
+using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Event.Weather
+namespace OregonTrail.Weather
 {
     /// <summary>
     ///     Bad hail storm damages supplies, this uses the item destroyer prefab like the river crossings do.
@@ -17,18 +16,15 @@ namespace OregonTrail.Event.Weather
     public sealed class HailStorm : ItemDestroyer
     {
         /// <summary>Fired by the item destroyer event prefab before items are destroyed.</summary>
-        /// <param name="destroyedItems"></param>
-        /// <returns>The <see cref="string" />.</returns>
-        protected override string OnPostDestroyItems(IDictionary<Entities, int> destroyedItems)
+        /// <param name="destroyedItems">All the items which have been destroyed.</param>
+        /// <param name="game">Simulation instance.</param>
+        protected override string OnPostDestroyItems(IDictionary<Entities, int> destroyedItems, GameSimulationApp game)
         {
-            // Grab an instance of the game simulation.
-            var game = GameSimulationApp.Instance;
-
             // Check if there are enough clothes to keep people warm, need two sets of clothes for every person.
             return game.Vehicle.Inventory[Entities.Clothes].Quantity >= (game.Vehicle.PassengerLivingCount*2) &&
                    destroyedItems.Count < 0
                 ? "no loss of items."
-                : TryKillPassengers("frozen");
+                : TryKillPassengers("frozen", game);
         }
 
         /// <summary>
@@ -44,10 +40,10 @@ namespace OregonTrail.Event.Weather
             base.Execute(eventExecutor);
 
             // Cast the source entity as vehicle.
-            var vehicle = eventExecutor.SourceEntity as Entity.Vehicle.Vehicle;
+            var vehicle = eventExecutor.SourceEntity as Vehicle.Vehicle;
 
             // Reduce the total possible mileage of the vehicle this turn.
-            vehicle?.ReduceMileage(vehicle.Mileage - 5 - GameSimulationApp.Instance.Random.Next()*10);
+            vehicle?.ReduceMileage(vehicle.Mileage - 5 - eventExecutor.Game.Random.Next()*10);
         }
 
         /// <summary>
@@ -58,11 +54,11 @@ namespace OregonTrail.Event.Weather
         /// </returns>
         protected override string OnPreDestroyItems()
         {
-            var _floodPrompt = new StringBuilder();
-            _floodPrompt.Clear();
-            _floodPrompt.AppendLine("Severe hail storm");
-            _floodPrompt.Append("results in");
-            return _floodPrompt.ToString();
+            var hailPrompt = new StringBuilder();
+            hailPrompt.Clear();
+            hailPrompt.AppendLine("Severe hail storm");
+            hailPrompt.Append("results in");
+            return hailPrompt.ToString();
         }
     }
 }

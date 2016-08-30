@@ -2,11 +2,10 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.Travel.Hunt.Help
+namespace OregonTrail.Travel.Hunt.Help
 {
     /// <summary>
     ///     Called when the player was targeting a given animal but waited to long or took to long typing in the shooting word

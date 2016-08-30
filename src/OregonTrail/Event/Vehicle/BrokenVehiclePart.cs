@@ -2,10 +2,10 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Diagnostics.CodeAnalysis;
-using OregonTrail.Module.Director;
-using OregonTrail.Window.RandomEvent;
+using OregonTrail.Director;
+using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Event.Vehicle
+namespace OregonTrail.Vehicle
 {
     /// <summary>
     ///     Used when we want to trigger special event that will damage one of the vehicles parts making it unable to continue
@@ -26,7 +26,7 @@ namespace OregonTrail.Event.Vehicle
         public override void Execute(RandomEventInfo userData)
         {
             // Cast the source entity as vehicle.
-            var vehicle = userData.SourceEntity as Entity.Vehicle.Vehicle;
+            var vehicle = userData.SourceEntity as Vehicle;
 
             // Break some random part on the vehicle.
             vehicle?.BreakRandomPart();
@@ -41,7 +41,7 @@ namespace OregonTrail.Event.Vehicle
             base.OnPostExecute(eventExecutor);
 
             // Check to make sure the source entity is a vehicle.
-            var vehicle = eventExecutor.UserData.SourceEntity as Entity.Vehicle.Vehicle;
+            var vehicle = eventExecutor.UserData.SourceEntity as Vehicle;
 
             // Check to make sure we should load the broken vehicle form.
             if (vehicle?.BrokenPart == null)
@@ -56,12 +56,12 @@ namespace OregonTrail.Event.Vehicle
         ///     Fired when the simulation would like to render the event, typically this is done AFTER executing it but this could
         ///     change depending on requirements of the implementation.
         /// </summary>
-        /// <param name="userData"></param>
+        /// <param name="eventExecutor"></param>
         /// <returns>Text user interface string that can be used to explain what the event did when executed.</returns>
-        protected override string OnRender(RandomEventInfo userData)
+        protected override string OnRender(RandomEventInfo eventExecutor)
         {
             // Cast the source entity as vehicle.
-            var vehicle = userData.SourceEntity as Entity.Vehicle.Vehicle;
+            var vehicle = eventExecutor.SourceEntity as Vehicle;
             return $"Broken {vehicle?.BrokenPart.Name.ToLowerInvariant()}.";
         }
     }

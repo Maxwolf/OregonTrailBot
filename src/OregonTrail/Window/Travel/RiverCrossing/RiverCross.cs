@@ -5,14 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OregonTrail.Window.Travel.Rest;
-using OregonTrail.Window.Travel.RiverCrossing.Ferry;
-using OregonTrail.Window.Travel.RiverCrossing.Help;
-using OregonTrail.Window.Travel.RiverCrossing.Indian;
-using WolfCurses;
-using WolfCurses.Form;
+using OregonTrail.Form;
+using OregonTrail.Travel.Rest;
+using OregonTrail.Travel.RiverCrossing.Ferry;
+using OregonTrail.Travel.RiverCrossing.Help;
+using OregonTrail.Travel.RiverCrossing.Indian;
 
-namespace OregonTrail.Window.Travel.RiverCrossing
+namespace OregonTrail.Travel.RiverCrossing
 {
     /// <summary>
     ///     Manages a boolean event where the player needs to make a choice before they can move onto the next location on the
@@ -69,11 +68,8 @@ namespace OregonTrail.Window.Travel.RiverCrossing
         {
             base.OnFormPostCreate();
 
-            // Grab instance of the game simulation.
-            var game = GameSimulationApp.Instance;
-
             // Cast the current location as river crossing.
-            var riverLocation = game.Trail.CurrentLocation as Entity.Location.Point.RiverCrossing;
+            var riverLocation = UserData.Game.Trail.CurrentLocation as Location.Point.RiverCrossing;
             if (riverLocation == null)
                 throw new InvalidCastException(
                     "Unable to cast location as river crossing even though it returns as one!");
@@ -89,7 +85,7 @@ namespace OregonTrail.Window.Travel.RiverCrossing
             // Header text for above menu comes from river crossing info object.
             _riverInfo.AppendLine("--------------------------------");
             _riverInfo.AppendLine($"{riverLocation.Name}");
-            _riverInfo.AppendLine($"{game.Time.Date}");
+            _riverInfo.AppendLine($"{UserData.Game.Time.Date}");
             _riverInfo.AppendLine("--------------------------------");
             _riverInfo.AppendLine(
                 $"Weather: {riverLocation.Weather.ToDescriptionAttribute()}");

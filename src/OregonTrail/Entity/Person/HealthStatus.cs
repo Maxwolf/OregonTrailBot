@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace OregonTrail.Entity.Person
+namespace OregonTrail.Person
 {
     /// <summary>
     ///     Overall health indicator for all entities in the simulation, we do not track health as a numeric value but as a
@@ -29,8 +29,7 @@ namespace OregonTrail.Entity.Person
         /// <summary>
         ///     Severe damage, danger of complete failure of death imminent.
         /// </summary>
-        [Description("Very Poor")]
-        VeryPoor = 200,
+        [Description("Very Poor")] VeryPoor = 200,
 
         /// <summary>
         ///     Player is dead and no longer living. This means they also will no longer consume resources, or check of illnesses

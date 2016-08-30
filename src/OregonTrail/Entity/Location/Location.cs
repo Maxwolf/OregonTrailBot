@@ -2,9 +2,9 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
-using OregonTrail.Entity.Location.Weather;
+using OregonTrail.Location.Weather;
 
-namespace OregonTrail.Entity.Location
+namespace OregonTrail.Location
 {
     /// <summary>
     ///     Defines a location in the game that is added to a list of points that make up the entire trail which the player and
@@ -12,22 +12,26 @@ namespace OregonTrail.Entity.Location
     /// </summary>
     public abstract class Location : ILocation
     {
+        private readonly GameSimulationApp _game;
+
         /// <summary>
         ///     Deals with the weather simulation for this location, each location on the trail is capable of simulating it's own
         ///     type of weather for the purposes of keeping them unique.
         /// </summary>
         private LocationWeather weather;
 
-        /// <summary>Initializes a new instance of the <see cref="T:OregonTrail.Entity.Location.Location" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="T:OregonTrail.Location.Location" /> class.</summary>
         /// <param name="name">Display name of the location as it should be known to the player.</param>
         /// <param name="climateType">Defines the type of weather the location will have overall.</param>
-        protected Location(string name, Climate climateType)
+        /// <param name="game">Simulation instance.</param>
+        protected Location(string name, Climate climateType, GameSimulationApp game)
         {
+            _game = game;
             // Default warning message for the location is based on fresh water status.
-            Warning = GameSimulationApp.Instance.Random.NextBool() ? LocationWarning.None : LocationWarning.BadWater;
+            Warning = _game.Random.NextBool() ? LocationWarning.None : LocationWarning.BadWater;
 
             // Creates a new system to deal with the management of the weather for this given location.
-            weather = new LocationWeather(climateType);
+            weather = new LocationWeather(climateType, _game);
 
             // Name of the point as it should be known to the player.
             Name = name;
@@ -45,7 +49,7 @@ namespace OregonTrail.Entity.Location
         public int Depth { get; set; }
 
         /// <summary>
-        ///     Warnings about low food, medical problems, weather, etc.
+        ///     Warnings about low food, medical problems, weather, etc..
         /// </summary>
         public LocationWarning Warning { get; }
 

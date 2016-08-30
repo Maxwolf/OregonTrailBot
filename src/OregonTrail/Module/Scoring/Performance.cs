@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace OregonTrail.Module.Scoring
+namespace OregonTrail.Scoring
 {
     /// <summary>
     ///     Defines a rating the player can get based on the number of points they receive during the entire course of the
@@ -24,7 +24,6 @@ namespace OregonTrail.Module.Scoring
         /// <summary>
         ///     Hard
         /// </summary>
-        [Description("Trail Guide")]
-        TrailGuide = 3
+        [Description("Trail Guide")] TrailGuide = 3
     }
 }

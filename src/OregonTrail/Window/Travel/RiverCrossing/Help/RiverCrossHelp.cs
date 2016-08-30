@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.Travel.RiverCrossing.Help
+namespace OregonTrail.Travel.RiverCrossing.Help
 {
     /// <summary>
     ///     Shown to the user the first time they cross a river, this way it can be explained to them they must cross it in

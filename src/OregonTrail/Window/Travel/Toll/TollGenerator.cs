@@ -1,9 +1,9 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Entity.Location.Point;
+using OregonTrail.Location.Point;
 
-namespace OregonTrail.Window.Travel.Toll
+namespace OregonTrail.Travel.Toll
 {
     /// <summary>
     ///     Generates a new toll amount and keeps track of the location to be inserted if the deal goes through with the
@@ -12,12 +12,13 @@ namespace OregonTrail.Window.Travel.Toll
     public sealed class TollGenerator
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="T:OregonTrail.Window.Travel.Toll.TollGenerator" /> class.
+        ///     Initializes a new instance of the <see cref="T:OregonTrail.Travel.Toll.TollGenerator" /> class.
         /// </summary>
         /// <param name="tollRoad">Location that is going to cost the player money in order to use the path to travel to it.</param>
-        public TollGenerator(TollRoad tollRoad)
+        /// <param name="game">Simulation instance.</param>
+        public TollGenerator(TollRoad tollRoad, GameSimulationApp game)
         {
-            Cost = GameSimulationApp.Instance.Random.Next(1, 13);
+            Cost = game.Random.Next(1, 13);
             Road = tollRoad;
         }
 

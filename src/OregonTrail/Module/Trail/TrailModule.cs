@@ -2,25 +2,40 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Collections.ObjectModel;
-using OregonTrail.Entity.Location;
-using OregonTrail.Entity.Vehicle;
-using OregonTrail.Window.Travel;
+using OregonTrail.Location;
+using OregonTrail.Vehicle;
 
-namespace OregonTrail.Module.Trail
+namespace OregonTrail.Trail
 {
     /// <summary>
     ///     Holds all the points of interest that make up the entire trail the players vehicle will be traveling along. Keeps
     ///     track of the vehicles current position on the trail and provides helper methods to quickly access it.
     /// </summary>
-    public sealed class TrailModule : WolfCurses.Module
+    public sealed class TrailModule : Module
     {
+        /// <summary>
+        ///     Reference to running game simulation which created this class.
+        /// </summary>
+        private GameSimulationApp _game;
+
+        /// <summary>
+        ///     Builds up all of the available trails which the simulation can take the players on.
+        /// </summary>
+        private TrailRegistry _trailRegistry;
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="TrailModule" /> class.
         /// </summary>
-        public TrailModule()
+        /// <param name="game">Simulation instance.</param>
+        public TrailModule(GameSimulationApp game)
         {
+            _game = game;
+
+            // Creates trail module and passes in game instance so it can have access to randomizer.
+            _trailRegistry = new TrailRegistry(_game);
+
             // Load a trail from file or prefab.
-            Trail = TrailRegistry.OregonTrail;
+            Trail = _trailRegistry.OregonTrail();
 
             // Startup location on the trail and distance to next point so it triggers immediately when we tick the first day.
             LocationIndex = 0;
@@ -45,7 +60,7 @@ namespace OregonTrail.Module.Trail
         /// <summary>
         ///     Reference to all locations in this trail, indexed in the order they should be visited by vehicle.
         /// </summary>
-        public ReadOnlyCollection<Location> Locations
+        public ReadOnlyCollection<Location.Location> Locations
         {
             get { return Trail.Locations; }
         }
@@ -63,7 +78,7 @@ namespace OregonTrail.Module.Trail
         ///     Returns the current point of interest the players vehicle is on. Lazy initialization of path when accessed by first
         ///     attached Windows getting current point.
         /// </summary>
-        public Location CurrentLocation
+        public Location.Location CurrentLocation
         {
             get { return Locations[LocationIndex]; }
         }
@@ -72,7 +87,7 @@ namespace OregonTrail.Module.Trail
         ///     Locates the next point of interest if it exists in the list, if this method returns NULL then that means the next
         ///     point of interest is the end of the game when the distance to point reaches zero.
         /// </summary>
-        public Location NextLocation
+        public Location.Location NextLocation
         {
             get
             {
@@ -117,7 +132,7 @@ namespace OregonTrail.Module.Trail
         /// </param>
         /// <param name="skipDay">
         ///     Determines if this tick skipped a day of the simulation and force ticked anyway. This is used for
-        ///     special events like river crossings, hunting, trading, etc.
+        ///     special events like river crossings, hunting, trading, etc..
         /// </param>
         public override void OnTick(bool systemTick, bool skipDay = false)
         {
@@ -125,17 +140,14 @@ namespace OregonTrail.Module.Trail
             if (systemTick)
                 return;
 
-            // Grab the current vehicle from the game simulation.
-            var vehicle = GameSimulationApp.Instance.Vehicle;
-
             // Tick the current location, typically this will randomize the possible trades, weather, and advice.
             CurrentLocation?.OnTick(false, skipDay);
 
             // Update total distance traveled on vehicle if we have not reached the point.
-            vehicle.OnTick(false, skipDay);
+            _game.Vehicle.OnTick(false, skipDay);
 
             // No advancing down the trail when vehicle is parked or force ticked by skipping a day.
-            if (vehicle.Status != VehicleStatus.Moving || skipDay)
+            if (_game.Vehicle.Status != VehicleStatus.Moving || skipDay)
                 return;
 
             // Check if the player is still working with the location they are currently arrived at.
@@ -144,7 +156,7 @@ namespace OregonTrail.Module.Trail
                 return;
 
             // Move us towards the next point if not zero.
-            DistanceToNextLocation -= vehicle.Mileage;
+            DistanceToNextLocation -= _game.Vehicle.Mileage;
 
             // If distance is zero we have arrived at the next location!
             if (DistanceToNextLocation >= 0)
@@ -170,19 +182,19 @@ namespace OregonTrail.Module.Trail
             DistanceToNextLocation = CurrentLocation.TotalDistance;
 
             // Skip incrementing to next location on first turn, we use first turn to setup game world and player position in it.
-            if (GameSimulationApp.Instance.TotalTurns > 0)
+            if (_game.TotalTurns > 0)
                 LocationIndex++;
 
             // Set visited flag for location, park the vehicle, and attach Windows the location requires.
             CurrentLocation.Status = LocationStatus.Arrived;
 
             // Check for end of game if we are at the end of the trail.
-            GameSimulationApp.Instance.WindowManager.Add(typeof (Travel));
+            _game.WindowManager.Add(typeof (Travel.Travel), _game);
         }
 
         /// <summary>Forcefully inserts skip location into location list after current location.</summary>
         /// <param name="skipChoice">Location that the trail module will point to after current location.</param>
-        public void InsertLocation(Location skipChoice)
+        public void InsertLocation(Location.Location skipChoice)
         {
             Trail.InsertLocation(LocationIndex + 1, skipChoice);
         }

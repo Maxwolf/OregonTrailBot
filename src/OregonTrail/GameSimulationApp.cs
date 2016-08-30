@@ -4,19 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OregonTrail.Entity.Person;
-using OregonTrail.Entity.Vehicle;
-using OregonTrail.Module.Director;
-using OregonTrail.Module.Scoring;
-using OregonTrail.Module.Time;
-using OregonTrail.Module.Tombstone;
-using OregonTrail.Module.Trail;
-using OregonTrail.Window.GameOver;
-using OregonTrail.Window.Graveyard;
-using OregonTrail.Window.MainMenu;
-using OregonTrail.Window.RandomEvent;
-using OregonTrail.Window.Travel;
-using WolfCurses;
+using OregonTrail.Director;
+using OregonTrail.MainMenu;
+using OregonTrail.Scoring;
+using OregonTrail.Time;
+using OregonTrail.Tombstone;
+using OregonTrail.Trail;
 
 namespace OregonTrail
 {
@@ -24,7 +17,7 @@ namespace OregonTrail
     ///     Primary game simulation singleton. Purpose of this class is to control game specific modules that are independent
     ///     of the simulations ability to manage itself, process ticks, and input.
     /// </summary>
-    public class GameSimulationApp : SimulationApp
+    public sealed class GameSimulationApp : SimulationApp
     {
         /// <summary>
         ///     Defines the limit on the number of players for the vehicle that will be allowed. This also determines how many
@@ -33,15 +26,17 @@ namespace OregonTrail
         public const int MAXPLAYERS = 4;
 
         /// <summary>
+        ///     Creates new instance of game simulation. Complains if instance already exists.
+        /// </summary>
+        public GameSimulationApp()
+        {
+            OnPostCreate();
+        }
+
+        /// <summary>
         ///     Keeps track of all the points of interest we want to visit from beginning to end that makeup the entire journey.
         /// </summary>
         public TrailModule Trail { get; private set; }
-
-        /// <summary>
-        ///     Singleton instance for the entire game simulation, does not block the calling thread though only listens for
-        ///     commands.
-        /// </summary>
-        public static GameSimulationApp Instance { get; private set; }
 
         /// <summary>
         ///     Manages time in a linear since from the provided ticks in base simulation class. Handles days, months, and years.
@@ -58,7 +53,7 @@ namespace OregonTrail
         ///     Current vessel which the player character and his party are traveling inside of, provides means of transportation
         ///     other than walking.
         /// </summary>
-        public Vehicle Vehicle { get; private set; }
+        public Vehicle.Vehicle Vehicle { get; private set; }
 
         /// <summary>
         ///     Total number of turns that have taken place. Typically a game will not go past eighteen (18) turns or 20+ weeks
@@ -86,11 +81,11 @@ namespace OregonTrail
             {
                 var windowList = new List<Type>
                 {
-                    typeof (Travel),
-                    typeof (MainMenu),
-                    typeof (RandomEvent),
-                    typeof (Graveyard),
-                    typeof (GameOver)
+                    typeof (Travel.Travel),
+                    typeof (MainMenu.MainMenu),
+                    typeof (RandomEvent.RandomEvent),
+                    typeof (Graveyard.Graveyard),
+                    typeof (GameOver.GameOver)
                 };
 
                 return windowList;
@@ -131,25 +126,12 @@ namespace OregonTrail
             {
                 // First name in list is always the leader.
                 var personLeader = startingInfo.PlayerNames.IndexOf(name) == 0 && crewNumber == 1;
-                Vehicle.AddPerson(new Person(startingInfo.PlayerProfession, name, personLeader));
+                Vehicle.AddPerson(new Person.Person(startingInfo.PlayerProfession, name, personLeader, this));
                 crewNumber++;
             }
 
             // Set the starting month to match what the user selected.
             Time.SetMonth(startingInfo.StartingMonth);
-        }
-
-        /// <summary>
-        ///     Creates new instance of game simulation. Complains if instance already exists.
-        /// </summary>
-        public static void Create()
-        {
-            if (Instance != null)
-                throw new InvalidOperationException(
-                    "Unable to create new instance of game simulation since it already exists!");
-
-            Instance = new GameSimulationApp();
-            Instance.OnPostCreate();
         }
 
         /// <summary>
@@ -184,9 +166,6 @@ namespace OregonTrail
             Trail = null;
             TotalTurns = 0;
             Vehicle = null;
-
-            // Destroys game simulation instance.
-            Instance = null;
         }
 
         /// <summary>
@@ -223,21 +202,21 @@ namespace OregonTrail
             TotalTurns = 0;
 
             // Linear time simulation (should tick first).
-            Time = new TimeModule();
+            Time = new TimeModule(this);
 
-            // Vehicle, weather, conditions, climate, tail, stats, event director, etc.
-            EventDirector = new EventDirectorModule();
-            Trail = new TrailModule();
-            Vehicle = new Vehicle();
+            // Vehicle, weather, conditions, climate, tail, stats, event director, etc..
+            EventDirector = new EventDirectorModule(this);
+            Trail = new TrailModule(this);
+            Vehicle = new Vehicle.Vehicle(this);
 
             // Resets the window manager in the base simulation.
             base.Restart();
 
             // Attach traveling Windows since that is the default and bottom most game Windows.
-            WindowManager.Add(typeof (Travel));
+            WindowManager.Add(typeof (Travel.Travel), this);
 
             // Add the new game configuration screen that asks for names, profession, and lets user buy initial items.
-            WindowManager.Add(typeof (MainMenu));
+            WindowManager.Add(typeof (MainMenu.MainMenu), this);
         }
     }
 }

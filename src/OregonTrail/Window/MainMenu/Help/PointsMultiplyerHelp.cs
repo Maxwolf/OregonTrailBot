@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.MainMenu.Help
+namespace OregonTrail.MainMenu.Help
 {
     /// <summary>
     ///     Third and final panel on point information, explains how players profession selection affects final scoring as a

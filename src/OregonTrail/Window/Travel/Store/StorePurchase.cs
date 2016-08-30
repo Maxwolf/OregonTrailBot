@@ -3,13 +3,12 @@
 
 using System;
 using System.Text;
-using OregonTrail.Entity.Item;
-using OregonTrail.Entity.Location;
-using OregonTrail.Window.Travel.Store.Help;
-using WolfCurses;
-using WolfCurses.Form;
+using OregonTrail.Form;
+using OregonTrail.Item;
+using OregonTrail.Location;
+using OregonTrail.Travel.Store.Help;
 
-namespace OregonTrail.Window.Travel.Store
+namespace OregonTrail.Travel.Store
 {
     /// <summary>
     ///     Allows the player to purchase a number of oxen to pull their vehicle.
@@ -55,7 +54,7 @@ namespace OregonTrail.Window.Travel.Store
 
             // Figure out what we owe already from other store items, then how many of the SimItem we can afford.
             var _currentBalance =
-                (int) (GameSimulationApp.Instance.Vehicle.Balance - UserData.Store.TotalTransactionCost);
+                (int) (UserData.Game.Vehicle.Balance - UserData.Store.TotalTransactionCost);
             _purchaseLimit = (int) (_currentBalance/UserData.Store.SelectedItem.Cost);
 
             // Prevent negative numbers and set credit limit to zero if it drops below that.
@@ -134,7 +133,7 @@ namespace OregonTrail.Window.Travel.Store
             }
 
             // Check that the player has enough monies to pay for the quantity of item they specified.
-            if (GameSimulationApp.Instance.Vehicle.Balance < (_itemToBuy.TotalValue*parsedInputNumber))
+            if (UserData.Game.Vehicle.Balance < (_itemToBuy.TotalValue*parsedInputNumber))
             {
                 UserData.Store.RemoveItem(_itemToBuy);
                 UserData.Store.SelectedItem = null;
@@ -146,7 +145,7 @@ namespace OregonTrail.Window.Travel.Store
             UserData.Store.AddItem(_itemToBuy, parsedInputNumber);
 
             // If we are not on the first location we will add the item right away.
-            if (GameSimulationApp.Instance.Trail.CurrentLocation?.Status == LocationStatus.Arrived)
+            if (UserData.Game.Trail.CurrentLocation?.Status == LocationStatus.Arrived)
             {
                 // Normal store operation while on the trail.
                 UserData.Store.PurchaseItems();
@@ -155,7 +154,7 @@ namespace OregonTrail.Window.Travel.Store
             {
                 // Check if player can afford the items they have selected.
                 var totalBill = UserData.Store.TotalTransactionCost;
-                if (GameSimulationApp.Instance.Vehicle.Balance < totalBill)
+                if (UserData.Game.Vehicle.Balance < totalBill)
                 {
                     SetForm(typeof (StoreDebtWarning));
                     return;

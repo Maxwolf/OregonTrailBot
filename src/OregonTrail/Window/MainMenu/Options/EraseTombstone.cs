@@ -3,11 +3,10 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
 
-namespace OregonTrail.Window.MainMenu.Options
+namespace OregonTrail.MainMenu.Options
 {
     /// <summary>
     ///     Erases all the saved JSON Tombstone epitaphs on the disk so other players will not encounter them, new ones can
@@ -69,7 +68,7 @@ namespace OregonTrail.Window.MainMenu.Options
         protected override void OnDialogResponse(DialogResponse reponse)
         {
             // Actually erase Tombstone messages.
-            GameSimulationApp.Instance.Tombstone.Reset();
+            UserData.Game.Tombstone.Reset();
 
             SetForm(typeof (ManagementOptions));
         }

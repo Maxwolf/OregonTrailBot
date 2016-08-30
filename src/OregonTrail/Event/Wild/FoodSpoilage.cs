@@ -2,10 +2,10 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Diagnostics.CodeAnalysis;
-using OregonTrail.Event.Prefab;
-using OregonTrail.Module.Director;
+using OregonTrail.Director;
+using OregonTrail.Prefab;
 
-namespace OregonTrail.Event.Wild
+namespace OregonTrail.Wild
 {
     /// <summary>
     ///     Causes some of the vehicle food stores to be lost due to spoilage or improper storage. The amount taken will be

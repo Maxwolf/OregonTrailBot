@@ -2,11 +2,10 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Collections.Generic;
-using OregonTrail.Entity.Item;
-using OregonTrail.Module.Time;
-using WolfCurses;
+using OregonTrail.Item;
+using OregonTrail.Time;
 
-namespace OregonTrail.Window.MainMenu
+namespace OregonTrail.MainMenu
 {
     /// <summary>
     ///     Holds all of the information required to kick-start a running game simulation onto a trail path with people,
@@ -22,7 +21,7 @@ namespace OregonTrail.Window.MainMenu
         /// <summary>
         ///     The _player profession.
         /// </summary>
-        private Entity.Person.Profession _playerProfession;
+        private Person.Profession _playerProfession;
 
         /// <summary>
         ///     The _starting inventory.
@@ -40,13 +39,13 @@ namespace OregonTrail.Window.MainMenu
         private Month _startingMonth;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="T:OregonTrail.Window.MainMenu.NewGameInfo" /> class.
+        ///     Initializes a new instance of the <see cref="T:OregonTrail.MainMenu.NewGameInfo" /> class.
         /// </summary>
         public NewGameInfo()
         {
             PlayerNameIndex = 0;
             _playerNames = new List<string>();
-            _playerProfession = Entity.Person.Profession.Banker;
+            _playerProfession = Person.Profession.Banker;
             _startingInventory = new List<SimItem>();
             _startingMonies = 0;
             _startingMonth = Month.March;
@@ -76,7 +75,7 @@ namespace OregonTrail.Window.MainMenu
         ///     Determines what profession the player character is, this information is applied to the entire party as the group
         ///     leader affects every players stats.
         /// </summary>
-        public Entity.Person.Profession PlayerProfession
+        public Person.Profession PlayerProfession
         {
             get { return _playerProfession; }
             set

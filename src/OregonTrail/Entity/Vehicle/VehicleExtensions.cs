@@ -2,9 +2,9 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Collections.Generic;
-using OregonTrail.Entity.Person;
+using OregonTrail.Person;
 
-namespace OregonTrail.Entity.Vehicle
+namespace OregonTrail.Vehicle
 {
     /// <summary>
     ///     Utility methods used by vehicle entity to make working with passengers and inventory easier on the eyes when used
@@ -17,15 +17,17 @@ namespace OregonTrail.Entity.Vehicle
         ///     is very powerful and can end the game quickly if used excessively.
         /// </summary>
         /// <param name="passengers">List of passengers from the vehicle.</param>
+        /// <param name="game">Simulation instance.</param>
         /// <returns>List of people the method killed, empty list means nobody was killed.</returns>
-        public static IEnumerable<Person.Person> TryKill(this IEnumerable<Person.Person> passengers)
+        public static IEnumerable<Person.Person> TryKill(this IEnumerable<Person.Person> passengers,
+            GameSimulationApp game)
         {
             // Determine if we lost any people, this is separate from items in vehicle.
             var peopleKilled = new List<Person.Person>();
             foreach (var person in passengers)
             {
                 // It all comes down to a dice roll if the storm kills you.
-                if (!GameSimulationApp.Instance.Random.NextBool() ||
+                if (!game.Random.NextBool() ||
                     person.HealthStatus == HealthStatus.Dead)
                     continue;
 

@@ -2,10 +2,11 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Diagnostics.CodeAnalysis;
-using OregonTrail.Event.Prefab;
-using OregonTrail.Module.Director;
+using OregonTrail.Director;
+using OregonTrail.Prefab;
+using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Event.River
+namespace OregonTrail.River
 {
     /// <summary>
     ///     Does not destroy items or drown people but will make you lose time gathering your things and drying them out.
@@ -18,8 +19,9 @@ namespace OregonTrail.Event.River
         ///     Grabs the correct number of days that should be skipped by the lose time event. The event skip day form that
         ///     follows will count down the number of days to zero before letting the player continue.
         /// </summary>
+        /// <param name="eventExecutor"></param>
         /// <returns>Number of days that should be skipped in the simulation.</returns>
-        protected override int DaysToSkip()
+        protected override int DaysToSkip(RandomEventInfo eventExecutor)
         {
             return 1;
         }

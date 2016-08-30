@@ -3,12 +3,11 @@
 
 using System;
 using System.Text;
-using OregonTrail.Window.MainMenu.Start_Month;
-using WolfCurses;
-using WolfCurses.Form;
-using WolfCurses.Form.Input;
+using OregonTrail.Form;
+using OregonTrail.Form.Input;
+using OregonTrail.MainMenu.Start_Month;
 
-namespace OregonTrail.Window.MainMenu.Names
+namespace OregonTrail.MainMenu.Names
 {
     /// <summary>
     ///     Prints out every entered player name in the user data for simulation initialization. Confirms with the player they
@@ -45,7 +44,7 @@ namespace OregonTrail.Window.MainMenu.Names
         protected override string OnDialogPrompt()
         {
             // Pass the game data to the simulation for each new game Windows state.
-            GameSimulationApp.Instance.SetStartInfo(UserData);
+            UserData.Game.SetStartInfo(UserData);
 
             // Create string builder, counter, print info about party members.
             var _confirmPartyText = new StringBuilder();

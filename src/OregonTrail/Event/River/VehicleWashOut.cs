@@ -3,12 +3,11 @@
 
 using System.Collections.Generic;
 using System.Text;
-using OregonTrail.Entity;
-using OregonTrail.Event.Prefab;
-using OregonTrail.Module.Director;
-using OregonTrail.Window.RandomEvent;
+using OregonTrail.Director;
+using OregonTrail.Prefab;
+using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Event.River
+namespace OregonTrail.River
 {
     /// <summary>
     ///     Player forded the river and it was to deep, they have been washed out by the current and some items destroyed.
@@ -18,11 +17,12 @@ namespace OregonTrail.Event.River
     {
         /// <summary>Fired by the item destroyer event prefab before items are destroyed.</summary>
         /// <param name="destroyedItems">Items that were destroyed from the players inventory.</param>
+        /// <param name="game"></param>
         /// <returns>The <see cref="string" />.</returns>
-        protected override string OnPostDestroyItems(IDictionary<Entities, int> destroyedItems)
+        protected override string OnPostDestroyItems(IDictionary<Entities, int> destroyedItems, GameSimulationApp game)
         {
             return destroyedItems.Count > 0
-                ? TryKillPassengers("drowned")
+                ? TryKillPassengers("drowned", game)
                 : "no loss of items.";
         }
 
@@ -39,10 +39,10 @@ namespace OregonTrail.Event.River
             base.Execute(eventExecutor);
 
             // Cast the source entity as vehicle.
-            var vehicle = eventExecutor.SourceEntity as Entity.Vehicle.Vehicle;
+            var vehicle = eventExecutor.SourceEntity as Vehicle.Vehicle;
 
             // Reduce the total possible mileage of the vehicle this turn.
-            vehicle?.ReduceMileage(20 - 20*GameSimulationApp.Instance.Random.Next());
+            vehicle?.ReduceMileage(20 - 20*eventExecutor.Game.Random.Next());
         }
 
         /// <summary>
@@ -53,11 +53,11 @@ namespace OregonTrail.Event.River
         /// </returns>
         protected override string OnPreDestroyItems()
         {
-            var _eventText = new StringBuilder();
-            _eventText.AppendLine("Vehicle was washed");
-            _eventText.AppendLine("out when attempting to");
-            _eventText.Append("ford the river results");
-            return _eventText.ToString();
+            var eventText = new StringBuilder();
+            eventText.AppendLine("Vehicle was washed");
+            eventText.AppendLine("out when attempting to");
+            eventText.Append("ford the river results");
+            return eventText.ToString();
         }
     }
 }

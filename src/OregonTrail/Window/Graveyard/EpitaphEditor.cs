@@ -3,10 +3,9 @@
 
 using System;
 using System.Text;
-using WolfCurses;
-using WolfCurses.Form;
+using OregonTrail.Form;
 
-namespace OregonTrail.Window.Graveyard
+namespace OregonTrail.Graveyard
 {
     /// <summary>
     ///     Allows for the message on the Tombstone to be edited or added, either way this window will get the job done.
@@ -43,7 +42,7 @@ namespace OregonTrail.Window.Graveyard
         /// <remarks>Default is FALSE. Setting to TRUE allows characters and input buffer to be read when submitted.</remarks>
         public override bool InputFillsBuffer
         {
-            get { return GameSimulationApp.Instance.InputManager.InputBuffer.Length <= EPITAPH_MAXLENGTH; }
+            get { return UserData.Game.InputManager.InputBuffer.Length <= EPITAPH_MAXLENGTH; }
         }
 
         /// <summary>

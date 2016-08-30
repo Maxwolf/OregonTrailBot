@@ -5,15 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OregonTrail.Entity;
-using OregonTrail.Entity.Item;
-using OregonTrail.Entity.Location;
-using OregonTrail.Window.Travel.Dialog;
-using OregonTrail.Window.Travel.Store.Help;
-using WolfCurses;
-using WolfCurses.Form;
+using OregonTrail.Form;
+using OregonTrail.Item;
+using OregonTrail.Location;
+using OregonTrail.Travel.Dialog;
+using OregonTrail.Travel.Store.Help;
 
-namespace OregonTrail.Window.Travel.Store
+namespace OregonTrail.Travel.Store
 {
     /// <summary>
     ///     Manages a general store where the player can buy food, clothes, bullets, and parts for their vehicle.
@@ -134,8 +132,8 @@ namespace OregonTrail.Window.Travel.Store
             // Clear previous prompt and rebuild it.
             _storePrompt.Clear();
             _storePrompt.AppendLine("--------------------------------");
-            _storePrompt.AppendLine($"{GameSimulationApp.Instance.Trail.CurrentLocation?.Name} General Store");
-            _storePrompt.AppendLine($"{GameSimulationApp.Instance.Time.Date}");
+            _storePrompt.AppendLine($"{UserData.Game.Trail.CurrentLocation?.Name} General Store");
+            _storePrompt.AppendLine($"{UserData.Game.Time.Date}");
             _storePrompt.AppendLine("--------------------------------");
 
             // Loop through all the store assets commands and print them out for the state.
@@ -156,8 +154,8 @@ namespace OregonTrail.Window.Travel.Store
                 var storeTag = storeItem.ToDescriptionAttribute()
                     .Replace("@AMT@",
                         UserData.Store.Transactions[storeItem].ToString(
-                            GameSimulationApp.Instance.Trail.IsFirstLocation &&
-                            GameSimulationApp.Instance.Trail.CurrentLocation?.Status == LocationStatus.Unreached));
+                            UserData.Game.Trail.IsFirstLocation &&
+                            UserData.Game.Trail.CurrentLocation?.Status == LocationStatus.Unreached));
 
                 // Last line should not print new line.
                 if (index == (storeAssets.Count - 5))
@@ -176,14 +174,14 @@ namespace OregonTrail.Window.Travel.Store
 
             // Calculate how much monies the player has and the total amount of monies owed to store for pending transaction receipt.
             var totalBill = UserData.Store.TotalTransactionCost;
-            var amountPlayerHas = GameSimulationApp.Instance.Vehicle.Balance - totalBill;
+            var amountPlayerHas = UserData.Game.Vehicle.Balance - totalBill;
 
             // If at first location we show the total cost of the bill so far the player has racked up.
-            _storePrompt.Append(GameSimulationApp.Instance.Trail.IsFirstLocation &&
-                                GameSimulationApp.Instance.Trail.CurrentLocation?.Status == LocationStatus.Unreached
+            _storePrompt.Append(UserData.Game.Trail.IsFirstLocation &&
+                                UserData.Game.Trail.CurrentLocation?.Status == LocationStatus.Unreached
                 ? $"Total bill:            {totalBill.ToString("C2")}" +
                   $"{Environment.NewLine}Amount you have:       {amountPlayerHas.ToString("C2")}"
-                : $"You have {GameSimulationApp.Instance.Vehicle.Balance.ToString("C2")} to spend.");
+                : $"You have {UserData.Game.Vehicle.Balance.ToString("C2")} to spend.");
         }
 
         /// <summary>Fired when the game Windows current state is not null and input buffer does not match any known command.</summary>
@@ -249,21 +247,21 @@ namespace OregonTrail.Window.Travel.Store
 
             // Check if player can afford the items they have selected.
             var totalBill = UserData.Store.TotalTransactionCost;
-            if (GameSimulationApp.Instance.Vehicle.Balance < totalBill)
+            if (UserData.Game.Vehicle.Balance < totalBill)
             {
                 SetForm(typeof (StoreDebtWarning));
                 return;
             }
 
             // Travel Windows waits until it is by itself on first location and first turn.
-            if (GameSimulationApp.Instance.Trail.IsFirstLocation &&
-                GameSimulationApp.Instance.Trail.CurrentLocation?.Status == LocationStatus.Unreached)
+            if (UserData.Game.Trail.IsFirstLocation &&
+                UserData.Game.Trail.CurrentLocation?.Status == LocationStatus.Unreached)
             {
                 // First location and store prompt buys items when you leave the store.
                 UserData.Store.PurchaseItems();
 
                 // Sets up vehicle, location, and all other needed variables for simulation.
-                GameSimulationApp.Instance.Trail.ArriveAtNextLocation();
+                UserData.Game.Trail.ArriveAtNextLocation();
 
                 // Attach state that will ask if we want to check status or keep driving on trail.
                 SetForm(typeof (LocationArrive));

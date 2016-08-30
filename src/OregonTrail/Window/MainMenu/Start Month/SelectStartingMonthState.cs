@@ -5,12 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OregonTrail.Module.Time;
-using OregonTrail.Window.MainMenu.Help;
-using WolfCurses;
-using WolfCurses.Form;
+using OregonTrail.Form;
+using OregonTrail.MainMenu.Help;
+using OregonTrail.Time;
 
-namespace OregonTrail.Window.MainMenu.Start_Month
+namespace OregonTrail.MainMenu.Start_Month
 {
     /// <summary>
     ///     Offers the player the ability to change the starting month of the simulation, this affects how many resources will
@@ -52,7 +51,7 @@ namespace OregonTrail.Window.MainMenu.Start_Month
             base.OnFormPostCreate();
 
             // Pass the game data to the simulation for each new game Windows state.
-            GameSimulationApp.Instance.SetStartInfo(UserData);
+            UserData.Game.SetStartInfo(UserData);
 
             // Tell the user they need to make a decision.
             _startMonthQuestion = new StringBuilder();
