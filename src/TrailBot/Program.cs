@@ -158,10 +158,13 @@ namespace TrailBot
                 // Tell the players what we are doing.
                 await Bot.SendTextMessageAsync(message.Chat.Id,
                     $"Creating new Oregon Trail session with token: {message.Chat.Id}",
-                    replyMarkup: new ReplyKeyboardHide());
+                    replyMarkup: new ReplyKeyboardHide(),
+                    parseMode: ParseMode.Markdown,
+                    disableWebPagePreview: true,
+                    disableNotification: true);
 
                 // Create a new game session using chat room ID as key in our dictionary.
-                _sessions.Add(message.Chat.Id, new GameSimulationApp(message.Chat.Id));
+                _sessions.Add(message.Chat.Id, new GameSimulationApp(message.Chat.Id, Bot));
 
                 // Hook delegate event for knowing when that simulation is updated.
                 if (_sessions.ContainsKey(message.Chat.Id))
@@ -174,12 +177,19 @@ namespace TrailBot
             // Cast the commands as a string array.
             var menuCommands = commands as string[];
 
+            // Skip messages that are internal mode switching or empty (populating) windows and forms.
+            if (content.Contains(SceneGraph.GAMEMODE_DEFAULT_TUI) ||
+                content.Contains(SceneGraph.GAMEMODE_EMPTY_TUI))
+                return;
+
             // Check if there are multiple commands that can be pressed (or dialog with continue only).
             if ((menuCommands != null && menuCommands.Length <= 0) || menuCommands == null)
             {
                 // Instruct the program that it can pass along screen buffer when it changes.
                 await Bot.SendTextMessageAsync(gameID, content,
-                    replyMarkup: new ReplyKeyboardHide());
+                    replyMarkup: new ReplyKeyboardHide(),
+                    disableWebPagePreview: true,
+                    disableNotification: true);
             }
             else if (menuCommands.Length > 0)
             {
@@ -190,41 +200,46 @@ namespace TrailBot
                 if (halfCommandCount <= 0)
                 {
                     // Send custom keyboard.
+                    var buttons = new List<KeyboardButton>();
+                    foreach (var t in menuCommands)
+                        buttons.Add(new KeyboardButton(t));
+
                     var keyboard = new ReplyKeyboardMarkup(new[]
                     {
-                                    new[] // Single commands get a continue button.
-                                    {
-                                        new KeyboardButton("Continue")
-                                    }
-                                });
+                        buttons.ToArray()
+                    }, true, true);
 
                     await Bot.SendTextMessageAsync(gameID, content,
-                        replyMarkup: keyboard);
+                        replyMarkup: keyboard,
+                        disableWebPagePreview: true,
+                        disableNotification: true);
                 }
                 else
                 {
                     // First row is first half of menu options.
                     var topRow = new List<KeyboardButton>();
                     for (var i = 0; i < halfCommandCount; i++)
-                        topRow.Add(new KeyboardButton(menuCommands[i].ToDescriptionAttribute()));
+                        topRow.Add(new KeyboardButton(menuCommands[i]));
 
                     // Second row is last half of menu options.
                     var bottomRow = new List<KeyboardButton>();
                     for (var i = halfCommandCount; i < menuCommands.Length; i++)
-                        bottomRow.Add(new KeyboardButton(menuCommands[i].ToDescriptionAttribute()));
+                        bottomRow.Add(new KeyboardButton(menuCommands[i]));
 
                     // Send custom keyboard.
                     var keyboard = new ReplyKeyboardMarkup(new[]
                     {
-                                    topRow.ToArray(),
-                                    bottomRow.ToArray()
-                                });
+                        topRow.ToArray(),
+                        bottomRow.ToArray()
+                    }, true, true);
 
                     // Send the message to chat room.
                     await Bot.SendTextMessageAsync(
                         gameID,
                         content,
-                        replyMarkup: keyboard);
+                        replyMarkup: keyboard,
+                        disableWebPagePreview: true,
+                        disableNotification: true);
                 }
             }
         }

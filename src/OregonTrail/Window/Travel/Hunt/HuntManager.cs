@@ -125,7 +125,7 @@ namespace OregonTrail.Travel.Hunt
                 var huntStatus = new StringBuilder();
 
                 // Build up the status for the current hunt.
-                huntStatus.AppendLine($"{Environment.NewLine}--------------------------------");
+                //huntStatus.AppendLine($"{Environment.NewLine}--------------------------------");
 
                 // Title displays some basic info about the area.
                 huntStatus.AppendLine(_game.Trail.CurrentLocation.Status != LocationStatus.Departed
@@ -138,7 +138,7 @@ namespace OregonTrail.Travel.Hunt
 
                 // Current weather on the planes.
                 huntStatus.AppendLine($"Weather: {_game.Trail.CurrentLocation.Weather.ToDescriptionAttribute()}");
-                huntStatus.AppendLine("--------------------------------");
+                //huntStatus.AppendLine("--------------------------------");
 
                 // Show the player their current shooting word and target they are aiming at.
                 huntStatus.AppendLine(

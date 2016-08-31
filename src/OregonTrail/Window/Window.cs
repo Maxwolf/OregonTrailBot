@@ -143,21 +143,6 @@ namespace OregonTrail
         protected TData UserData { get; }
 
         /// <summary>
-        ///     Defines the menu options in the enumeration which we have to work with for this window.
-        /// </summary>
-        public object MenuCommands
-        {
-            get
-            {
-                var menuList = new List<string>();
-                for (var i = 0; i < Commands.Length; i++)
-                    menuList.Add((i+1).ToString());
-
-                return menuList.ToArray();
-            }
-        }
-
-        /// <summary>
         ///     Because of how generics work in C# we need to have the ability to override a method in implementing classes to get
         ///     back the correct commands for the implementation from abstract class inheritance chain. On the bright side it
         ///     enforces the commands returned to be of the specified enum in generics.
@@ -229,6 +214,26 @@ namespace OregonTrail
             return GetType().Name.Equals(other.GetType().Name) &&
                    Form.Equals(other.Form);
         }
+
+        /// <summary>
+        ///     Defines the menu options in the enumeration which we have to work with for this window.
+        /// </summary>
+        public object MenuCommands
+        {
+            get
+            {
+                var menuList = new List<string>();
+                for (var i = 0; i < _menuMappings.Count; i++)
+                    menuList.Add((i + 1).ToString());
+
+                return menuList.ToArray();
+            }
+        }
+
+        /// <summary>
+        ///     Path to image which will be sent along with this window when it is sent to the telegram bot API.
+        /// </summary>
+        public string ImagePath { get; set; }
 
         /// <summary>
         ///     Intended to be overridden in abstract class by generics to provide method to return object that contains all the

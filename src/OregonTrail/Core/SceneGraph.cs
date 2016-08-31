@@ -97,7 +97,7 @@ namespace OregonTrail
                 return;
 
             // Depending on if form is attached to window, we change up what keyboard options are sent to user as reference.
-            ScreenBufferDirtyEvent?.Invoke(ScreenBuffer,
+            ScreenBufferDirtyEvent?.Invoke($"{ScreenBuffer}",
                 _game.WindowManager.FocusedWindow.CurrentForm != null
                     ? _game?.WindowManager?.FocusedWindow?.CurrentForm.MenuCommands
                     : _game?.WindowManager?.FocusedWindow?.MenuCommands,
@@ -115,22 +115,16 @@ namespace OregonTrail
             // Spinning ticker that shows activity, lets us know if application hangs or freezes.
             var tui = new StringBuilder();
 
-            // Keeps track of active Windows name and active Windows current state name for debugging purposes.
-            tui.Append(_game.WindowManager.FocusedWindow?.CurrentForm != null
-                ? $"Window({_game.WindowManager.Count}): {_game.WindowManager.FocusedWindow}({_game.WindowManager.FocusedWindow.CurrentForm}) - "
-                : $"Window({_game.WindowManager.Count}): {_game.WindowManager.FocusedWindow}() - ");
+            //// Keeps track of active Windows name and active Windows current state name for debugging purposes.
+            //tui.Append(_game.WindowManager.FocusedWindow?.CurrentForm != null
+            //    ? $"Window({_game.WindowManager.Count}): {_game.WindowManager.FocusedWindow}({_game.WindowManager.FocusedWindow.CurrentForm}) - "
+            //    : $"Window({_game.WindowManager.Count}): {_game.WindowManager.FocusedWindow}() - ");
 
-            // Allows the implementing simulation to control text before window is rendered out.
-            tui.Append(_game.OnPreRender());
+            //// Allows the implementing simulation to control text before window is rendered out.
+            //tui.Append(_game.OnPreRender());
 
             // Prints game Windows specific text and options. This typically is menus from commands, or states showing some information.
-            tui.Append($"{RenderWindow()}{Environment.NewLine}");
-
-            if (_game.WindowManager.AcceptingInput)
-            {
-                // Allow user to see their input from buffer.
-                tui.Append("What is your choice?");
-            }
+            tui.Append($"{RenderWindow()}");
 
             // Outputs the result of the string builder to TUI builder above.
             return tui.ToString();

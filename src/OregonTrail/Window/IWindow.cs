@@ -48,6 +48,11 @@ namespace OregonTrail
         /// </summary>
         object MenuCommands { get; }
 
+        /// <summary>
+        ///     Path to image which will be sent along with this window when it is sent to the telegram bot API.
+        /// </summary>
+        string ImagePath { get; set; }
+
         /// <summary>Creates and adds the specified type of state to currently active game Windows.</summary>
         /// <param name="stateType">The state Type.</param>
         void SetForm(Type stateType);

@@ -30,9 +30,9 @@ namespace OregonTrail.MainMenu
         /// </summary>
         [Description("Choose Management Options")] ChooseManagementOptions = 4,
 
-        /// <summary>
-        ///     Exits the application, clears in memory in holding.
-        /// </summary>
-        [Description("End")] CloseSimulation = 5
+        ///// <summary>
+        /////     Exits the application, clears in memory in holding.
+        ///// </summary>
+        //[Description("End")] CloseSimulation = 5
     }
 }

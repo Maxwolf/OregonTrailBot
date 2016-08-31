@@ -36,6 +36,8 @@ namespace OregonTrail.Form
             get { return ParentWindow.UserData as TData; }
         }
 
+        
+
         public abstract object MenuCommands { get; }
 
         /// <summary>
@@ -128,6 +130,11 @@ namespace OregonTrail.Form
         {
             get { return !ParentWindow.ShouldRemoveMode; }
         }
+
+        /// <summary>
+        ///     Path to image which will be sent along with this form when it is sent to the telegram bot API.
+        /// </summary>
+        public string ImagePath { get; set; }
 
         /// <summary>
         ///     Returns a text only representation of the current game Windows state. Could be a statement, information, question

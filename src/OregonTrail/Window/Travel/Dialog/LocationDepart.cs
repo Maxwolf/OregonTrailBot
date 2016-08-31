@@ -56,7 +56,7 @@ namespace OregonTrail.Travel.Dialog
 
         public override object MenuCommands
         {
-            get { return new[] { "Return" }; }
+            get { return new[] { "Ok" }; }
         }
     }
 }

@@ -44,7 +44,13 @@ namespace OregonTrail.Travel.Dialog
 
         public override object MenuCommands
         {
-            get { return new[] { "Return" }; }
+            get
+            {
+                // First location we only tell the user they are going back in time and arrived at first location on trail.
+                return UserData.Game.Trail.IsFirstLocation
+                    ? new[] {"Continue"}
+                    : new[] {"Yes", "No"};
+            }
         }
 
         /// <summary>
@@ -118,6 +124,8 @@ namespace OregonTrail.Travel.Dialog
                     travelMode.ContinueOnTrail();
                     break;
                 case DialogResponse.Yes:
+                    //ImagePath = UserData.Game.Trail.CurrentLocation.ImagePath;
+                    ParentWindow.ImagePath = UserData.Game.Trail.CurrentLocation.ImagePath;
                     ClearForm();
                     break;
                 default:

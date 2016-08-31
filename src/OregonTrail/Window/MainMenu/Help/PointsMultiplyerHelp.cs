@@ -58,7 +58,7 @@ namespace OregonTrail.MainMenu.Help
 
         public override object MenuCommands
         {
-            get { return new[] { "Return" }; }
+            get { return new[] { "Ok" }; }
         }
     }
 }

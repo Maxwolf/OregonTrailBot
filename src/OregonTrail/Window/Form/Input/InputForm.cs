@@ -73,19 +73,6 @@ namespace OregonTrail.Form.Input
 
             // Build up the dialog prompt using abstract methods to get text to show user.
             _prompt.Append(OnDialogPrompt());
-
-            // Wait for user input by asking them to press ANY key.
-            switch (DialogType)
-            {
-                case DialogType.Prompt:
-                    _prompt.Append(InputManager.PRESSENTER);
-                    break;
-                case DialogType.YesNo:
-                case DialogType.Custom:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
         }
 
         /// <summary>

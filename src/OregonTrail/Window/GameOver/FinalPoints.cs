@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OregonTrail.Control;
 using OregonTrail.Form;
 using OregonTrail.Form.Input;
 using OregonTrail.Item;
@@ -116,7 +115,7 @@ namespace OregonTrail.GameOver
                 u => u.Item2,
                 u => u.Item3
                 );
-            _pointsPrompt.AppendLine(locationTable);
+            _pointsPrompt.AppendLine($"{locationTable}");
 
             // Calculate total points for all entities and items.
             var totalPoints = 0;

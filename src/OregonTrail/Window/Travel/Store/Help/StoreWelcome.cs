@@ -25,11 +25,6 @@ namespace OregonTrail.Travel.Store.Help
         private StringBuilder _storeHelp;
 
         /// <summary>
-        ///     Determines which panel of information we have shown to the user, pressing return will cycle through them.
-        /// </summary>
-        private int adviceCount;
-
-        /// <summary>
         ///     Initializes a new instance of the <see cref="StoreWelcome" /> class.
         ///     Offers up some free information about what items are important to the player and what they mean for the during the
         ///     course of the simulation.
@@ -70,37 +65,19 @@ namespace OregonTrail.Travel.Store.Help
             _storeHelp.Clear();
 
             // Create the current state of our advice to player.
-            _storeHelp.Append($"{Environment.NewLine}Hello, I'm Matt. So you're going{Environment.NewLine}");
-            _storeHelp.Append($"to Oregon! I can fix you up with{Environment.NewLine}");
-            _storeHelp.Append($"what you need:{Environment.NewLine}{Environment.NewLine}");
+            _storeHelp.Append(
+                $"{Environment.NewLine}Hello, I'm Matt. So you're going to Oregon! I can fix you up with what you need:{Environment.NewLine}{Environment.NewLine}");
 
-            if (adviceCount <= 0)
-            {
-                _storeHelp.Append($" - a team of oxen to pull{Environment.NewLine}");
-                _storeHelp.Append($" your vehicle{Environment.NewLine}{Environment.NewLine}");
-
-                _storeHelp.Append($" - clothing for both{Environment.NewLine}");
-                _storeHelp.Append($" summer and winter{Environment.NewLine}{Environment.NewLine}");
-            }
-            else if (adviceCount == 1)
-            {
-                _storeHelp.Append($" - plenty of food for the{Environment.NewLine}");
-                _storeHelp.Append($" trip{Environment.NewLine}{Environment.NewLine}");
-
-                _storeHelp.Append($" - ammunition for your{Environment.NewLine}");
-                _storeHelp.Append($" rifles{Environment.NewLine}{Environment.NewLine}");
-
-                _storeHelp.Append($" - spare parts for your{Environment.NewLine}");
-                _storeHelp.Append($" wagon{Environment.NewLine}{Environment.NewLine}");
-            }
-
-            // Wait for user input...
-            _storeHelp.Append(InputManager.PRESSENTER);
+            _storeHelp.Append($" - a team of oxen to pull your vehicle{Environment.NewLine}{Environment.NewLine}");
+            _storeHelp.Append($" - clothing for both summer and winter{Environment.NewLine}{Environment.NewLine}");
+            _storeHelp.Append($" - plenty of food for the trip{Environment.NewLine}{Environment.NewLine}");
+            _storeHelp.Append($" - ammunition for your rifles{Environment.NewLine}{Environment.NewLine}");
+            _storeHelp.Append($" - spare parts for your wagon{Environment.NewLine}{Environment.NewLine}");
         }
 
         public override object MenuCommands
         {
-            get { return new[] { "Return" }; }
+            get { return new[] { "Ok" }; }
         }
 
         /// <summary>
@@ -125,18 +102,6 @@ namespace OregonTrail.Travel.Store.Help
                 ClearForm();
                 return;
             }
-
-            // Tick the advice to next panel when we get input.
-            if (adviceCount <= 0)
-            {
-                adviceCount++;
-                UpdateAdvice();
-                return;
-            }
-
-            // Make sure we don't run final logic to show actual store until we show all advice to player.
-            if (adviceCount < 1)
-                return;
 
             _hasReadAdvice = true;
             SetForm(typeof (Store));

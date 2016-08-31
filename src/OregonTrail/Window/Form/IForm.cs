@@ -26,6 +26,11 @@ namespace OregonTrail.Form
         bool AllowInput { get; }
 
         /// <summary>
+        ///     Path to image which will be sent along with this form when it is sent to the telegram bot API.
+        /// </summary>
+        string ImagePath { get; set; }
+
+        /// <summary>
         ///     Intended to be overridden in abstract class by generics to provide method to return object that contains all the
         ///     data for parent game Windows.
         /// </summary>

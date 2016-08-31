@@ -39,7 +39,7 @@ namespace OregonTrail.MainMenu
         public override void OnWindowPostCreate()
         {
             var headerText = new StringBuilder();
-            headerText.Append($"{Environment.NewLine}The Oregon Trail{Environment.NewLine}{Environment.NewLine}");
+            headerText.Append($"The Oregon Trail{Environment.NewLine}{Environment.NewLine}");
             headerText.Append("You may:");
             MenuHeader = headerText.ToString();
 
@@ -47,7 +47,7 @@ namespace OregonTrail.MainMenu
             AddCommand(LearnAboutTrail, MainMenuCommands.LearnAboutTheTrail);
             AddCommand(SeeTopTen, MainMenuCommands.SeeTheOregonTopTen);
             AddCommand(ChooseManagementOptions, MainMenuCommands.ChooseManagementOptions);
-            AddCommand(CloseSimulation, MainMenuCommands.CloseSimulation);
+            //AddCommand(CloseSimulation, MainMenuCommands.CloseSimulation);
         }
 
         /// <summary>

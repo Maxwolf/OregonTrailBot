@@ -9,7 +9,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
-namespace OregonTrail.Control
+namespace OregonTrail
 {
     /// <summary>
     ///     Converts lists of objects into string table representations of themselves.
@@ -41,11 +41,11 @@ namespace OregonTrail.Control
 
             var arrValues = new string[values.Length + 1, valueSelectors.Length];
 
-            // Fill headers
-            for (var colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
-            {
-                arrValues[0, colIndex] = columnHeaders[colIndex];
-            }
+            //// Fill headers
+            //for (var colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
+            //{
+            //    arrValues[0, colIndex] = columnHeaders[colIndex];
+            //}
 
             // Fill table rows
             for (var rowIndex = 1; rowIndex < arrValues.GetLength(0); rowIndex++)
@@ -53,7 +53,6 @@ namespace OregonTrail.Control
                 for (var colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
                 {
                     var value = valueSelectors[colIndex].Invoke(values[rowIndex - 1]);
-
                     arrValues[rowIndex, colIndex] = value?.ToString() ?? "null";
                 }
             }
@@ -62,13 +61,9 @@ namespace OregonTrail.Control
         }
 
         /// <summary>The to string table.</summary>
-        /// <param name="arrValues">The arr values.</param>
         /// <returns>The <see cref="string" />.</returns>
         public static string ToStringTable(this string[,] arrValues)
         {
-            var maxColumnsWidth = GetMaxColumnsWidth(arrValues);
-            var headerSpliter = new string('-', maxColumnsWidth.Sum(i => i + 3) - 1);
-
             var sb = new StringBuilder();
             for (var rowIndex = 0; rowIndex < arrValues.GetLength(0); rowIndex++)
             {
@@ -76,28 +71,26 @@ namespace OregonTrail.Control
                 {
                     // Print cell
                     var cell = arrValues[rowIndex, colIndex];
-                    cell = cell.PadRight(maxColumnsWidth[colIndex]);
-                    sb.Append(" | ");
+                    sb.Append(" ");
                     sb.Append(cell);
                 }
 
                 // Print end of line
-                //sb.Append("|");
+                //sb.Append(" ");
                 sb.AppendLine();
 
-                // Print splitter
-                if (rowIndex == 0)
-                {
-                    sb.AppendFormat(" |{0}| ", headerSpliter);
-                    sb.AppendLine();
-                }
+                //// Print splitter
+                //if (rowIndex == 0)
+                //{
+                //    sb.AppendFormat("{0}", headerSpliter);
+                //    sb.AppendLine();
+                //}
             }
 
             return sb.ToString();
         }
 
         /// <summary>The get max columns width.</summary>
-        /// <param name="arrValues">The arr values.</param>
         /// <returns>The <see cref="int[]" />.</returns>
         private static int[] GetMaxColumnsWidth(string[,] arrValues)
         {

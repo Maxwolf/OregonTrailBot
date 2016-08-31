@@ -25,7 +25,7 @@ namespace OregonTrail.Travel.Rest
 
         public override object MenuCommands
         {
-            get { return null; }
+            get { return new[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}; }
         }
 
         /// <summary>

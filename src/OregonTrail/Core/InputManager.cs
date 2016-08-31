@@ -13,12 +13,6 @@ namespace OregonTrail
     public sealed class InputManager : Module
     {
         /// <summary>
-        ///     Holds a constant representation of the string telling the user to press enter key to continue so we don't repeat
-        ///     ourselves.
-        /// </summary>
-        public const string PRESSENTER = "Press ENTER KEY to continue";
-
-        /// <summary>
         ///     Reference to simulation that is controlling the input manager.
         /// </summary>
         private readonly SimulationApp _simUnit;

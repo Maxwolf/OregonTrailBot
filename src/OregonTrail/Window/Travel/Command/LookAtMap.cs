@@ -3,7 +3,6 @@
 
 using System;
 using System.Text;
-using OregonTrail.Control;
 using OregonTrail.Form;
 using OregonTrail.Form.Input;
 using OregonTrail.Location;
@@ -38,11 +37,10 @@ namespace OregonTrail.Travel.Command
         protected override string OnDialogPrompt()
         {
             // Create visual progress representation of the trail.
-            var _map = new StringBuilder();
-            _map.AppendLine($"{Environment.NewLine}Trail progress{Environment.NewLine}");
-            _map.AppendLine(TextProgress.DrawProgressBar(
-                UserData.Game.Trail.LocationIndex + 1,
-                UserData.Game.Trail.Locations.Count, 32) + Environment.NewLine);
+            var mapPrompt = new StringBuilder();
+            mapPrompt.AppendLine($"{Environment.NewLine}Trail progress{Environment.NewLine}");
+            var perc = UserData.Game.Trail.LocationIndex + 1 / (decimal)UserData.Game.Trail.Locations.Count;
+            mapPrompt.AppendFormat("{0}%", (perc*100).ToString("N2"));
 
             // Build up a table of location names and if the player has visited them.
             var locationTable = UserData.Game.Trail.Locations.ToStringTable(
@@ -50,9 +48,9 @@ namespace OregonTrail.Travel.Command
                 u => u.Status >= LocationStatus.Arrived,
                 u => u.Name
                 );
-            _map.AppendLine(locationTable);
+            mapPrompt.AppendLine($"{locationTable}");
 
-            return _map.ToString();
+            return mapPrompt.ToString();
         }
 
         /// <summary>
@@ -75,7 +73,7 @@ namespace OregonTrail.Travel.Command
 
         public override object MenuCommands
         {
-            get { return new[] { "Return" }; }
+            get { return new[] { "Ok" }; }
         }
     }
 }

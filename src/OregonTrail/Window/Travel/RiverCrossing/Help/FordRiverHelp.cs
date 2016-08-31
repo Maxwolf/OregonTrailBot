@@ -23,6 +23,11 @@ namespace OregonTrail.Travel.RiverCrossing.Help
         {
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Ok"}; }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>
@@ -32,11 +37,8 @@ namespace OregonTrail.Travel.RiverCrossing.Help
         protected override string OnDialogPrompt()
         {
             var fordRiver = new StringBuilder();
-            fordRiver.AppendLine($"{Environment.NewLine}To ford a river means to");
-            fordRiver.AppendLine("pull your wagon across a");
-            fordRiver.AppendLine("shallow part of the river,");
-            fordRiver.AppendLine("with the oxen still");
-            fordRiver.AppendLine($"attached.{Environment.NewLine}");
+            fordRiver.AppendLine(
+                $"{Environment.NewLine}To ford a river means to pull your wagon across a shallow part of the river, with the oxen still attached.{Environment.NewLine}");
             return fordRiver.ToString();
         }
 
@@ -47,13 +49,7 @@ namespace OregonTrail.Travel.RiverCrossing.Help
         /// <param name="reponse">The response the dialog parsed from simulation input buffer.</param>
         protected override void OnDialogResponse(DialogResponse reponse)
         {
-            // parentGameMode.State = new CaulkRiverHelp(parentGameMode, UserData);
             SetForm(typeof (CaulkRiverHelp));
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "Return" }; }
         }
     }
 }

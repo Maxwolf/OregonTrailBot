@@ -3,7 +3,6 @@
 
 using System;
 using System.Text;
-using OregonTrail.Control;
 using OregonTrail.Form;
 using OregonTrail.Form.Input;
 using OregonTrail.MainMenu.Help;

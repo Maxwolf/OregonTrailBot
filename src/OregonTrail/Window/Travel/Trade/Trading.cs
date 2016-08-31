@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OregonTrail.Control;
 using OregonTrail.Form;
 using OregonTrail.Form.Input;
 using OregonTrail.Vehicle;
@@ -149,7 +148,13 @@ namespace OregonTrail.Travel.Trade
 
         public override object MenuCommands
         {
-            get { return new[] { "Yes", "No" }; }
+            get
+            { // Dialog type is determined by players ability to trade against the generated offer.
+                if (_trades != null && _trades.Count > 0 && _playerCanTrade)
+                    return new[] { "Yes", "No" };
+
+                return new[] { "Ok" };
+            }
         }
 
         /// <summary>

@@ -90,7 +90,7 @@ namespace OregonTrail.Travel.TalkToPeople
 
         public override object MenuCommands
         {
-            get { return new[] { "Return" }; }
+            get { return new[] { "Ok" }; }
         }
     }
 }

@@ -10,6 +10,8 @@ namespace OregonTrail.Location
     /// </summary>
     public interface ILocation : IEntity
     {
+        string ImagePath { get; }
+
         /// <summary>
         ///     Warnings about low food, medical problems, weather, etc.
         /// </summary>

@@ -50,7 +50,7 @@ namespace OregonTrail.RandomEvent
 
         public override object MenuCommands
         {
-            get { return new[] { "Return" }; }
+            get { return new[] { "Ok" }; }
         }
 
         /// <summary>
@@ -81,12 +81,6 @@ namespace OregonTrail.RandomEvent
             _skipMessage.AppendLine(UserData.DaysToSkip > 1
                 ? $"Lose {UserData.DaysToSkip} days."
                 : "Lose 1 day.");
-
-            // Only show the press enter when they can actually leave.
-            if (UserData.DaysToSkip <= 0)
-            {
-                _skipMessage.AppendLine($"{Environment.NewLine}{InputManager.PRESSENTER}{Environment.NewLine}");
-            }
         }
 
         /// <summary>Fired when the game Windows current state is not null and input buffer does not match any known command.</summary>

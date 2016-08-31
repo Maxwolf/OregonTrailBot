@@ -2,6 +2,7 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
+using System.IO;
 using OregonTrail.Location.Weather;
 
 namespace OregonTrail.Location
@@ -12,13 +13,11 @@ namespace OregonTrail.Location
     /// </summary>
     public abstract class Location : ILocation
     {
-        private readonly GameSimulationApp _game;
-
         /// <summary>
         ///     Deals with the weather simulation for this location, each location on the trail is capable of simulating it's own
         ///     type of weather for the purposes of keeping them unique.
         /// </summary>
-        private LocationWeather weather;
+        private LocationWeather _weather;
 
         /// <summary>Initializes a new instance of the <see cref="T:OregonTrail.Location.Location" /> class.</summary>
         /// <param name="name">Display name of the location as it should be known to the player.</param>
@@ -26,15 +25,23 @@ namespace OregonTrail.Location
         /// <param name="game">Simulation instance.</param>
         protected Location(string name, Climate climateType, GameSimulationApp game)
         {
-            _game = game;
             // Default warning message for the location is based on fresh water status.
-            Warning = _game.Random.NextBool() ? LocationWarning.None : LocationWarning.BadWater;
+            Warning = game.Random.NextBool() ? LocationWarning.None : LocationWarning.BadWater;
 
             // Creates a new system to deal with the management of the weather for this given location.
-            weather = new LocationWeather(climateType, _game);
+            _weather = new LocationWeather(climateType, game);
 
             // Name of the point as it should be known to the player.
             Name = name;
+
+            var namePath = name.Replace(" ", "_").ToLowerInvariant() + ".jpg";
+            // ReSharper disable once AssignNullToNotNullAttribute
+            ImagePath = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), namePath);
+
+            // Complain if the image for the location does not exist, last chance before the game starts.
+            if (!File.Exists(ImagePath))
+                throw new FileNotFoundException(
+                    "Unable to locate image for location on the trail! Check naming for location " + namePath);
 
             // Default location status is not visited by the player or vehicle.
             Status = LocationStatus.Unreached;
@@ -48,6 +55,8 @@ namespace OregonTrail.Location
         /// </summary>
         public int Depth { get; set; }
 
+        public string ImagePath { get; }
+
         /// <summary>
         ///     Warnings about low food, medical problems, weather, etc..
         /// </summary>
@@ -58,7 +67,7 @@ namespace OregonTrail.Location
         /// </summary>
         public Weather.Weather Weather
         {
-            get { return weather.Condition; }
+            get { return _weather.Condition; }
         }
 
         /// <summary>
@@ -212,7 +221,7 @@ namespace OregonTrail.Location
 
             // Weather will only be ticked when not skipping a day.
             if (!skipDay)
-                weather.Tick();
+                _weather.Tick();
         }
     }
 }

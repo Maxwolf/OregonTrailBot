@@ -68,7 +68,7 @@ namespace OregonTrail.Travel.RiverCrossing
 
         public override object MenuCommands
         {
-            get { return new[] { "Return" }; }
+            get { return null; }
         }
 
         /// <summary>
@@ -116,8 +116,7 @@ namespace OregonTrail.Travel.RiverCrossing
             _crossingPrompt.Clear();
 
             // Shows basic status of vehicle and total river crossing percentage.
-            _crossingPrompt.AppendLine(
-                "--------------------------------");
+            //_crossingPrompt.AppendLine("--------------------------------");
             _crossingPrompt.AppendLine(
                 $"{UserData.Game.Trail.CurrentLocation.Name}");
             _crossingPrompt.AppendLine(
@@ -132,12 +131,7 @@ namespace OregonTrail.Travel.RiverCrossing
                 $"River width: {UserData.River.RiverWidth.ToString("N0")} feet");
             _crossingPrompt.AppendLine(
                 $"River crossed: {_riverCrossingOfTotalWidth.ToString("N0")} feet");
-            _crossingPrompt.AppendLine(
-                "--------------------------------");
-
-            // Wait for user input...
-            if (_finishedCrossingRiver)
-                _crossingPrompt.AppendLine(InputManager.PRESSENTER);
+            //_crossingPrompt.AppendLine("--------------------------------");
 
             return _crossingPrompt.ToString();
         }

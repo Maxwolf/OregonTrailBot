@@ -138,10 +138,14 @@ namespace OregonTrail.Travel.Store
         {
             // Clear previous prompt and rebuild it.
             _storePrompt.Clear();
-            _storePrompt.AppendLine("--------------------------------");
-            _storePrompt.AppendLine($"{UserData.Game.Trail.CurrentLocation?.Name} General Store");
+            //_storePrompt.AppendLine("--------------------------------");
+            _storePrompt.AppendLine(UserData.Game.Trail.CurrentLocation == null
+                ? $"{UserData.Game.Trail.Locations.First().Name} General Store"
+                : $"{UserData.Game.Trail.CurrentLocation.Name} General Store");
+
             _storePrompt.AppendLine($"{UserData.Game.Time.Date}");
-            _storePrompt.AppendLine("--------------------------------");
+            _storePrompt.AppendLine();
+            //_storePrompt.AppendLine("--------------------------------");
 
             // Loop through all the store assets commands and print them out for the state.
             _storeAssets = new List<Entities>(Enum.GetValues(typeof (Entities)).Cast<Entities>());
@@ -177,7 +181,8 @@ namespace OregonTrail.Travel.Store
             }
 
             // Footer text for below menu.
-            _storePrompt.AppendLine("--------------------------------");
+            //_storePrompt.AppendLine("--------------------------------");
+            _storePrompt.AppendLine();
 
             // Calculate how much monies the player has and the total amount of monies owed to store for pending transaction receipt.
             var totalBill = UserData.Store.TotalTransactionCost;

@@ -10,6 +10,7 @@ using OregonTrail.Scoring;
 using OregonTrail.Time;
 using OregonTrail.Tombstone;
 using OregonTrail.Trail;
+using Telegram.Bot;
 
 namespace OregonTrail
 {
@@ -30,10 +31,17 @@ namespace OregonTrail
         ///     Creates new instance of game simulation. Complains if instance already exists.
         /// </summary>
         /// <param name="gameID">Unique identifier for this game.</param>
-        public GameSimulationApp(long gameID) : base(gameID)
+        /// <param name="bot">Telegram Bot API reference which is currently in a chat room acting as game master.</param>
+        public GameSimulationApp(long gameID, TelegramBotClient bot) : base(gameID)
         {
+            Bot = bot;
             OnPostCreate();
         }
+
+        /// <summary>
+        ///     Telegram Bot API reference which is currently in a chat room acting as game master.
+        /// </summary>
+        public TelegramBotClient Bot { get; }
 
         /// <summary>
         ///     Keeps track of all the points of interest we want to visit from beginning to end that makeup the entire journey.
