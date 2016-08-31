@@ -26,6 +26,11 @@ namespace OregonTrail.Travel.Store.Help
         {
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Ok"}; }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>
@@ -52,11 +57,6 @@ namespace OregonTrail.Travel.Store.Help
         {
             UserData.Store.SelectedItem = null;
             SetForm(typeof (Store));
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "Ok" }; }
         }
     }
 }

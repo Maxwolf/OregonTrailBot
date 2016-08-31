@@ -45,7 +45,7 @@ namespace OregonTrail.Travel.Toll
 
         public override object MenuCommands
         {
-            get { return new[] { "Yes", "No" }; }
+            get { return new[] {"Yes", "No"}; }
         }
 
         /// <summary>

@@ -20,6 +20,11 @@ namespace OregonTrail.MainMenu.Start_Month
         {
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Ok"}; }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>
@@ -53,11 +58,6 @@ namespace OregonTrail.MainMenu.Start_Month
         {
             // parentGameMode.State = new SelectStartingMonthState(parentGameMode, UserData);
             SetForm(typeof (SelectStartingMonthState));
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "Ok" }; }
         }
     }
 }

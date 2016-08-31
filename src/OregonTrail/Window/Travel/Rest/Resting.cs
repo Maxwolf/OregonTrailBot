@@ -49,6 +49,11 @@ namespace OregonTrail.Travel.Rest
             get { return false; }
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"WAKE"}; }
+        }
+
         /// <summary>
         ///     Called when the simulation is ticked by underlying operating system, game engine, or potato. Each of these system
         ///     ticks is called at unpredictable rates, however if not a system tick that means the simulation has processed enough
@@ -102,11 +107,6 @@ namespace OregonTrail.Travel.Rest
             // Only change the vehicle status to stopped if it is moving, it could just be stuck.
             if (UserData.Game.Vehicle.Status == VehicleStatus.Moving)
                 UserData.Game.Vehicle.Status = VehicleStatus.Stopped;
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "WAKE" }; }
         }
 
         /// <summary>

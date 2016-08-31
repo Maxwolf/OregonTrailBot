@@ -58,7 +58,7 @@ namespace OregonTrail.Travel.RiverCrossing.Indian
 
         public override object MenuCommands
         {
-            get { return new[] { "Yes", "No" }; }
+            get { return new[] {"Yes", "No"}; }
         }
 
         /// <summary>

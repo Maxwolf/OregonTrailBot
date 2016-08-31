@@ -23,6 +23,11 @@ namespace OregonTrail.MainMenu.Help
         {
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Ok"}; }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>
@@ -46,11 +51,6 @@ namespace OregonTrail.MainMenu.Help
         {
             // Closes main menu and drops back to travel Windows at the bottom level which should have store already open and ready.
             ParentWindow.RemoveWindowNextTick();
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "Ok" }; }
         }
     }
 }

@@ -28,6 +28,11 @@ namespace OregonTrail.Travel.Command
         {
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Ok"}; }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>
@@ -39,7 +44,7 @@ namespace OregonTrail.Travel.Command
             // Create visual progress representation of the trail.
             var mapPrompt = new StringBuilder();
             mapPrompt.AppendLine($"{Environment.NewLine}Trail progress{Environment.NewLine}");
-            var perc = UserData.Game.Trail.LocationIndex + 1 / (decimal)UserData.Game.Trail.Locations.Count;
+            var perc = UserData.Game.Trail.LocationIndex + 1/(decimal) UserData.Game.Trail.Locations.Count;
             mapPrompt.AppendFormat("{0}%", (perc*100).ToString("N2"));
 
             // Build up a table of location names and if the player has visited them.
@@ -69,11 +74,6 @@ namespace OregonTrail.Travel.Command
 
             // Default action is to return to travel menu.
             ClearForm();
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "Ok" }; }
         }
     }
 }

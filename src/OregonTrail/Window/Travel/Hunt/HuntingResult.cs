@@ -38,7 +38,7 @@ namespace OregonTrail.Travel.Hunt
 
         public override object MenuCommands
         {
-            get { return new[] { "Ok" }; }
+            get { return new[] {"Ok"}; }
         }
 
         /// <summary>

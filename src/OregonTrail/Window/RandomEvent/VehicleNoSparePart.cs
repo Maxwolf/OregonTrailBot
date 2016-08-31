@@ -44,7 +44,7 @@ namespace OregonTrail.RandomEvent
 
         public override object MenuCommands
         {
-            get { return new[] { "Ok" }; }
+            get { return new[] {"Ok"}; }
         }
 
         /// <summary>

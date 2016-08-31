@@ -36,7 +36,6 @@ namespace OregonTrail.RandomEvent
 
         public override void OnPostCreate(GameSimulationApp game)
         {
-            
         }
     }
 }

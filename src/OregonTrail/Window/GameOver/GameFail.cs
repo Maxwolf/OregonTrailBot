@@ -43,7 +43,7 @@ namespace OregonTrail.GameOver
 
         public override object MenuCommands
         {
-            get { return new[] { "Ok" }; }
+            get { return new[] {"Ok"}; }
         }
 
         /// <summary>

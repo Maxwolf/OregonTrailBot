@@ -19,12 +19,12 @@ namespace OregonTrail.Travel.Store
     [ParentWindow(typeof (Travel))]
     public sealed class Store : Form<TravelInfo>
     {
+        private List<Entities> _storeAssets;
+
         /// <summary>
         ///     String builder that will hold all the generated data about store inventory and selections for player to make.
         /// </summary>
         private StringBuilder _storePrompt;
-
-        private List<Entities> _storeAssets;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="Store" /> class.
@@ -33,6 +33,11 @@ namespace OregonTrail.Travel.Store
         /// <param name="window">The window.</param>
         public Store(IWindow window) : base(window)
         {
+        }
+
+        public override object MenuCommands
+        {
+            get { return new[] {"1", "2", "3", "4", "5", "6", "7", "8"}; }
         }
 
         /// <summary>
@@ -111,11 +116,6 @@ namespace OregonTrail.Travel.Store
         {
             UserData.Store.SelectedItem = Parts.Tongue;
             SetForm(typeof (StorePurchase));
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] {"1","2","3","4","5","6","7","8"}; }
         }
 
         /// <summary>

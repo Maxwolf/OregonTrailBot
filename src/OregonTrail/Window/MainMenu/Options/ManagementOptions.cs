@@ -30,6 +30,11 @@ namespace OregonTrail.MainMenu.Options
             _optionsPrompt = new StringBuilder();
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"1", "2", "3", "4"}; }
+        }
+
         /// <summary>
         ///     Fired after the state has been completely attached to the simulation letting the state know it can browse the user
         ///     data and other properties below it.
@@ -47,11 +52,6 @@ namespace OregonTrail.MainMenu.Options
             _optionsPrompt.AppendLine("2. Erase the current Top Ten list");
             _optionsPrompt.AppendLine("3. Erase the Tombstone messages");
             _optionsPrompt.Append("4. Return to the main menu");
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] {"1", "2", "3", "4"}; }
         }
 
         /// <summary>

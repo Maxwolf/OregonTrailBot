@@ -44,6 +44,11 @@ namespace OregonTrail.Travel.Store
         {
         }
 
+        public override object MenuCommands
+        {
+            get { return null; }
+        }
+
         /// <summary>
         ///     Fired after the state has been completely attached to the simulation letting the state know it can browse the user
         ///     data and other properties below it.
@@ -82,11 +87,6 @@ namespace OregonTrail.Travel.Store
 
             // Set the SimItem to buy text.
             _itemToBuy = UserData.Store.SelectedItem;
-        }
-
-        public override object MenuCommands
-        {
-            get { return null; }
         }
 
         /// <summary>

@@ -34,6 +34,11 @@ namespace OregonTrail.Travel.RiverCrossing
             _crossingResult = new StringBuilder();
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Ok"}; }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>
@@ -144,11 +149,6 @@ namespace OregonTrail.Travel.RiverCrossing
 
             // Start going there...
             SetForm(typeof (LocationDepart));
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "Ok" }; }
         }
     }
 }

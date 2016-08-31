@@ -30,6 +30,11 @@ namespace OregonTrail.MainMenu.Names
         {
         }
 
+        public override object MenuCommands
+        {
+            get { return null; }
+        }
+
         /// <summary>
         ///     Fired after the state has been completely attached to the simulation letting the state know it can browse the user
         ///     data and other properties below it.
@@ -93,11 +98,6 @@ namespace OregonTrail.MainMenu.Names
                 // Wait for user input...
                 _inputNamesHelp.Append("\n(Enter names or press Enter)");
             }
-        }
-
-        public override object MenuCommands
-        {
-            get { return null; }
         }
 
         /// <summary>

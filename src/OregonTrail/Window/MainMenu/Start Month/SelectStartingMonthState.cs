@@ -18,13 +18,13 @@ namespace OregonTrail.MainMenu.Start_Month
     [ParentWindow(typeof (MainMenu))]
     public sealed class SelectStartingMonthState : Form<NewGameInfo>
     {
+        private List<StartingMonth> _startingMonths;
+
         /// <summary>
         ///     References the string representing the question about starting month, only builds it once and holds in memory while
         ///     state is active.
         /// </summary>
         private StringBuilder _startMonthQuestion;
-
-        private List<StartingMonth> _startingMonths;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="SelectStartingMonthState" /> class.
@@ -42,6 +42,11 @@ namespace OregonTrail.MainMenu.Start_Month
         public override bool InputFillsBuffer
         {
             get { return true; }
+        }
+
+        public override object MenuCommands
+        {
+            get { return new[] {"1", "2", "3", "4", "5", "6"}; }
         }
 
         /// <summary>
@@ -80,11 +85,6 @@ namespace OregonTrail.MainMenu.Start_Month
                     _startMonthQuestion.AppendLine($"  {(int) monthValue}. {monthValue}");
                 }
             }
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] {"1", "2", "3", "4", "5", "6"}; }
         }
 
         /// <summary>

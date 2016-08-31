@@ -28,7 +28,7 @@ namespace OregonTrail.MainMenu
         /// <summary>
         ///     Shows version information, ability to clear high scores, Tombstone messages, saved games
         /// </summary>
-        [Description("Choose Management Options")] ChooseManagementOptions = 4,
+        [Description("Choose Management Options")] ChooseManagementOptions = 4
 
         ///// <summary>
         /////     Exits the application, clears in memory in holding.

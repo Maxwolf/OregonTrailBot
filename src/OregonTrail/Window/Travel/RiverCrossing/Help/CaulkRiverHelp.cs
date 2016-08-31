@@ -24,6 +24,11 @@ namespace OregonTrail.Travel.RiverCrossing.Help
         {
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Ok"}; }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>
@@ -50,11 +55,6 @@ namespace OregonTrail.Travel.RiverCrossing.Help
         {
             // parentGameMode.State = new FerryHelp(parentGameMode, UserData);
             SetForm(typeof (FerryHelp));
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "Ok" }; }
         }
     }
 }

@@ -24,6 +24,11 @@ namespace OregonTrail.MainMenu.Options
         {
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Return"}; }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>
@@ -54,11 +59,6 @@ namespace OregonTrail.MainMenu.Options
         protected override void OnDialogResponse(DialogResponse reponse)
         {
             SetForm(typeof (ManagementOptions));
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] {"Return"}; }
         }
     }
 }

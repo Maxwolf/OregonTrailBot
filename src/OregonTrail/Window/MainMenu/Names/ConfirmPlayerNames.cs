@@ -35,6 +35,11 @@ namespace OregonTrail.MainMenu.Names
             get { return DialogType.Custom; }
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Yes", "No"}; }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>
@@ -109,11 +114,6 @@ namespace OregonTrail.MainMenu.Names
             UserData.PlayerNames.Clear();
             UserData.PlayerNameIndex = 0;
             SetForm(typeof (InputPlayerNames));
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "Yes", "No" }; }
         }
     }
 }

@@ -13,8 +13,6 @@ namespace OregonTrail
     /// </summary>
     public abstract class SimulationApp : ITick
     {
-        private readonly long _gameID;
-
         /// <summary>
         ///     Determines if the dynamic menu system should show the command names or only numbers. If false then only numbers
         ///     will be shown.
@@ -26,6 +24,8 @@ namespace OregonTrail
         ///     the simulation logic will be ticked.
         /// </summary>
         private const double TICK_INTERVAL = 1000.0d;
+
+        private readonly long _gameID;
 
         /// <summary>
         ///     Time and date of latest system tick, used to measure total elapsed time and tick simulation after each second.

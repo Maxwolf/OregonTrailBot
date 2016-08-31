@@ -43,6 +43,11 @@ namespace OregonTrail.Travel.Store.Help
             get { return false; }
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Ok"}; }
+        }
+
         /// <summary>
         ///     Fired after the state has been completely attached to the simulation letting the state know it can browse the user
         ///     data and other properties below it.
@@ -73,11 +78,6 @@ namespace OregonTrail.Travel.Store.Help
             _storeHelp.Append($" - plenty of food for the trip{Environment.NewLine}{Environment.NewLine}");
             _storeHelp.Append($" - ammunition for your rifles{Environment.NewLine}{Environment.NewLine}");
             _storeHelp.Append($" - spare parts for your wagon{Environment.NewLine}{Environment.NewLine}");
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "Ok" }; }
         }
 
         /// <summary>

@@ -35,6 +35,11 @@ namespace OregonTrail.GameOver
             _pointsPrompt = new StringBuilder();
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Reset"}; }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>
@@ -175,11 +180,6 @@ namespace OregonTrail.GameOver
         {
             // Completely resets the game to default state it was in when it first started.
             UserData.Game.Restart();
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "Reset" }; }
         }
     }
 }

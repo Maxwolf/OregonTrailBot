@@ -21,6 +21,11 @@ namespace OregonTrail.MainMenu.Profession
         {
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Ok"}; }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>
@@ -54,11 +59,6 @@ namespace OregonTrail.MainMenu.Profession
         {
             // parentGameMode.State = new ProfessionSelector(parentGameMode, UserData);
             SetForm(typeof (ProfessionSelector));
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "Ok" }; }
         }
     }
 }

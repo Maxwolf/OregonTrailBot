@@ -25,6 +25,11 @@ namespace OregonTrail.Travel.RiverCrossing.Indian
         {
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Ok"}; }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>
@@ -48,11 +53,6 @@ namespace OregonTrail.Travel.RiverCrossing.Indian
         {
             // Player has enough clothing to satisfy the Indians cost.
             SetForm(typeof (CrossingTick));
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "Ok" }; }
         }
     }
 }

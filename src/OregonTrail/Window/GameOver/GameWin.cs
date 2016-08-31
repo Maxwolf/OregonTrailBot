@@ -29,6 +29,11 @@ namespace OregonTrail.GameOver
             _gameOver = new StringBuilder();
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Ok"}; }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>
@@ -52,11 +57,6 @@ namespace OregonTrail.GameOver
         protected override void OnDialogResponse(DialogResponse reponse)
         {
             SetForm(typeof (FinalPoints));
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "Ok" }; }
         }
     }
 }

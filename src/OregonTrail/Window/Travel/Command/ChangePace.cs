@@ -31,6 +31,11 @@ namespace OregonTrail.Travel.Command
         {
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"1", "2", "3", "4"}; }
+        }
+
         /// <summary>
         ///     Fired after the state has been completely attached to the simulation letting the state know it can browse the user
         ///     data and other properties below it.
@@ -50,11 +55,6 @@ namespace OregonTrail.Travel.Command
             _pace.Append($"3. a grueling pace{Environment.NewLine}");
             _pace.Append($"4. find out what these{Environment.NewLine}");
             _pace.Append($"   different paces mean");
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "1", "2", "3", "4" }; }
         }
 
         /// <summary>

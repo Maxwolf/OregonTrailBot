@@ -134,19 +134,6 @@ namespace TrailBot
 
                 // Send whatever we got to the simulation for processing it will decide what it wants.
                 game.InputManager.SendInputBufferAsCommand();
-
-                //if (message.Text.StartsWith("/photo")) // send a photo
-                //{
-                //    await Bot.SendChatActionAsync(message.Chat.Id, ChatAction.UploadPhoto);
-                //    const string file = @"C:\OregonTrailBot\bin\test.png";
-                //    var fileName = file.Split('\\').Last();
-
-                //    using (var fileStream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read))
-                //    {
-                //        var fts = new FileToSend(fileName, fileStream);
-                //        await Bot.SendPhotoAsync(message.Chat.Id, fts, "Nice Picture");
-                //    }
-                //}
             }
             else
             {
@@ -172,7 +159,16 @@ namespace TrailBot
             }
         }
 
-        private async static void SceneGraphOnScreenBufferDirtyEvent(string content, object commands, long gameID)
+        /// <summary>
+        ///     Called when one of the running instances in the game wants to update the data that has been displayed to users.
+        /// </summary>
+        /// <param name="content">Text user interface that will be sent to the chat.</param>
+        /// <param name="commands">
+        ///     Commands which will become buttons, NULL if user input required for things like amounts or
+        ///     names.
+        /// </param>
+        /// <param name="gameID">Unique identifier that is used to base the chat with bot to given user.</param>
+        private static async void SceneGraphOnScreenBufferDirtyEvent(string content, object commands, long gameID)
         {
             // Cast the commands as a string array.
             var menuCommands = commands as string[];
@@ -181,6 +177,9 @@ namespace TrailBot
             if (content.Contains(SceneGraph.GAMEMODE_DEFAULT_TUI) ||
                 content.Contains(SceneGraph.GAMEMODE_EMPTY_TUI))
                 return;
+
+            // Makes the bot appear to be thinking.
+            await Bot.SendChatActionAsync(gameID, ChatAction.Typing);
 
             // Check if there are multiple commands that can be pressed (or dialog with continue only).
             if ((menuCommands != null && menuCommands.Length <= 0) || menuCommands == null)
@@ -194,7 +193,7 @@ namespace TrailBot
             else if (menuCommands.Length > 0)
             {
                 // Get half of the commands.
-                var halfCommandCount = menuCommands.Length / 2;
+                var halfCommandCount = menuCommands.Length/2;
 
                 // Check if less than zero.
                 if (halfCommandCount <= 0)

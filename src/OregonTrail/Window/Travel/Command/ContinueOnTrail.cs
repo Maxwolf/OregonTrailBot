@@ -41,6 +41,11 @@ namespace OregonTrail.Travel.Command
             get { return false; }
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Stop"}; }
+        }
+
         /// <summary>
         ///     Fired after the state has been completely attached to the simulation letting the state know it can browse the user
         ///     data and other properties below it.
@@ -59,11 +64,6 @@ namespace OregonTrail.Travel.Command
             if (game.Trail.DistanceToNextLocation > 0 &&
                 game.Trail.CurrentLocation.Status == LocationStatus.Arrived)
                 game.Trail.CurrentLocation.Status = LocationStatus.Departed;
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "Stop" }; }
         }
 
         /// <summary>

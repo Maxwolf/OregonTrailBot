@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Reflection;
 using OregonTrail.Location.Weather;
 
 namespace OregonTrail.Location
@@ -36,7 +37,7 @@ namespace OregonTrail.Location
 
             var namePath = name.Replace(" ", "_").ToLowerInvariant() + ".jpg";
             // ReSharper disable once AssignNullToNotNullAttribute
-            ImagePath = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), namePath);
+            ImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), namePath);
 
             // Complain if the image for the location does not exist, last chance before the game starts.
             if (!File.Exists(ImagePath))

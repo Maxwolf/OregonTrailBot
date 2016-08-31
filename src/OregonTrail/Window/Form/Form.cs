@@ -36,10 +36,6 @@ namespace OregonTrail.Form
             get { return ParentWindow.UserData as TData; }
         }
 
-        
-
-        public abstract object MenuCommands { get; }
-
         /// <summary>
         ///     Current parent game Windows which this state is bound to and is doing work on behalf of.
         /// </summary>
@@ -103,6 +99,9 @@ namespace OregonTrail.Form
             return UserData.Equals(other.UserData) &&
                    ParentWindow.Equals(other.ParentWindow);
         }
+
+
+        public abstract object MenuCommands { get; }
 
         /// <summary>
         ///     Intended to be overridden in abstract class by generics to provide method to return object that contains all the

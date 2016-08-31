@@ -161,7 +161,7 @@
     <Compile Include="Core\SimulationApp.cs" />
     <Compile Include="Utility\ArrayExtensions.cs" />
     <Compile Include="Utility\AttributeExtensions.cs" />
-    <Compile Include="Utility\EnumerableExtensions.cs" />
+    <Compile Include="Utility\EnumerableExtension.cs" />
     <Compile Include="Utility\StringExtensions.cs" />
     <Compile Include="Utility\TypeExtensions.cs" />
     <Compile Include="Utility\TextTableExtensions.cs" />

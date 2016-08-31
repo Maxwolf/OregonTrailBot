@@ -34,6 +34,11 @@ namespace OregonTrail.MainMenu
             get { return DialogType.YesNo; }
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Yes", "No"}; }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>
@@ -81,11 +86,6 @@ namespace OregonTrail.MainMenu
                 default:
                     throw new ArgumentOutOfRangeException(nameof(reponse), reponse, null);
             }
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "Yes", "No" }; }
         }
     }
 }

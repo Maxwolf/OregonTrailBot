@@ -43,6 +43,11 @@ namespace OregonTrail.MainMenu.Profession
             get { return true; }
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"1", "2", "3", "4"}; }
+        }
+
         /// <summary>
         ///     Fired after the state has been completely attached to the simulation letting the state know it can browse the user
         ///     data and other properties below it.
@@ -86,11 +91,6 @@ namespace OregonTrail.MainMenu.Profession
                         $"  {(int) professionChoice}. {professionChoice.ToDescriptionAttribute()}");
                 }
             }
-        }
-
-        public override object MenuCommands
-        {
-            get { return new [] {"1", "2", "3", "4"}; }
         }
 
         /// <summary>

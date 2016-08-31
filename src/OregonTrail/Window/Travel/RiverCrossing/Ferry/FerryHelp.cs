@@ -23,6 +23,11 @@ namespace OregonTrail.Travel.RiverCrossing.Ferry
         {
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Ok"}; }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>
@@ -49,11 +54,6 @@ namespace OregonTrail.Travel.RiverCrossing.Ferry
         protected override void OnDialogResponse(DialogResponse reponse)
         {
             SetForm(typeof (RiverCross));
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "Ok" }; }
         }
     }
 }

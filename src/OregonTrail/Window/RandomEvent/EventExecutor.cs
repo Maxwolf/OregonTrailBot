@@ -30,6 +30,11 @@ namespace OregonTrail.RandomEvent
         {
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Ok"}; }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>
@@ -82,11 +87,6 @@ namespace OregonTrail.RandomEvent
 
             // Only remove the entire random event form if we don't have any days to skip.
             ParentWindow.RemoveWindowNextTick();
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "Ok" }; }
         }
     }
 }

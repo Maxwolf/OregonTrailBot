@@ -46,7 +46,6 @@ namespace OregonTrail.Graveyard
 
         public override void OnPostCreate(GameSimulationApp game)
         {
-            
         }
     }
 }

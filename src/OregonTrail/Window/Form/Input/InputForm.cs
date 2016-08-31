@@ -1,7 +1,6 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 12/31/2015@4:49 AM
 
-using System;
 using System.Text;
 
 namespace OregonTrail.Form.Input

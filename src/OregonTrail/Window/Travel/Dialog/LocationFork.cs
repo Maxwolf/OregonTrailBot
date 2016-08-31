@@ -41,6 +41,18 @@ namespace OregonTrail.Travel.Dialog
             _forkPrompt = new StringBuilder();
         }
 
+        public override object MenuCommands
+        {
+            get
+            {
+                var menuList = new List<string>();
+                for (var i = 0; i < _skipChoices.Count; i++)
+                    menuList.Add((i + 1).ToString());
+
+                return new[] {menuList.ToArray()};
+            }
+        }
+
         /// <summary>
         ///     Fired after the state has been completely attached to the simulation letting the state know it can browse the user
         ///     data and other properties below it.
@@ -60,18 +72,6 @@ namespace OregonTrail.Travel.Dialog
             {
                 var skipChoice = forkInRoad.SkipChoices[index];
                 _skipChoices.Add(index + 1, skipChoice);
-            }
-        }
-
-        public override object MenuCommands
-        {
-            get
-            {
-                var menuList = new List<string>();
-                for (var i = 0; i < _skipChoices.Count; i++)
-                    menuList.Add((i+1).ToString());
-
-                return new[] { menuList.ToArray() };
             }
         }
 

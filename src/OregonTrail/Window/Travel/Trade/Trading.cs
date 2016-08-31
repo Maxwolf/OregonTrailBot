@@ -132,6 +132,18 @@ namespace OregonTrail.Travel.Trade
             }
         }
 
+        public override object MenuCommands
+        {
+            get
+            {
+                // Dialog type is determined by players ability to trade against the generated offer.
+                if (_trades != null && _trades.Count > 0 && _playerCanTrade)
+                    return new[] {"Yes", "No"};
+
+                return new[] {"Ok"};
+            }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>
@@ -144,17 +156,6 @@ namespace OregonTrail.Travel.Trade
 
             // Returns the completed table of supplies and selected trade offer.
             return _supplyPrompt.ToString();
-        }
-
-        public override object MenuCommands
-        {
-            get
-            { // Dialog type is determined by players ability to trade against the generated offer.
-                if (_trades != null && _trades.Count > 0 && _playerCanTrade)
-                    return new[] { "Yes", "No" };
-
-                return new[] { "Ok" };
-            }
         }
 
         /// <summary>
@@ -189,7 +190,7 @@ namespace OregonTrail.Travel.Trade
 
             // Check if the player has the item in question the trader wants.
             _playerCanTrade = _trades.Count > 0 &&
-                             UserData.Game.Vehicle.ContainsItem(_trades[_tradeIndex].WantedItem);
+                              UserData.Game.Vehicle.ContainsItem(_trades[_tradeIndex].WantedItem);
 
             // Select one of the trades to use, or say there are none if none generated.
             if (_trades.Count > 0)

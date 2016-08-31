@@ -25,6 +25,11 @@ namespace OregonTrail.Travel.Dialog
         {
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Ok"}; }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>
@@ -67,11 +72,6 @@ namespace OregonTrail.Travel.Dialog
         {
             // parentGameMode.State = new ChangePace(parentGameMode, UserData);
             SetForm(typeof (ChangePace));
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "Ok" }; }
         }
     }
 }

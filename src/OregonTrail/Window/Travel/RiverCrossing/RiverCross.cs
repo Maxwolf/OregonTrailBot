@@ -60,6 +60,20 @@ namespace OregonTrail.Travel.RiverCrossing
         {
         }
 
+        public override object MenuCommands
+        {
+            get
+            {
+                var crossList = new List<string>();
+                for (var i = 0; i < _choiceMappings.Count; i++)
+                {
+                    crossList.Add((i + 1).ToString());
+                }
+
+                return crossList.ToArray();
+            }
+        }
+
         /// <summary>
         ///     Fired after the state has been completely attached to the simulation letting the state know it can browse the user
         ///     data and other properties below it.
@@ -220,20 +234,6 @@ namespace OregonTrail.Travel.RiverCrossing
                 default:
                     throw new ArgumentOutOfRangeException(nameof(riverChoice),
                         "Unable to cast river cross choice into a valid selection for river crossing.");
-            }
-        }
-
-        public override object MenuCommands
-        {
-            get
-            {
-                var crossList = new List<string>();
-                for (var i = 0; i < _choiceMappings.Count; i++)
-                {
-                    crossList.Add((i+1).ToString());
-                }
-
-                return crossList.ToArray();
             }
         }
 

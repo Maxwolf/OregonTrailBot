@@ -30,6 +30,11 @@ namespace OregonTrail.Travel.Command
         {
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"1", "2", "3"}; }
+        }
+
         /// <summary>
         ///     Fired after the state has been completely attached to the simulation letting the state know it can browse the user
         ///     data and other properties below it.
@@ -51,11 +56,6 @@ namespace OregonTrail.Travel.Command
             _ration.AppendLine($"   adequate.{Environment.NewLine}");
             _ration.AppendLine($"3. bare bones - meals are very");
             _ration.Append($"   small, everyone stays hungry.");
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "1", "2", "3" }; }
         }
 
         /// <summary>

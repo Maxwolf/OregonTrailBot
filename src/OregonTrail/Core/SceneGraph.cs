@@ -92,7 +92,7 @@ namespace OregonTrail
             ScreenBuffer = tuiContent;
 
             // Check if the focused window is null, and accepts input.
-            if (_game.WindowManager.FocusedWindow == null || 
+            if (_game.WindowManager.FocusedWindow == null ||
                 !_game.WindowManager.FocusedWindow.AcceptsInput)
                 return;
 

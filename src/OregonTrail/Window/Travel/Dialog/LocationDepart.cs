@@ -27,6 +27,11 @@ namespace OregonTrail.Travel.Dialog
         {
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"Ok"}; }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>
@@ -52,11 +57,6 @@ namespace OregonTrail.Travel.Dialog
         protected override void OnDialogResponse(DialogResponse reponse)
         {
             SetForm(typeof (ContinueOnTrail));
-        }
-
-        public override object MenuCommands
-        {
-            get { return new[] { "Ok" }; }
         }
     }
 }

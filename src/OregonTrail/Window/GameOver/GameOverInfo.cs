@@ -12,7 +12,6 @@ namespace OregonTrail.GameOver
         // Nothing to see here, move along...
         public override void OnPostCreate(GameSimulationApp game)
         {
-            
         }
     }
 }
