@@ -24,6 +24,8 @@ namespace OregonTrail.Travel.Store
         /// </summary>
         private StringBuilder _storePrompt;
 
+        private List<Entities> _storeAssets;
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="Store" /> class.
         ///     This constructor will be used by the other one
@@ -111,6 +113,11 @@ namespace OregonTrail.Travel.Store
             SetForm(typeof (StorePurchase));
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] {"1","2","3","4","5","6","7","8"}; }
+        }
+
         /// <summary>
         ///     Returns a text only representation of the current game Windows state. Could be a statement, information, question
         ///     waiting input, etc.
@@ -137,11 +144,11 @@ namespace OregonTrail.Travel.Store
             _storePrompt.AppendLine("--------------------------------");
 
             // Loop through all the store assets commands and print them out for the state.
-            var storeAssets = new List<Entities>(Enum.GetValues(typeof (Entities)).Cast<Entities>());
-            for (var index = 0; index < storeAssets.Count; index++)
+            _storeAssets = new List<Entities>(Enum.GetValues(typeof (Entities)).Cast<Entities>());
+            for (var index = 0; index < _storeAssets.Count; index++)
             {
                 // Get the current entity enumeration value we casted into list.
-                var storeItem = storeAssets[index];
+                var storeItem = _storeAssets[index];
 
                 // Skip if store item is cash, person, or vehicle.
                 if (storeItem == Entities.Cash ||
@@ -158,10 +165,10 @@ namespace OregonTrail.Travel.Store
                             UserData.Game.Trail.CurrentLocation?.Status == LocationStatus.Unreached));
 
                 // Last line should not print new line.
-                if (index == (storeAssets.Count - 5))
+                if (index == (_storeAssets.Count - 5))
                 {
                     _storePrompt.AppendLine($"  {(int) storeItem}. {storeTag}");
-                    _storePrompt.AppendLine($"  {storeAssets.Count - 3}. Leave store");
+                    _storePrompt.AppendLine($"  {_storeAssets.Count - 3}. Leave store");
                 }
                 else
                 {

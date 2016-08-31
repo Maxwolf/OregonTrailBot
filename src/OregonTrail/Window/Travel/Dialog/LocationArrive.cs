@@ -42,6 +42,11 @@ namespace OregonTrail.Travel.Dialog
             }
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
+
         /// <summary>
         ///     Fired after the state has been completely attached to the simulation letting the state know it can browse the user
         ///     data and other properties below it.

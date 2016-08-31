@@ -53,5 +53,10 @@ namespace OregonTrail.GameOver
         {
             SetForm(typeof (FinalPoints));
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
     }
 }

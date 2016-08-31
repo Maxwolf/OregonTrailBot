@@ -63,6 +63,18 @@ namespace OregonTrail.Travel.Dialog
             }
         }
 
+        public override object MenuCommands
+        {
+            get
+            {
+                var menuList = new List<string>();
+                for (var i = 0; i < _skipChoices.Count; i++)
+                    menuList.Add((i+1).ToString());
+
+                return new[] { menuList.ToArray() };
+            }
+        }
+
         /// <summary>
         ///     Returns a text only representation of the current game Windows state. Could be a statement, information, question
         ///     waiting input, etc.

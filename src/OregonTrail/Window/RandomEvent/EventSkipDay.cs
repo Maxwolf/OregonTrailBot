@@ -48,6 +48,11 @@ namespace OregonTrail.RandomEvent
             get { return UserData.DaysToSkip <= 0; }
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
+
         /// <summary>
         ///     Returns a text only representation of the current game Windows state. Could be a statement, information, question
         ///     waiting input, etc.

@@ -36,7 +36,7 @@ namespace OregonTrail.Form
             get { return ParentWindow.UserData as TData; }
         }
 
-        public abstract int[] MenuCommands { get; }
+        public abstract object MenuCommands { get; }
 
         /// <summary>
         ///     Current parent game Windows which this state is bound to and is doing work on behalf of.

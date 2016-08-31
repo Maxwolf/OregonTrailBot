@@ -110,5 +110,10 @@ namespace OregonTrail.MainMenu.Names
             UserData.PlayerNameIndex = 0;
             SetForm(typeof (InputPlayerNames));
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Yes", "No" }; }
+        }
     }
 }

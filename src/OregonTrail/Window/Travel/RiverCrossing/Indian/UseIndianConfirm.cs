@@ -49,5 +49,10 @@ namespace OregonTrail.Travel.RiverCrossing.Indian
             // Player has enough clothing to satisfy the Indians cost.
             SetForm(typeof (CrossingTick));
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
     }
 }

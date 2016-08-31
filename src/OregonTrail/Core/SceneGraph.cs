@@ -17,7 +17,7 @@ namespace OregonTrail
         /// <summary>
         ///     Fired when the screen back buffer has changed from what is currently being shown, this forces a redraw.
         /// </summary>
-        public delegate void ScreenBufferDirty(string tuiContent, int[] commands, long gameID);
+        public delegate void ScreenBufferDirty(string tuiContent, object commands, long gameID);
 
         /// <summary>
         ///     Default string used when game Windows has nothing better to say.
@@ -90,22 +90,18 @@ namespace OregonTrail
 
             // Update the screen buffer with altered data.
             ScreenBuffer = tuiContent;
-            if (_game.WindowManager.FocusedWindow != null &&
-                _game.WindowManager.FocusedWindow.AcceptsInput)
-            {
-                if (_game.WindowManager.FocusedWindow.CurrentForm != null)
-                {
-                    ScreenBufferDirtyEvent?.Invoke(ScreenBuffer,
-                        _game?.WindowManager?.FocusedWindow?.CurrentForm.MenuCommands as int[],
-                        _gameID);
-                }
-                else
-                {
-                    ScreenBufferDirtyEvent?.Invoke(ScreenBuffer,
-                                            _game?.WindowManager?.FocusedWindow?.MenuCommands as int[],
-                                            _gameID);
-                }
-            }
+
+            // Check if the focused window is null, and accepts input.
+            if (_game.WindowManager.FocusedWindow == null || 
+                !_game.WindowManager.FocusedWindow.AcceptsInput)
+                return;
+
+            // Depending on if form is attached to window, we change up what keyboard options are sent to user as reference.
+            ScreenBufferDirtyEvent?.Invoke(ScreenBuffer,
+                _game.WindowManager.FocusedWindow.CurrentForm != null
+                    ? _game?.WindowManager?.FocusedWindow?.CurrentForm.MenuCommands
+                    : _game?.WindowManager?.FocusedWindow?.MenuCommands,
+                _gameID);
         }
 
         /// <summary>
@@ -133,7 +129,6 @@ namespace OregonTrail
             if (_game.WindowManager.AcceptingInput)
             {
                 // Allow user to see their input from buffer.
-                //tui.Append($"What is your choice? {_simUnit.InputManager.InputBuffer}");
                 tui.Append("What is your choice?");
             }
 

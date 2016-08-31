@@ -178,9 +178,9 @@ namespace OregonTrail.GameOver
             UserData.Game.Restart();
         }
 
-        public override int[] MenuCommands
+        public override object MenuCommands
         {
-            get { return new[] {1}; }
+            get { return new[] { "Reset" }; }
         }
     }
 }

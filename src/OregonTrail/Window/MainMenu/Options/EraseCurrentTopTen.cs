@@ -70,5 +70,10 @@ namespace OregonTrail.MainMenu.Options
             // Return to main menu.
             SetForm(typeof (ManagementOptions));
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
     }
 }

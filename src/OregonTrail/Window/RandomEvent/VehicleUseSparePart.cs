@@ -42,6 +42,11 @@ namespace OregonTrail.RandomEvent
             get { return false; }
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
+
         /// <summary>
         ///     Fired when dialog prompt is attached to active game Windows and would like to have a string returned.
         /// </summary>

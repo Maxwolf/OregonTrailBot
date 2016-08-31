@@ -75,5 +75,10 @@ namespace OregonTrail.Travel.Hunt.Help
             // Attaches the form that lets us manipulate and view this data.
             SetForm(typeof (Hunting));
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
     }
 }

@@ -23,6 +23,8 @@ namespace OregonTrail.MainMenu.Profession
         /// </summary>
         private StringBuilder _professionChooser;
 
+        private List<Person.Profession> _professions;
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ProfessionSelector" /> class.
         ///     This constructor will be used by the other one
@@ -63,19 +65,19 @@ namespace OregonTrail.MainMenu.Profession
             _professionChooser.AppendLine($"You may:{Environment.NewLine}");
 
             // Loop through all the profession enumeration values and grab their description attribute for selection purposes.
-            var professions =
+            _professions =
                 new List<Person.Profession>(Enum.GetValues(typeof (Person.Profession)).Cast<Person.Profession>());
-            for (var index = 0; index < professions.Count; index++)
+            for (var index = 0; index < _professions.Count; index++)
             {
                 // Get the current profession choice enumeration value we casted into list.
-                var professionChoice = professions[index];
+                var professionChoice = _professions[index];
 
                 // Last line should not print new line.
-                if (index == (professions.Count - 1))
+                if (index == (_professions.Count - 1))
                 {
                     _professionChooser.AppendLine(
                         $"  {(int) professionChoice}. {professionChoice.ToDescriptionAttribute()}");
-                    _professionChooser.AppendLine($"  {professions.Count + 1}. Find out the differences");
+                    _professionChooser.AppendLine($"  {_professions.Count + 1}. Find out the differences");
                     _professionChooser.Append("     between these choices");
                 }
                 else
@@ -84,6 +86,11 @@ namespace OregonTrail.MainMenu.Profession
                         $"  {(int) professionChoice}. {professionChoice.ToDescriptionAttribute()}");
                 }
             }
+        }
+
+        public override object MenuCommands
+        {
+            get { return new [] {"1", "2", "3", "4"}; }
         }
 
         /// <summary>

@@ -79,5 +79,10 @@ namespace OregonTrail.Graveyard
             // Return to travel mode menu if we are just looking at some other dead guy grave.
             ParentWindow.RemoveWindowNextTick();
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
     }
 }

@@ -110,5 +110,10 @@ namespace OregonTrail.Travel.Command
             // parentGameMode.State = null;
             ClearForm();
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
     }
 }

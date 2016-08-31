@@ -72,5 +72,10 @@ namespace OregonTrail.MainMenu.Help
             // parentGameMode.State = new PointsAwardHelp(parentGameMode, UserData);
             SetForm(typeof (PointsAwardHelp));
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
     }
 }

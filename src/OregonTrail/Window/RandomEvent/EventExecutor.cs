@@ -83,5 +83,10 @@ namespace OregonTrail.RandomEvent
             // Only remove the entire random event form if we don't have any days to skip.
             ParentWindow.RemoveWindowNextTick();
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
     }
 }

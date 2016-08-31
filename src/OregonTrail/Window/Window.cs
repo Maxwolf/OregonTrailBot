@@ -147,7 +147,14 @@ namespace OregonTrail
         /// </summary>
         public object MenuCommands
         {
-            get { return Commands.ToArray(); }
+            get
+            {
+                var menuList = new List<string>();
+                for (var i = 0; i < Commands.Length; i++)
+                    menuList.Add((i+1).ToString());
+
+                return menuList.ToArray();
+            }
         }
 
         /// <summary>

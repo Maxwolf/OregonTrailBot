@@ -68,5 +68,10 @@ namespace OregonTrail.Travel.Dialog
             // parentGameMode.State = new ChangePace(parentGameMode, UserData);
             SetForm(typeof (ChangePace));
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
     }
 }

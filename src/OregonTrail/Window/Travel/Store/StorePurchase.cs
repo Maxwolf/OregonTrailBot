@@ -84,6 +84,11 @@ namespace OregonTrail.Travel.Store
             _itemToBuy = UserData.Store.SelectedItem;
         }
 
+        public override object MenuCommands
+        {
+            get { return null; }
+        }
+
         /// <summary>
         ///     Returns a text only representation of the current game Windows state. Could be a statement, information, question
         ///     waiting input, etc.

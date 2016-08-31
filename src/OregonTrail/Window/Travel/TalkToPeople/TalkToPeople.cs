@@ -87,5 +87,10 @@ namespace OregonTrail.Travel.TalkToPeople
             // Return to travel menu.
             ClearForm();
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
     }
 }

@@ -19,6 +19,7 @@ namespace OregonTrail.Graveyard
         ///     Defines how long a epitaph on a tombstone can be in characters which will make up the entire string (spaces
         ///     included).
         /// </summary>
+        // ReSharper disable once InconsistentNaming
         private const int EPITAPH_MAXLENGTH = 38;
 
         /// <summary>
@@ -43,6 +44,11 @@ namespace OregonTrail.Graveyard
         public override bool InputFillsBuffer
         {
             get { return UserData.Game.InputManager.InputBuffer.Length <= EPITAPH_MAXLENGTH; }
+        }
+
+        public override object MenuCommands
+        {
+            get { return null; }
         }
 
         /// <summary>

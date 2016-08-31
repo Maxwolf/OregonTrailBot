@@ -53,5 +53,10 @@ namespace OregonTrail.Travel.Store.Help
             UserData.Store.SelectedItem = null;
             SetForm(typeof (Store));
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
     }
 }

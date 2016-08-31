@@ -104,6 +104,11 @@ namespace OregonTrail.Travel.Rest
                 UserData.Game.Vehicle.Status = VehicleStatus.Stopped;
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] { "WAKE" }; }
+        }
+
         /// <summary>
         ///     Returns a text only representation of the current game Windows state. Could be a statement, information, question
         ///     waiting input, etc.
@@ -150,7 +155,7 @@ namespace OregonTrail.Travel.Rest
 
             // Allow the user to stop resting, this will break the cycle and reset days to rest to zero.
             if (_daysRested > 0)
-                _restMessage.AppendLine($"{Environment.NewLine}Press ENTER to stop resting.{Environment.NewLine}");
+                _restMessage.AppendLine($"{Environment.NewLine}Press WAKE to stop resting.{Environment.NewLine}");
 
             // Prints out the message about resting for however long this cycle was.
             return _restMessage.ToString();

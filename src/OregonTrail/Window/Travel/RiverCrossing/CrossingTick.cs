@@ -3,7 +3,6 @@
 
 using System;
 using System.Text;
-using OregonTrail.Control;
 using OregonTrail.Form;
 using OregonTrail.River;
 using OregonTrail.Vehicle;
@@ -32,11 +31,6 @@ namespace OregonTrail.Travel.RiverCrossing
         ///     river.
         /// </summary>
         private int _riverCrossingOfTotalWidth;
-
-        /// <summary>
-        ///     Holds the text related to animated sway bar, each tick of simulation steps it.
-        /// </summary>
-        private string _swayBarText;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="CrossingTick" /> class.
@@ -70,6 +64,11 @@ namespace OregonTrail.Travel.RiverCrossing
         public override bool AllowInput
         {
             get { return _finishedCrossingRiver; }
+        }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
         }
 
         /// <summary>
@@ -115,9 +114,6 @@ namespace OregonTrail.Travel.RiverCrossing
         {
             // Clears the string buffer for this render pass.
             _crossingPrompt.Clear();
-
-            // Ping-pong progress bar to show that we are moving.
-            _crossingPrompt.AppendLine($"{Environment.NewLine}{_swayBarText}");
 
             // Shows basic status of vehicle and total river crossing percentage.
             _crossingPrompt.AppendLine(

@@ -54,5 +54,10 @@ namespace OregonTrail.MainMenu.Start_Month
             // parentGameMode.State = new SelectStartingMonthState(parentGameMode, UserData);
             SetForm(typeof (SelectStartingMonthState));
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
     }
 }

@@ -75,5 +75,10 @@ namespace OregonTrail.Travel.Dialog
                     throw new ArgumentOutOfRangeException(nameof(reponse), reponse, null);
             }
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Yes", "No" }; }
+        }
     }
 }

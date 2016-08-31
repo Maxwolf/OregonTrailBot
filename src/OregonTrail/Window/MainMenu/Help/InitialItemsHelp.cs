@@ -54,5 +54,10 @@ namespace OregonTrail.MainMenu.Help
         {
             SetForm(typeof (StoreHelp));
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
     }
 }

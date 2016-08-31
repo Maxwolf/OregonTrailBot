@@ -68,5 +68,10 @@ namespace OregonTrail.MainMenu.Help
             // parentGameMode.State = null;
             ClearForm();
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
     }
 }

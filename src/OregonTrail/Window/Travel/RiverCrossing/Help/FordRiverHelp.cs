@@ -50,5 +50,10 @@ namespace OregonTrail.Travel.RiverCrossing.Help
             // parentGameMode.State = new CaulkRiverHelp(parentGameMode, UserData);
             SetForm(typeof (CaulkRiverHelp));
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
     }
 }

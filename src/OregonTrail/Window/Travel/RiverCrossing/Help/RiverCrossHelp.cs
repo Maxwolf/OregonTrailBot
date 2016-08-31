@@ -55,5 +55,10 @@ namespace OregonTrail.Travel.RiverCrossing.Help
         {
             SetForm(typeof (RiverCross));
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
     }
 }

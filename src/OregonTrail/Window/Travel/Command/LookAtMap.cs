@@ -72,5 +72,10 @@ namespace OregonTrail.Travel.Command
             // Default action is to return to travel menu.
             ClearForm();
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
     }
 }

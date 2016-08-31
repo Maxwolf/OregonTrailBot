@@ -24,6 +24,8 @@ namespace OregonTrail.MainMenu.Start_Month
         /// </summary>
         private StringBuilder _startMonthQuestion;
 
+        private List<StartingMonth> _startingMonths;
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="SelectStartingMonthState" /> class.
         ///     This constructor will be used by the other one
@@ -61,23 +63,28 @@ namespace OregonTrail.MainMenu.Start_Month
             _startMonthQuestion.AppendLine($"to leave Independence{Environment.NewLine}");
 
             // Loop through every possible starting month and list them out by their enumeration integer values along with description attribute.
-            var choices = new List<StartingMonth>(Enum.GetValues(typeof (StartingMonth)).Cast<StartingMonth>());
-            for (var index = 0; index < choices.Count; index++)
+            _startingMonths = new List<StartingMonth>(Enum.GetValues(typeof (StartingMonth)).Cast<StartingMonth>());
+            for (var index = 0; index < _startingMonths.Count; index++)
             {
                 // Get the current river choice enumeration value we casted into list.
-                var monthValue = choices[index];
+                var monthValue = _startingMonths[index];
 
                 // Last line should not print new line.
-                if (index == (choices.Count - 1))
+                if (index == (_startingMonths.Count - 1))
                 {
                     _startMonthQuestion.AppendLine($"  {(int) monthValue}. {monthValue}");
-                    _startMonthQuestion.Append($"  {choices.Count + 1}. Ask for advice");
+                    _startMonthQuestion.Append($"  {_startingMonths.Count + 1}. Ask for advice");
                 }
                 else
                 {
                     _startMonthQuestion.AppendLine($"  {(int) monthValue}. {monthValue}");
                 }
             }
+        }
+
+        public override object MenuCommands
+        {
+            get { return new[] {"1", "2", "3", "4", "5", "6"}; }
         }
 
         /// <summary>

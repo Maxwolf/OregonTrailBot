@@ -43,6 +43,11 @@ namespace OregonTrail.Travel.Toll
             get { return canAffordToll; }
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] { "Yes", "No" }; }
+        }
+
         /// <summary>
         ///     Defines what type of dialog this will act like depending on this enumeration value. Up to implementation to define
         ///     desired behavior.

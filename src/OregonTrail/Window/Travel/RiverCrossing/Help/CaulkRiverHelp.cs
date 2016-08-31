@@ -51,5 +51,10 @@ namespace OregonTrail.Travel.RiverCrossing.Help
             // parentGameMode.State = new FerryHelp(parentGameMode, UserData);
             SetForm(typeof (FerryHelp));
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
     }
 }

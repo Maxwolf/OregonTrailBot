@@ -45,5 +45,10 @@ namespace OregonTrail.Travel.Hunt.Help
         {
             ClearForm();
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Return" }; }
+        }
     }
 }

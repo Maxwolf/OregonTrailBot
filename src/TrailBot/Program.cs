@@ -169,19 +169,22 @@ namespace TrailBot
             }
         }
 
-        private async static void SceneGraphOnScreenBufferDirtyEvent(string content, int[] commands, long gameID)
+        private async static void SceneGraphOnScreenBufferDirtyEvent(string content, object commands, long gameID)
         {
+            // Cast the commands as a string array.
+            var menuCommands = commands as string[];
+
             // Check if there are multiple commands that can be pressed (or dialog with continue only).
-            if ((commands != null && commands.Length <= 0) || commands == null)
+            if ((menuCommands != null && menuCommands.Length <= 0) || menuCommands == null)
             {
                 // Instruct the program that it can pass along screen buffer when it changes.
                 await Bot.SendTextMessageAsync(gameID, content,
                     replyMarkup: new ReplyKeyboardHide());
             }
-            else if (commands.Length > 0)
+            else if (menuCommands.Length > 0)
             {
                 // Get half of the commands.
-                var halfCommandCount = commands.Length / 2;
+                var halfCommandCount = menuCommands.Length / 2;
 
                 // Check if less than zero.
                 if (halfCommandCount <= 0)
@@ -203,12 +206,12 @@ namespace TrailBot
                     // First row is first half of menu options.
                     var topRow = new List<KeyboardButton>();
                     for (var i = 0; i < halfCommandCount; i++)
-                        topRow.Add(new KeyboardButton(commands[i].ToDescriptionAttribute()));
+                        topRow.Add(new KeyboardButton(menuCommands[i].ToDescriptionAttribute()));
 
                     // Second row is last half of menu options.
                     var bottomRow = new List<KeyboardButton>();
-                    for (var i = halfCommandCount; i < commands.Length; i++)
-                        bottomRow.Add(new KeyboardButton(commands[i].ToDescriptionAttribute()));
+                    for (var i = halfCommandCount; i < menuCommands.Length; i++)
+                        bottomRow.Add(new KeyboardButton(menuCommands[i].ToDescriptionAttribute()));
 
                     // Send custom keyboard.
                     var keyboard = new ReplyKeyboardMarkup(new[]

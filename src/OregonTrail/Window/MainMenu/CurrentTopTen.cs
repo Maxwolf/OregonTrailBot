@@ -83,5 +83,10 @@ namespace OregonTrail.MainMenu
                     throw new ArgumentOutOfRangeException(nameof(reponse), reponse, null);
             }
         }
+
+        public override object MenuCommands
+        {
+            get { return new[] { "Yes", "No" }; }
+        }
     }
 }

@@ -223,6 +223,20 @@ namespace OregonTrail.Travel.RiverCrossing
             }
         }
 
+        public override object MenuCommands
+        {
+            get
+            {
+                var crossList = new List<string>();
+                for (var i = 0; i < _choiceMappings.Count; i++)
+                {
+                    crossList.Add(i.ToString());
+                }
+
+                return new[] { crossList.ToArray() };
+            }
+        }
+
         /// <summary>
         ///     Returns a text only representation of the current game Windows state. Could be a statement, information, question
         ///     waiting input, etc.

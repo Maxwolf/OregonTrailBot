@@ -61,6 +61,11 @@ namespace OregonTrail.Travel.Command
                 game.Trail.CurrentLocation.Status = LocationStatus.Departed;
         }
 
+        public override object MenuCommands
+        {
+            get { return new[] { "Stop" }; }
+        }
+
         /// <summary>
         ///     Returns a text only representation of the current game Windows state. Could be a statement, information, question
         ///     waiting input, etc.
@@ -77,7 +82,7 @@ namespace OregonTrail.Travel.Command
             _drive.AppendLine(UserData.DriveStatus);
 
             // Don't add the RETURN KEY text here if we are not actually at a point.
-            _drive.Append("Press ENTER to size up the situation");
+            _drive.Append("Press STOP to size up the situation");
 
             // Wait for user input, event, or reaching next location...
             return _drive.ToString();
