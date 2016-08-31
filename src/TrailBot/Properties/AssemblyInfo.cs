@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("TrailBot")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Oregon Trail Telegram Bot Server")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Ron 'Maxwolf' McDowell")]
 [assembly: AssemblyProduct("TrailBot")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("Ron 'Maxwolf' McDowell")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

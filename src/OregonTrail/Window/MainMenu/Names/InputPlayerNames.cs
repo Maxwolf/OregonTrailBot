@@ -75,28 +75,25 @@ namespace OregonTrail.MainMenu.Names
             }
 
             // Only print player names if we have some to actually print.
-            if (UserData.PlayerNames.Count > 0)
+            if (UserData.PlayerNames.Count <= 0)
+                return;
+
+            // Loop through all the player names and get their current state.
+            var crewNumber = 1;
+
+            // Loop through every player and print their name.
+            for (var index = 0; index < GameSimulationApp.MAXPLAYERS; index++)
             {
-                // Loop through all the player names and get their current state.
-                var crewNumber = 1;
+                var name = string.Empty;
+                if (index < UserData.PlayerNames.Count)
+                    name = UserData.PlayerNames[index];
 
-                // Loop through every player and print their name.
-                for (var index = 0; index < GameSimulationApp.MAXPLAYERS; index++)
-                {
-                    var name = string.Empty;
-                    if (index < UserData.PlayerNames.Count)
-                        name = UserData.PlayerNames[index];
-
-                    // First name in list is always the leader.
-                    var isLeader = UserData.PlayerNames.IndexOf(name) == 0 && crewNumber == 1;
-                    _inputNamesHelp.AppendFormat(isLeader
-                        ? $"  {crewNumber} - {name} (leader){Environment.NewLine}"
-                        : $"  {crewNumber} - {name}{Environment.NewLine}");
-                    crewNumber++;
-                }
-
-                // Wait for user input...
-                _inputNamesHelp.Append("\n(Enter names or press Enter)");
+                // First name in list is always the leader.
+                var isLeader = UserData.PlayerNames.IndexOf(name) == 0 && crewNumber == 1;
+                _inputNamesHelp.AppendFormat(isLeader
+                    ? $"  {crewNumber} - {name} (leader){Environment.NewLine}"
+                    : $"  {crewNumber} - {name}{Environment.NewLine}");
+                crewNumber++;
             }
         }
 
@@ -121,9 +118,7 @@ namespace OregonTrail.MainMenu.Names
             {
                 // Only fill out names for slots that are empty.
                 for (var i = 0; i < (GameSimulationApp.MAXPLAYERS - UserData.PlayerNameIndex); i++)
-                {
                     UserData.PlayerNames.Insert(UserData.PlayerNameIndex, GetPlayerName());
-                }
 
                 // Attach state to confirm randomized name selection, skipping manual entry with the return.
                 SetForm(typeof (ConfirmPlayerNames));

@@ -77,6 +77,10 @@ namespace OregonTrail.Travel.Dialog
             var game = UserData.Game;
             var pointReached = new StringBuilder();
 
+            // Locations always show a picture on arrival to a new place.
+            //ParentWindow.ImagePath = UserData.Game.Trail.CurrentLocation.ImagePath;
+            ImagePath = UserData.Game.Trail.CurrentLocation.ImagePath;
+
             // Build up representation of arrival to new location, depending on location it can change.
             if (game.Trail.IsFirstLocation)
             {
@@ -124,8 +128,6 @@ namespace OregonTrail.Travel.Dialog
                     travelMode.ContinueOnTrail();
                     break;
                 case DialogResponse.Yes:
-                    //ImagePath = UserData.Game.Trail.CurrentLocation.ImagePath;
-                    ParentWindow.ImagePath = UserData.Game.Trail.CurrentLocation.ImagePath;
                     ClearForm();
                     break;
                 default:

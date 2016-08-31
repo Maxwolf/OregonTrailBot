@@ -2,6 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using OregonTrail.MainMenu.Help;
 using OregonTrail.MainMenu.Options;
@@ -39,7 +41,11 @@ namespace OregonTrail.MainMenu
         public override void OnWindowPostCreate()
         {
             var headerText = new StringBuilder();
-            headerText.Append($"The Oregon Trail{Environment.NewLine}{Environment.NewLine}");
+
+            // Graphical title for main menu.
+            ImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "title.jpg");
+
+            //headerText.Append($"The Oregon Trail{Environment.NewLine}{Environment.NewLine}");
             headerText.Append("You may:");
             MenuHeader = headerText.ToString();
 
@@ -50,13 +56,13 @@ namespace OregonTrail.MainMenu
             //AddCommand(CloseSimulation, MainMenuCommands.CloseSimulation);
         }
 
-        /// <summary>
-        ///     Does exactly what it says on the tin, closes the simulation and releases all memory.
-        /// </summary>
-        private void CloseSimulation()
-        {
-            UserData.Game.Destroy();
-        }
+        ///// <summary>
+        /////     Does exactly what it says on the tin, closes the simulation and releases all memory.
+        ///// </summary>
+        //private void CloseSimulation()
+        //{
+        //    UserData.Game.Destroy();
+        //}
 
         /// <summary>
         ///     Glorified options menu, used to clear top ten, Tombstone messages, and saved games.

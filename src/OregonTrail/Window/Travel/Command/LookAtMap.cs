@@ -2,6 +2,9 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using OregonTrail.Form;
 using OregonTrail.Form.Input;
@@ -43,17 +46,17 @@ namespace OregonTrail.Travel.Command
         {
             // Create visual progress representation of the trail.
             var mapPrompt = new StringBuilder();
-            mapPrompt.AppendLine($"{Environment.NewLine}Trail progress{Environment.NewLine}");
-            var perc = UserData.Game.Trail.LocationIndex + 1/(decimal) UserData.Game.Trail.Locations.Count;
-            mapPrompt.AppendFormat("{0}%", (perc*100).ToString("N2"));
+            mapPrompt.AppendLine($"{Environment.NewLine}Trail Progress");
+
+            // Graphical title for main menu.
+            ImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "map.jpg");
 
             // Build up a table of location names and if the player has visited them.
-            var locationTable = UserData.Game.Trail.Locations.ToStringTable(
-                new[] {"Visited", "Location Name"},
-                u => u.Status >= LocationStatus.Arrived,
-                u => u.Name
-                );
-            mapPrompt.AppendLine($"{locationTable}");
+            var locationsCompleted = UserData.Game.Trail.Locations.Count(
+                location => location.Status == LocationStatus.Arrived && location.ArrivalFlag);
+
+            var locationsPercentComplete = locationsCompleted/(decimal)UserData.Game.Trail.Locations.Count;
+            mapPrompt.AppendLine(locationsPercentComplete.ToString("P"));
 
             return mapPrompt.ToString();
         }

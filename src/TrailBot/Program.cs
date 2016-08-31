@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using OregonTrail;
 using Telegram.Bot;
@@ -38,7 +40,7 @@ namespace TrailBot
             Console.Title = me.Username;
 
             // Create console with title, no cursor, make CTRL-C act as input.
-            Console.Title = "Oregon Trail Clone";
+            Console.Title = "Oregon Trail Telegram Bot Server";
             Console.Clear();
             Console.SetCursorPosition(0, 0);
             Console.CursorVisible = false;
@@ -80,7 +82,7 @@ namespace TrailBot
             Console.Clear();
             Console.SetCursorPosition(0, 0);
             Console.CursorVisible = false;
-            Console.WriteLine($"Oregon Trail Clone{Environment.NewLine}Sessions: {_sessions.Count.ToString("N0")}");
+            Console.WriteLine($"Oregon Trail Telegram Bot Server{Environment.NewLine}Sessions: {_sessions.Count.ToString("N0")}");
         }
 
         /// <summary>
@@ -142,13 +144,16 @@ namespace TrailBot
                     messageEventArgs.Message.Text.Contains(SceneGraph.GAMEMODE_EMPTY_TUI))
                     return;
 
-                // Tell the players what we are doing.
-                await Bot.SendTextMessageAsync(message.Chat.Id,
-                    $"Creating new Oregon Trail session with token: {message.Chat.Id}",
-                    replyMarkup: new ReplyKeyboardHide(),
-                    parseMode: ParseMode.Markdown,
-                    disableWebPagePreview: true,
-                    disableNotification: true);
+                //// Tell the players what we are doing.
+                //await Bot.SendTextMessageAsync(message.Chat.Id,
+                //    $"Creating new Oregon Trail session with token: {message.Chat.Id}",
+                //    replyMarkup: new ReplyKeyboardHide(),
+                //    parseMode: ParseMode.Markdown,
+                //    disableWebPagePreview: true,
+                //    disableNotification: true);
+
+                // Makes the bot appear to be thinking.
+                await Bot.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
 
                 // Create a new game session using chat room ID as key in our dictionary.
                 _sessions.Add(message.Chat.Id, new GameSimulationApp(message.Chat.Id, Bot));
@@ -178,12 +183,12 @@ namespace TrailBot
                 content.Contains(SceneGraph.GAMEMODE_EMPTY_TUI))
                 return;
 
-            // Makes the bot appear to be thinking.
-            await Bot.SendChatActionAsync(gameID, ChatAction.Typing);
-
             // Check if there are multiple commands that can be pressed (or dialog with continue only).
             if ((menuCommands != null && menuCommands.Length <= 0) || menuCommands == null)
             {
+                // Makes the bot appear to be thinking.
+                await Bot.SendChatActionAsync(gameID, ChatAction.Typing);
+
                 // Instruct the program that it can pass along screen buffer when it changes.
                 await Bot.SendTextMessageAsync(gameID, content,
                     replyMarkup: new ReplyKeyboardHide(),
@@ -199,19 +204,62 @@ namespace TrailBot
                 if (halfCommandCount <= 0)
                 {
                     // Send custom keyboard.
-                    var buttons = new List<KeyboardButton>();
+                    var button = new List<KeyboardButton>();
                     foreach (var t in menuCommands)
-                        buttons.Add(new KeyboardButton(t));
+                        button.Add(new KeyboardButton(t));
 
                     var keyboard = new ReplyKeyboardMarkup(new[]
                     {
-                        buttons.ToArray()
+                        button.ToArray()
                     }, true, true);
 
-                    await Bot.SendTextMessageAsync(gameID, content,
-                        replyMarkup: keyboard,
-                        disableWebPagePreview: true,
-                        disableNotification: true);
+                    // Simulation can send photos to chat to help visualize locations.
+                    if (_sessions[gameID].WindowManager.FocusedWindow == null)
+                        return;
+
+                    // Figures out where the image will be coming from.
+                    var fileName = string.Empty;
+                    var filePath = string.Empty;
+                    if (!string.IsNullOrEmpty(_sessions[gameID].WindowManager.FocusedWindow.ImagePath) &&
+                        _sessions[gameID].WindowManager.FocusedWindow.CurrentForm == null)
+                    {
+                        fileName = _sessions[gameID].WindowManager.FocusedWindow.ImagePath.Split('\\').Last();
+                        filePath = _sessions[gameID].WindowManager.FocusedWindow.ImagePath;
+                    }
+                    else if (_sessions[gameID].WindowManager.FocusedWindow.CurrentForm != null &&
+                             !string.IsNullOrEmpty(
+                                 _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath))
+                    {
+                        fileName = _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath.Split('\\').Last();
+                        filePath = _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath;
+                    }
+
+                    // Abort if there is no valid filename.
+                    if (string.IsNullOrEmpty(fileName))
+                    {
+                        // Makes the bot appear to be thinking.
+                        await Bot.SendChatActionAsync(gameID, ChatAction.Typing);
+
+                        // Text operations do not include photos.
+                        await Bot.SendTextMessageAsync(gameID, content,
+                            replyMarkup: keyboard,
+                            disableWebPagePreview: true,
+                            disableNotification: true);
+                    }
+                    else
+                    {
+                        // Grabs the picture from the given path and then loads it into the Telegram API.
+                        using (
+                            var fileStream = new FileStream(
+                                filePath, FileMode.Open,
+                                FileAccess.Read, FileShare.Read))
+                        {
+                            var fts = new FileToSend(fileName, fileStream);
+                            await Bot.SendPhotoAsync(gameID, fts, content,
+                                replyMarkup: keyboard,
+                                disableNotification: true);
+                        }
+                    }
                 }
                 else
                 {
@@ -232,13 +280,70 @@ namespace TrailBot
                         bottomRow.ToArray()
                     }, true, true);
 
-                    // Send the message to chat room.
-                    await Bot.SendTextMessageAsync(
-                        gameID,
-                        content,
-                        replyMarkup: keyboard,
-                        disableWebPagePreview: true,
-                        disableNotification: true);
+                    // Figures out where the image will be coming from.
+                    string fileName;
+                    string filePath;
+                    if (!string.IsNullOrEmpty(_sessions[gameID].WindowManager.FocusedWindow.ImagePath) &&
+                        _sessions[gameID].WindowManager.FocusedWindow.CurrentForm == null)
+                    {
+                        filePath = _sessions[gameID].WindowManager.FocusedWindow.ImagePath;
+                        fileName = _sessions[gameID].WindowManager.FocusedWindow.ImagePath.Split('\\').Last();
+                        await Bot.SendChatActionAsync(gameID, ChatAction.UploadPhoto);
+
+                        // Grabs the picture from the given path and then loads it into the Telegram API.
+                        using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                        {
+                            var fts = new FileToSend(fileName, fileStream);
+                            await Bot.SendPhotoAsync(gameID, fts, content,
+                                replyMarkup: keyboard,
+                                disableNotification: true);
+                        }
+                    }
+                    else if (_sessions[gameID].WindowManager.FocusedWindow.CurrentForm != null &&
+                        !string.IsNullOrEmpty(
+                            _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath))
+                    {
+                        filePath = _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath;
+                        fileName = _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath.Split('\\').Last();
+                        await Bot.SendChatActionAsync(gameID, ChatAction.UploadPhoto);
+
+                        // Abort if there is no valid filename.
+                        if (string.IsNullOrEmpty(fileName))
+                        {
+                            await Bot.SendChatActionAsync(gameID, ChatAction.Typing);
+
+                            // Send the message to chat room.
+                            await Bot.SendTextMessageAsync(
+                                gameID,
+                                content,
+                                replyMarkup: keyboard,
+                                disableWebPagePreview: true,
+                                disableNotification: true);
+                        }
+                        else
+                        {
+                            // Grabs the picture from the given path and then loads it into the Telegram API.
+                            using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                            {
+                                var fts = new FileToSend(fileName, fileStream);
+                                await Bot.SendPhotoAsync(gameID, fts, content,
+                                    replyMarkup: keyboard,
+                                    disableNotification: true);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        await Bot.SendChatActionAsync(gameID, ChatAction.Typing);
+
+                        // Send the message to chat room.
+                        await Bot.SendTextMessageAsync(
+                            gameID,
+                            content,
+                            replyMarkup: keyboard,
+                            disableWebPagePreview: true,
+                            disableNotification: true);
+                    }
                 }
             }
         }

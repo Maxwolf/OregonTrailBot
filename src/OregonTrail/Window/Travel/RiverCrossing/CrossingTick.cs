@@ -68,7 +68,12 @@ namespace OregonTrail.Travel.RiverCrossing
 
         public override object MenuCommands
         {
-            get { return null; }
+            get
+            {
+                return _riverCrossingOfTotalWidth >= UserData.River.RiverWidth
+                    ? new[] {"Finish Crossing"}
+                    : null;
+            }
         }
 
         /// <summary>
