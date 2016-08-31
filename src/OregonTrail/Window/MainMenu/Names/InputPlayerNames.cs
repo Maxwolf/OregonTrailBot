@@ -55,21 +55,21 @@ namespace OregonTrail.MainMenu.Names
             {
                 case 0:
                     _inputNamesHelp.Append(Environment.NewLine +
-                                           $"{MainMenu.LEADER_QUESTION}");
+                                           $"{MainMenu.LeaderQuestion}");
                     break;
                 case 1:
                     _inputNamesHelp.Append(Environment.NewLine +
-                                           $"{MainMenu.MEMBERS_QUESTION}" +
+                                           $"{MainMenu.MembersQuestion}" +
                                            $"{Environment.NewLine}{Environment.NewLine}");
                     break;
                 case 2:
                     _inputNamesHelp.Append(Environment.NewLine +
-                                           $"{MainMenu.MEMBERS_QUESTION}" +
+                                           $"{MainMenu.MembersQuestion}" +
                                            $"{Environment.NewLine}{Environment.NewLine}");
                     break;
                 case 3:
                     _inputNamesHelp.Append(Environment.NewLine +
-                                           $"{MainMenu.MEMBERS_QUESTION}" +
+                                           $"{MainMenu.MembersQuestion}" +
                                            $"{Environment.NewLine}{Environment.NewLine}");
                     break;
             }

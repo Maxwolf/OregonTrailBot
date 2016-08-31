@@ -44,18 +44,10 @@ namespace OregonTrail.Travel.Command
             base.OnFormPostCreate();
 
             _ration = new StringBuilder();
-            _ration.AppendLine($"{Environment.NewLine}Change food rations");
-            _ration.AppendLine(
-                $"(currently \"{UserData.Game.Vehicle.Ration.ToDescriptionAttribute()}\"){Environment.NewLine}");
-            _ration.AppendLine($"The amount of food the people in");
-            _ration.AppendLine($"your party eat each day can");
-            _ration.AppendLine($"change. These amounts are:{Environment.NewLine}");
-            _ration.AppendLine($"1. filling - meals are large and");
-            _ration.AppendLine($"   generous.{Environment.NewLine}");
-            _ration.AppendLine($"2. meager - meals are small, but");
-            _ration.AppendLine($"   adequate.{Environment.NewLine}");
-            _ration.AppendLine($"3. bare bones - meals are very");
-            _ration.Append($"   small, everyone stays hungry.");
+            _ration.AppendLine($"Change food rations (currently \"{UserData.Game.Vehicle.Ration.ToDescriptionAttribute()}\"){Environment.NewLine} The amount of food the people in your party eat each day can change. These amounts are:{Environment.NewLine}");
+            _ration.AppendLine("1. filling - meals are large and generous.");
+            _ration.AppendLine("2. meager - meals are small, but adequate.");
+            _ration.AppendLine("3. bare bones - meals are very small, everyone stays hungry.");
         }
 
         /// <summary>

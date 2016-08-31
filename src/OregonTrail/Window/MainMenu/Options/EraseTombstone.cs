@@ -35,7 +35,7 @@ namespace OregonTrail.MainMenu.Options
 
         public override object MenuCommands
         {
-            get { return new[] {"Ok"}; }
+            get { return new[] {"Yes", "No"}; }
         }
 
         /// <summary>
@@ -49,17 +49,12 @@ namespace OregonTrail.MainMenu.Options
             var eraseEpitaphs = new StringBuilder();
 
             // Text above the table to declare what this state is.
-            eraseEpitaphs.Append(
-                $"{Environment.NewLine}Erase tombstone messages{Environment.NewLine}{Environment.NewLine}");
+            eraseEpitaphs.AppendLine(
+                $"{Environment.NewLine}Erase tombstone messages{Environment.NewLine}");
 
             // Tell the user how tombstones work before destroying them.
-            eraseEpitaphs.Append($"There may be one tombstone on{Environment.NewLine}");
-            eraseEpitaphs.Append($"the first half of the trail and{Environment.NewLine}");
-            eraseEpitaphs.Append($"one tombstone on the second{Environment.NewLine}");
-            eraseEpitaphs.Append($"half. If you erase the{Environment.NewLine}");
-            eraseEpitaphs.Append($"tombstone messages, they will{Environment.NewLine}");
-            eraseEpitaphs.Append($"not be replaced until team{Environment.NewLine}");
-            eraseEpitaphs.Append($"leaders die along the trail.{Environment.NewLine}{Environment.NewLine}");
+            eraseEpitaphs.AppendLine(
+                $"There may be one tombstone on the first half of the trail and one tombstone on the second half. If you erase the tombstone messages, they will not be replaced until team leaders die along the trail.{Environment.NewLine}");
 
             eraseEpitaphs.Append("Do you want to do this? Y/N");
             return eraseEpitaphs.ToString();

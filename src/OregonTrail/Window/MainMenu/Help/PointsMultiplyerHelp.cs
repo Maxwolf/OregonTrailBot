@@ -37,18 +37,11 @@ namespace OregonTrail.MainMenu.Help
         /// </returns>
         protected override string OnDialogPrompt()
         {
-            var _pointsProfession = new StringBuilder();
-            _pointsProfession.Append(
+            var pointsProfession = new StringBuilder();
+            pointsProfession.Append(
                 $"{Environment.NewLine}On Arriving in Oregon{Environment.NewLine}{Environment.NewLine}");
-            _pointsProfession.AppendLine("You receive points for your");
-            _pointsProfession.AppendLine("occupation in the new land.");
-            _pointsProfession.AppendLine("Because more farmers and");
-            _pointsProfession.AppendLine("carpenters were needed than");
-            _pointsProfession.AppendLine("bankers, you receive double");
-            _pointsProfession.AppendLine("points upon arriving in Oregon");
-            _pointsProfession.AppendLine("as a carpenter, and triple");
-            _pointsProfession.AppendLine($"points for arriving as a farmer.{Environment.NewLine}");
-            return _pointsProfession.ToString();
+            pointsProfession.AppendLine("You receive points for your occupation in the new land. Because more farmers and carpenters were needed than bankers, you receive double points upon arriving in Oregon as a carpenter, and triple points for arriving as a farmer.{Environment.NewLine}");
+            return pointsProfession.ToString();
         }
 
         /// <summary>

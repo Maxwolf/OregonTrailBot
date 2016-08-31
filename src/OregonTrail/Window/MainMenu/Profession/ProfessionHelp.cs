@@ -35,19 +35,14 @@ namespace OregonTrail.MainMenu.Profession
         protected override string OnDialogPrompt()
         {
             // Information about professions and how they work.
-            var _job = new StringBuilder();
-            _job.Append($"{Environment.NewLine}Traveling to Oregon isn't easy!{Environment.NewLine}");
-            _job.Append($"But if you're a banker, you'll{Environment.NewLine}");
-            _job.Append($"have more money for supplies{Environment.NewLine}");
-            _job.Append($"and services than a carpenter{Environment.NewLine}");
-            _job.Append($"or a farmer.{Environment.NewLine}{Environment.NewLine}");
-            _job.Append($"However, the harder you have{Environment.NewLine}");
-            _job.Append($"to try, the more points you{Environment.NewLine}");
-            _job.Append($"deserve! Therefore, the{Environment.NewLine}");
-            _job.Append($"farmer earns the greatest{Environment.NewLine}");
-            _job.Append($"number of points and the{Environment.NewLine}");
-            _job.Append($"banker earns the least.{Environment.NewLine}{Environment.NewLine}");
-            return _job.ToString();
+            var jobInfo = new StringBuilder();
+            jobInfo.AppendLine($"{Environment.NewLine}Traveling to Oregon isn't easy!{Environment.NewLine}");
+            jobInfo.Append(
+                $"But if you're a banker, you'll have more money for supplies and services than a carpenter or a farmer.{Environment.NewLine}");
+
+            jobInfo.AppendLine(
+                $"However, the harder you have to try, the more points you deserve! Therefore, the farmer earns the greatest number of points and the banker earns the least.{Environment.NewLine}{Environment.NewLine}");
+            return jobInfo.ToString();
         }
 
         /// <summary>

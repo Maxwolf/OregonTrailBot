@@ -56,8 +56,7 @@ namespace OregonTrail.RandomEvent
         protected override string OnDialogPrompt()
         {
             return
-                $"{Environment.NewLine}Since you don't have a spare {UserData.Game.Vehicle.BrokenPart.Name.ToLowerInvariant()}" +
-                $" you must trade for one.{Environment.NewLine}{Environment.NewLine}";
+                $"{Environment.NewLine}Since you don't have a spare {UserData.Game.Vehicle.BrokenPart.Name.ToLowerInvariant()} you must trade for one.{Environment.NewLine}";
         }
 
         /// <summary>

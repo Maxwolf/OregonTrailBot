@@ -19,13 +19,13 @@ namespace OregonTrail.MainMenu
         /// <summary>
         ///     Asked for the first party member.
         /// </summary>
-        public const string LEADER_QUESTION = "What is the first name of the wagon leader?";
+        public const string LeaderQuestion = "What is the first name of the wagon leader?";
 
         /// <summary>
         ///     Asked for every other party member name we want to collect.
         /// </summary>
-        public static readonly string MEMBERS_QUESTION =
-            $"What are the first names of the{Environment.NewLine}three other members in your party?";
+        public const string MembersQuestion =
+            "What are the first names of the three other members in your party?";
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="Window{TCommands,TData}" /> class.
@@ -44,8 +44,6 @@ namespace OregonTrail.MainMenu
 
             // Graphical title for main menu.
             ImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "title.jpg");
-
-            //headerText.Append($"The Oregon Trail{Environment.NewLine}{Environment.NewLine}");
             headerText.Append("You may:");
             MenuHeader = headerText.ToString();
 

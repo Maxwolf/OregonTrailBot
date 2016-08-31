@@ -45,16 +45,12 @@ namespace OregonTrail.Travel.Command
             base.OnFormPostCreate();
 
             _pace = new StringBuilder();
-            _pace.Append($"{Environment.NewLine}Change pace{Environment.NewLine}");
-            _pace.Append(
-                $"(currently \"{UserData.Game.Vehicle.Pace}\"){Environment.NewLine}{Environment.NewLine}");
-            _pace.Append($"The pace at which you travel{Environment.NewLine}");
-            _pace.Append($"can change. Your choices are:{Environment.NewLine}{Environment.NewLine}");
-            _pace.Append($"1. a steady pace{Environment.NewLine}");
-            _pace.Append($"2. a strenuous pace{Environment.NewLine}");
-            _pace.Append($"3. a grueling pace{Environment.NewLine}");
-            _pace.Append($"4. find out what these{Environment.NewLine}");
-            _pace.Append($"   different paces mean");
+            _pace.AppendLine(
+                $"Change pace (currently \"{UserData.Game.Vehicle.Pace}\"){Environment.NewLine}The pace at which you travel can change. Your choices are:{Environment.NewLine}");
+            _pace.AppendLine("1. a steady pace");
+            _pace.AppendLine("2. a strenuous pace");
+            _pace.AppendLine("3. a grueling pace");
+            _pace.Append("4. find out what these different paces mean");
         }
 
         /// <summary>

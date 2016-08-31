@@ -49,12 +49,10 @@ namespace OregonTrail.Travel.RiverCrossing.Ferry
         /// </returns>
         protected override string OnDialogPrompt()
         {
-            var _prompt = new StringBuilder();
-            _prompt.AppendLine($"{Environment.NewLine}The ferry operator says that");
-            _prompt.AppendLine($"he will charge you {UserData.River.FerryCost.ToString("C2")} and");
-            _prompt.AppendLine($"that you will have to wait {UserData.River.FerryDelayInDays}");
-            _prompt.Append("days. Are you willing to do this?");
-            return _prompt.ToString();
+            var ferryConfirm = new StringBuilder();
+            ferryConfirm.AppendLine(
+                $"{Environment.NewLine}The ferry operator says that he will charge you {UserData.River.FerryCost.ToString("C2")} and that you will have to wait {UserData.River.FerryDelayInDays} days. Are you willing to do this?");
+            return ferryConfirm.ToString();
         }
 
         /// <summary>

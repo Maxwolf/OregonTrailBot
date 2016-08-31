@@ -51,7 +51,7 @@ namespace OregonTrail.Travel.Rest
 
         public override object MenuCommands
         {
-            get { return new[] {"WAKE"}; }
+            get { return null; }
         }
 
         /// <summary>
@@ -125,37 +125,21 @@ namespace OregonTrail.Travel.Rest
             if (UserData.Game.Trail.CurrentLocation is ForkInRoad)
             {
                 if (_daysRested > 1)
-                {
                     _restMessage.AppendLine($"{Environment.NewLine}You camp near the river for {_daysRested} days.");
-                }
                 else if (_daysRested == 1)
-                {
                     _restMessage.AppendLine($"{Environment.NewLine}You camp near the river for a day.");
-                }
                 else if (_daysRested <= 0)
-                {
                     _restMessage.AppendLine($"{Environment.NewLine}Preparing to camp near the river...");
-                }
             }
             else
             {
                 if (_daysRested > 1)
-                {
                     _restMessage.AppendLine($"{Environment.NewLine}You rest for {_daysRested} days");
-                }
                 else if (_daysRested == 1)
-                {
                     _restMessage.AppendLine($"{Environment.NewLine}You rest for a day.");
-                }
-                else if (_daysRested <= 0)
-                {
-                    _restMessage.AppendLine($"{Environment.NewLine}Preparing to rest...");
-                }
+                //else if (_daysRested <= 0)
+                //    _restMessage.AppendLine($"{Environment.NewLine}Preparing to rest...");
             }
-
-            // Allow the user to stop resting, this will break the cycle and reset days to rest to zero.
-            if (_daysRested > 0)
-                _restMessage.AppendLine($"{Environment.NewLine}Press WAKE to stop resting.{Environment.NewLine}");
 
             // Prints out the message about resting for however long this cycle was.
             return _restMessage.ToString();

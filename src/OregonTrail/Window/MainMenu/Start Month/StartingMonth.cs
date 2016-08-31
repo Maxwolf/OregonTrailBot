@@ -11,27 +11,27 @@ namespace OregonTrail.MainMenu.Start_Month
     public enum StartingMonth
     {
         /// <summary>
-        ///     The march.
+        ///     Month of March.
         /// </summary>
         March = 1,
 
         /// <summary>
-        ///     The april.
+        ///     Month of April.
         /// </summary>
         April = 2,
 
         /// <summary>
-        ///     The may.
+        ///     Month of May.
         /// </summary>
         May = 3,
 
         /// <summary>
-        ///     The june.
+        ///     Month of June.
         /// </summary>
         June = 4,
 
         /// <summary>
-        ///     The july.
+        ///     Month of July.
         /// </summary>
         July = 5
     }

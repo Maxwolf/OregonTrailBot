@@ -124,9 +124,6 @@ namespace OregonTrail.Travel.Hunt
                 // Will hole on the string data representing hunting status.
                 var huntStatus = new StringBuilder();
 
-                // Build up the status for the current hunt.
-                //huntStatus.AppendLine($"{Environment.NewLine}--------------------------------");
-
                 // Title displays some basic info about the area.
                 huntStatus.AppendLine(_game.Trail.CurrentLocation.Status != LocationStatus.Departed
                     ? $"Hunting outside {_game.Trail.CurrentLocation.Name}"
@@ -138,7 +135,6 @@ namespace OregonTrail.Travel.Hunt
 
                 // Current weather on the planes.
                 huntStatus.AppendLine($"Weather: {_game.Trail.CurrentLocation.Weather.ToDescriptionAttribute()}");
-                //huntStatus.AppendLine("--------------------------------");
 
                 // Show the player their current shooting word and target they are aiming at.
                 huntStatus.AppendLine(
@@ -160,8 +156,7 @@ namespace OregonTrail.Travel.Hunt
                 // Prompt the player with information about what to do.
                 if (ShootingWord != HuntWord.None)
                 {
-                    huntStatus.AppendLine($"Type the word '{ShootingWord.ToString().ToLowerInvariant()}' to");
-                    huntStatus.Append("take a shot!");
+                    huntStatus.AppendLine($"Type the word '{ShootingWord.ToString().ToLowerInvariant()}' to take a shot!");
                 }
                 else
                 {
@@ -172,8 +167,7 @@ namespace OregonTrail.Travel.Hunt
 
                     // Prey will read out animals for multiple, and just animal for one (1), animals for zero (0).
                     huntStatus.AppendLine(
-                        $"{Environment.NewLine}You sense {_sortedPrey.Count.ToString("N0")} {animalText}");
-                    huntStatus.Append("in the area...");
+                        $"{Environment.NewLine}You sense {_sortedPrey.Count.ToString("N0")} {animalText} in the area...");
                 }
 
                 return huntStatus.ToString();

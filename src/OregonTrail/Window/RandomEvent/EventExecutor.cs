@@ -44,7 +44,7 @@ namespace OregonTrail.RandomEvent
         protected override string OnDialogPrompt()
         {
             // Create new string builder that will hold event execution data.
-            var _randomEventText = new StringBuilder();
+            var randomEvent = new StringBuilder();
 
             // Execute the event which should return us some text to display to user about what it did to running simulation.
             UserData.DirectorEvent.Execute(UserData);
@@ -63,9 +63,9 @@ namespace OregonTrail.RandomEvent
                 return "Loading event...";
 
             // Add the text to our output about the random event.
-            _randomEventText.AppendLine(
+            randomEvent.AppendLine(
                 $"{Environment.NewLine}{eventText}{Environment.NewLine}");
-            return _randomEventText.ToString();
+            return randomEvent.ToString();
         }
 
         /// <summary>

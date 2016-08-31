@@ -55,8 +55,7 @@ namespace OregonTrail.RandomEvent
         /// </returns>
         protected override string OnDialogPrompt()
         {
-            return $"{Environment.NewLine}You were able to repair the " +
-                   $"{UserData.Game.Vehicle.BrokenPart.Name.ToLowerInvariant()} using your spare.{Environment.NewLine}{Environment.NewLine}";
+            return $"{Environment.NewLine}You were able to repair the {UserData.Game.Vehicle.BrokenPart.Name.ToLowerInvariant()} using your spare.{Environment.NewLine}";
         }
 
         /// <summary>

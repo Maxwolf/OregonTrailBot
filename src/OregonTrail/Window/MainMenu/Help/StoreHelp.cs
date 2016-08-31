@@ -36,10 +36,9 @@ namespace OregonTrail.MainMenu.Help
         /// </returns>
         protected override string OnDialogPrompt()
         {
-            var _storeHelp = new StringBuilder();
-            _storeHelp.Append($"{Environment.NewLine}You can buy whatever you need at{Environment.NewLine}");
-            _storeHelp.Append($"Matt's General Store.{Environment.NewLine}{Environment.NewLine}");
-            return _storeHelp.ToString();
+            var storeHelp = new StringBuilder();
+            storeHelp.AppendLine($"{Environment.NewLine}You can buy whatever you need at Matt's General Store.");
+            return storeHelp.ToString();
         }
 
         /// <summary>

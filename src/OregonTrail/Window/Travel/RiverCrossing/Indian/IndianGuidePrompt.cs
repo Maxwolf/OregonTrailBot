@@ -58,7 +58,12 @@ namespace OregonTrail.Travel.RiverCrossing.Indian
 
         public override object MenuCommands
         {
-            get { return new[] {"Yes", "No"}; }
+            get
+            {
+                return HasEnoughClothingToTrade
+                    ? new[] {"Yes", "No"}
+                    : new[] {"Ok"};
+            }
         }
 
         /// <summary>
@@ -70,28 +75,16 @@ namespace OregonTrail.Travel.RiverCrossing.Indian
         protected override string OnDialogPrompt()
         {
             // Builds up the first part about the Indian guide for river crossing.
-            var _prompt = new StringBuilder();
-            _prompt.AppendLine($"{Environment.NewLine}A Shoshoni guide says that he");
-            _prompt.AppendLine("will take your wagon across");
-            _prompt.AppendLine($"the river in exchange for {UserData.River.IndianCost.ToString("N0")}");
-            _prompt.AppendLine($"sets of clothing.{Environment.NewLine}");
+            var indianGuidePrompt = new StringBuilder();
+            indianGuidePrompt.AppendLine($"{Environment.NewLine}A Shoshoni guide says that he will take your wagon across the river in exchange for {UserData.River.IndianCost.ToString("N0")} sets of clothing.{Environment.NewLine}");
 
             // Change up the message based on if the player has enough clothing, they won't be able to get more if they don't here.
-            if (HasEnoughClothingToTrade)
-            {
-                // Player has enough clothing to satisfy the Indians cost.
-                _prompt.AppendLine("Will you accept this");
-                _prompt.Append("offer? Y/N");
-            }
-            else
-            {
-                // Player does not have enough clothing to satisfy the Indian cost.
-                _prompt.AppendLine($"You don't have {UserData.River.IndianCost.ToString("N0")} sets of");
-                _prompt.AppendLine($"clothing.{Environment.NewLine}");
-            }
+            indianGuidePrompt.AppendLine(HasEnoughClothingToTrade
+                ? "Will you accept this offer? Y/N"
+                : $"You don't have {UserData.River.IndianCost.ToString("N0")} sets of clothing.{Environment.NewLine}");
 
             // Renders out the Indian guide river crossing confirmation and or denial.
-            return _prompt.ToString();
+            return indianGuidePrompt.ToString();
         }
 
         /// <summary>

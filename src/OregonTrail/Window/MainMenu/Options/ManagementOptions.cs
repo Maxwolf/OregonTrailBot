@@ -44,8 +44,8 @@ namespace OregonTrail.MainMenu.Options
             base.OnFormPostCreate();
 
             _optionsPrompt.AppendLine($"{Environment.NewLine}The Oregon Trail");
-            _optionsPrompt.AppendLine(
-                $"Version: {Assembly.GetExecutingAssembly().GetName().Version}{Environment.NewLine}");
+            //_optionsPrompt.AppendLine(
+            //    $"Version: {Assembly.GetExecutingAssembly().GetName().Version}{Environment.NewLine}");
             _optionsPrompt.AppendLine($"Management Options{Environment.NewLine}");
             _optionsPrompt.AppendLine("You may:");
             _optionsPrompt.AppendLine("1. See the original Top Ten list");

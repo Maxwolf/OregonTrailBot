@@ -36,14 +36,10 @@ namespace OregonTrail.Travel.RiverCrossing.Ferry
         /// </returns>
         protected override string OnDialogPrompt()
         {
-            var _prompt = new StringBuilder();
-            _prompt.AppendLine($"{Environment.NewLine}To use a ferry means to put");
-            _prompt.AppendLine("your wagon on top of a flat");
-            _prompt.AppendLine("boat that belongs to someone");
-            _prompt.AppendLine("else. The owner of the");
-            _prompt.AppendLine("ferry will take your wagon");
-            _prompt.AppendLine($"across the river.{Environment.NewLine}");
-            return _prompt.ToString();
+            var ferryHelp = new StringBuilder();
+            ferryHelp.AppendLine(
+                $"{Environment.NewLine}To use a ferry means to put your wagon on top of a flat boat that belongs to someone else. The owner of the ferry will take your wagon across the river.{Environment.NewLine}");
+            return ferryHelp.ToString();
         }
 
         /// <summary>

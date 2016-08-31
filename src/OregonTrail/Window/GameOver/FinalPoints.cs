@@ -86,7 +86,7 @@ namespace OregonTrail.GameOver
             {
                 // HealthStatus of vehicle passengers that are still alive.
                 new Tuple<int, string, int>(
-                    game.Vehicle.Passengers.Count,
+                    game.Vehicle.PassengerLivingCount,
                     $"people in {avgHealth.ToDescriptionAttribute().ToLowerInvariant()} health",
                     game.Vehicle.PassengerLivingCount*(int) avgHealth),
                 new Tuple<int, string, int>(1, "wagon", Resources.Vehicle.Points),
@@ -148,7 +148,7 @@ namespace OregonTrail.GameOver
             }
 
             // When building up the bonus text we will change the message about point multiplier so it makes sense.
-            _pointsPrompt.AppendLine(
+            _pointsPrompt.Append(
                 $"{Environment.NewLine}For going as a {leaderPerson.Profession.ToString().ToLowerInvariant()}, your");
             switch (leaderPerson.Profession)
             {

@@ -51,8 +51,7 @@ namespace OregonTrail.Graveyard
             // Add Tombstone message with here lies player name, no epitaph yet.
             epitaphPrompt.Clear();
             epitaphPrompt.Append($"{Environment.NewLine}{UserData.Tombstone}");
-            epitaphPrompt.AppendLine($"{Environment.NewLine}Would you like to write");
-            epitaphPrompt.Append("an epitaph? Y/N");
+            epitaphPrompt.AppendLine($"{Environment.NewLine}Would you like to write an epitaph? Y/N");
             return epitaphPrompt.ToString();
         }
 

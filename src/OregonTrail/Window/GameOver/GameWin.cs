@@ -42,10 +42,7 @@ namespace OregonTrail.GameOver
         /// </returns>
         protected override string OnDialogPrompt()
         {
-            _gameOver.AppendLine($"{Environment.NewLine}Congratulations! You have ");
-            _gameOver.AppendLine("made it to Oregon! Let's see ");
-            _gameOver.AppendLine("how many points you have ");
-            _gameOver.AppendLine($"received.{Environment.NewLine}");
+            _gameOver.AppendLine($"{Environment.NewLine}Congratulations! You have made it to Oregon! Let's see how many points you have received.{Environment.NewLine}");
             return _gameOver.ToString();
         }
 

@@ -62,10 +62,8 @@ namespace OregonTrail.MainMenu.Start_Month
 
             // Tell the user they need to make a decision.
             _startMonthQuestion = new StringBuilder();
-            _startMonthQuestion.AppendLine($"{Environment.NewLine}It is 1848. Your jumping off place");
-            _startMonthQuestion.AppendLine("for Oregon is Independence, Missouri.");
-            _startMonthQuestion.AppendLine("You must decide which month");
-            _startMonthQuestion.AppendLine($"to leave Independence{Environment.NewLine}");
+            _startMonthQuestion.AppendLine(
+                $"{Environment.NewLine}It is 1848. Your jumping off place for Oregon is Independence, Missouri. You must decide which month to leave Independence{Environment.NewLine}");
 
             // Loop through every possible starting month and list them out by their enumeration integer values along with description attribute.
             _startingMonths = new List<StartingMonth>(Enum.GetValues(typeof (StartingMonth)).Cast<StartingMonth>());
@@ -135,9 +133,6 @@ namespace OregonTrail.MainMenu.Start_Month
                     SetForm(typeof (InitialItemsHelp));
                     break;
                 default:
-
-
-// Shows information about what the different starting months mean.
                     SetForm(typeof (StartMonthHelp));
                     break;
             }

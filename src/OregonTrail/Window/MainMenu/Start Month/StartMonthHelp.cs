@@ -34,19 +34,12 @@ namespace OregonTrail.MainMenu.Start_Month
         protected override string OnDialogPrompt()
         {
             // Inform the user about a decision they need to make.
-            var _startMonthHelp = new StringBuilder();
-            _startMonthHelp.Append($"{Environment.NewLine}You attend a public meeting held{Environment.NewLine}");
-            _startMonthHelp.Append($"for \"folks with the California -{Environment.NewLine}");
-            _startMonthHelp.Append($"Oregon fever.\" You're told:{Environment.NewLine}{Environment.NewLine}");
-            _startMonthHelp.Append($"If you leave too early, there{Environment.NewLine}");
-            _startMonthHelp.Append($"won't be any grass for your{Environment.NewLine}");
-            _startMonthHelp.Append($"oxen to eat. If you leave too{Environment.NewLine}");
-            _startMonthHelp.Append($"late, you may not get to Oregon{Environment.NewLine}");
-            _startMonthHelp.Append($"before winter comes. If you{Environment.NewLine}");
-            _startMonthHelp.Append($"leave at just the right time,{Environment.NewLine}");
-            _startMonthHelp.Append($"there will be green grass and{Environment.NewLine}");
-            _startMonthHelp.Append($"the weather will still be cool.{Environment.NewLine}{Environment.NewLine}");
-            return _startMonthHelp.ToString();
+            var startMonth = new StringBuilder();
+            startMonth.AppendLine(
+                $"You attend a public meeting held for \"folks with the California - Oregon fever.\" You're told:{Environment.NewLine}");
+            startMonth.AppendLine(
+                "If you leave too early, there won't be any grass for your oxen to eat. If you leave too late, you may not get to Oregon before winter comes. If you leave at just the right time, there will be green grass and the weather will still be cool.");
+            return startMonth.ToString();
         }
 
         /// <summary>

@@ -35,7 +35,7 @@ namespace OregonTrail.MainMenu.Options
 
         public override object MenuCommands
         {
-            get { return new[] {"Ok"}; }
+            get { return new[] {"Yes", "No"}; }
         }
 
         /// <summary>
@@ -49,13 +49,10 @@ namespace OregonTrail.MainMenu.Options
             var eraseTopTen = new StringBuilder();
 
             // Text above the table to declare what this state is.
-            eraseTopTen.Append($"{Environment.NewLine}Erase Top Ten list{Environment.NewLine}{Environment.NewLine}");
+            eraseTopTen.AppendLine($"{Environment.NewLine}Erase Top Ten list{Environment.NewLine}");
 
             // Ask the user question if they really want to remove the top ten list.
-            eraseTopTen.Append($"If you erase the current Top Ten{Environment.NewLine}");
-            eraseTopTen.Append($"list, the names and scores will be{Environment.NewLine}");
-            eraseTopTen.Append($"replaced by those on the original{Environment.NewLine}");
-            eraseTopTen.Append($"list.{Environment.NewLine}{Environment.NewLine}");
+            eraseTopTen.AppendLine($"If you erase the current Top Ten list, the names and scores will be replaced by those on the original list.{Environment.NewLine}");
 
             // Wait for use input...
             eraseTopTen.Append("Do you want to do this? Y/N");

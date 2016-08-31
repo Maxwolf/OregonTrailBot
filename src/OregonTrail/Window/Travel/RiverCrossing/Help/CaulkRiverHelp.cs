@@ -38,11 +38,7 @@ namespace OregonTrail.Travel.RiverCrossing.Help
         protected override string OnDialogPrompt()
         {
             var caulkWagon = new StringBuilder();
-            caulkWagon.AppendLine($"{Environment.NewLine}To caulk the wagon means to");
-            caulkWagon.AppendLine("seal it so that no water can");
-            caulkWagon.AppendLine("get in. The wagon can then");
-            caulkWagon.AppendLine("be floated across like a");
-            caulkWagon.AppendLine($"boat{Environment.NewLine}");
+            caulkWagon.AppendLine($"{Environment.NewLine}To caulk the wagon means to seal it so that no water can get in. The wagon can then be floated across like a boat{Environment.NewLine}");
             return caulkWagon.ToString();
         }
 

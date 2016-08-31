@@ -52,8 +52,8 @@ namespace OregonTrail.MainMenu.Names
             UserData.Game.SetStartInfo(UserData);
 
             // Create string builder, counter, print info about party members.
-            var _confirmPartyText = new StringBuilder();
-            _confirmPartyText.AppendLine(
+            var confirmParty = new StringBuilder();
+            confirmParty.AppendLine(
                 $"{Environment.NewLine}Are these names correct? Y/N{Environment.NewLine}");
             var crewNumber = 1;
 
@@ -67,19 +67,19 @@ namespace OregonTrail.MainMenu.Names
                 // Only append new line when not printing last line.
                 if (index < (UserData.PlayerNames.Count - 1))
                 {
-                    _confirmPartyText.AppendLine(isLeader
+                    confirmParty.AppendLine(isLeader
                         ? $"  {crewNumber} - {name} (leader)"
                         : $"  {crewNumber} - {name}");
                 }
                 else
                 {
-                    _confirmPartyText.Append($"  {crewNumber} - {name}");
+                    confirmParty.Append($"  {crewNumber} - {name}");
                 }
 
                 crewNumber++;
             }
 
-            return _confirmPartyText.ToString();
+            return confirmParty.ToString();
         }
 
         /// <summary>

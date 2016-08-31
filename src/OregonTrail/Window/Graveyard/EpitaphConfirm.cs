@@ -60,8 +60,7 @@ namespace OregonTrail.Graveyard
                 $"{Environment.NewLine}{UserData.Tombstone}");
 
             // Confirmation message if player would like to edit tombstone.
-            _confirmPrompt.AppendLine("Would you like to make");
-            _confirmPrompt.Append("changes? Y/N");
+            _confirmPrompt.AppendLine("Would you like to make changes? Y/N");
             return _confirmPrompt.ToString();
         }
 

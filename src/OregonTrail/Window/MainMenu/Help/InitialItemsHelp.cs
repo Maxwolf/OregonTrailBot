@@ -41,13 +41,9 @@ namespace OregonTrail.MainMenu.Help
         protected override string OnDialogPrompt()
         {
             // Create text we will display to user about the store before they actually load that game Windows.
-            var _storeHelp = new StringBuilder();
-            _storeHelp.AppendLine($"{Environment.NewLine}Before leaving Independence you");
-            _storeHelp.AppendLine("should buy equipment and");
-            _storeHelp.AppendLine($"supplies. You have {UserData.StartingMonies.ToString("C2")} in");
-            _storeHelp.AppendLine("cash, but you don't have to");
-            _storeHelp.AppendLine($"spend it all now.{Environment.NewLine}");
-            return _storeHelp.ToString();
+            var storeHelp = new StringBuilder();
+            storeHelp.AppendLine($"{Environment.NewLine}Before leaving Independence you should buy equipment and supplies. You have {UserData.StartingMonies.ToString("C2")} in cash, but you don't have to spend it all now.{Environment.NewLine}");
+            return storeHelp.ToString();
         }
 
         /// <summary>

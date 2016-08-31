@@ -63,12 +63,9 @@ namespace OregonTrail.MainMenu.Help
         /// </returns>
         protected override string OnDialogPrompt()
         {
-            var _pointsItems = new StringBuilder();
-            _pointsItems.Append($"{Environment.NewLine}On Arriving in Oregon{Environment.NewLine}{Environment.NewLine}");
-            _pointsItems.Append($"The resources you arrive with will{Environment.NewLine}");
-            _pointsItems.Append($"help you get started in the new{Environment.NewLine}");
-            _pointsItems.Append($"land. You receive points for each{Environment.NewLine}");
-            _pointsItems.Append($"item you bring safely to Oregon.{Environment.NewLine}{Environment.NewLine}");
+            var pointsHelp = new StringBuilder();
+            pointsHelp.Append($"{Environment.NewLine}On Arriving in Oregon{Environment.NewLine}{Environment.NewLine}");
+            pointsHelp.Append($"The resources you arrive with will{Environment.NewLine} help you get started in the new{Environment.NewLine} land. You receive points for each{Environment.NewLine} item you bring safely to Oregon.{Environment.NewLine}{Environment.NewLine}");
 
             // Build up the table of resource points and how they work for player.
             var partyTable = ResourcePoints.ToStringTable(
@@ -78,8 +75,8 @@ namespace OregonTrail.MainMenu.Help
                 );
 
             // Print the table of how resources earn points.
-            _pointsItems.AppendLine(partyTable);
-            return _pointsItems.ToString();
+            pointsHelp.AppendLine(partyTable);
+            return pointsHelp.ToString();
         }
 
         /// <summary>

@@ -44,7 +44,7 @@ namespace OregonTrail.Travel.Command
 
             // Build up representation of supplies once in constructor and then reference when asked for render.
             var supplies = new StringBuilder();
-            supplies.AppendLine($"{Environment.NewLine}Your Supplies{Environment.NewLine}");
+            supplies.AppendLine($"Your Supplies{Environment.NewLine}");
 
             // Build up a list with tuple in it to hold our data about supplies.
             var suppliesList = new List<Tuple<string, string>>();
@@ -111,7 +111,6 @@ namespace OregonTrail.Travel.Command
         /// <param name="reponse">The response the dialog parsed from simulation input buffer.</param>
         protected override void OnDialogResponse(DialogResponse reponse)
         {
-            // parentGameMode.State = null;
             ClearForm();
         }
     }

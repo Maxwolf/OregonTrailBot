@@ -38,10 +38,9 @@ namespace OregonTrail.Travel.RiverCrossing.Indian
         /// </returns>
         protected override string OnDialogPrompt()
         {
-            var _prompt = new StringBuilder();
-            _prompt.AppendLine($"{Environment.NewLine}The Shoshoni guide will help");
-            _prompt.AppendLine($"you float your wagon across.{Environment.NewLine}");
-            return _prompt.ToString();
+            var indianConfirmPrompt = new StringBuilder();
+            indianConfirmPrompt.AppendLine($"{Environment.NewLine}The Shoshoni guide will help you float your wagon across.{Environment.NewLine}");
+            return indianConfirmPrompt.ToString();
         }
 
         /// <summary>
