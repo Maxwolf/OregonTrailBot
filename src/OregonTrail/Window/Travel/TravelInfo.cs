@@ -57,7 +57,6 @@ namespace OregonTrail.Travel
 
                 // Build up the status for the vehicle as it moves through the simulation.
                 var driveStatus = new StringBuilder();
-                //driveStatus.AppendLine("--------------------------------");
                 driveStatus.AppendLine($"Date: {Game.Time.Date}");
                 driveStatus.AppendLine(
                     $"Weather: {Game.Trail.CurrentLocation.Weather.ToDescriptionAttribute()}");
@@ -65,7 +64,6 @@ namespace OregonTrail.Travel
                 driveStatus.AppendLine($"Food: {foodStatus}");
                 driveStatus.AppendLine($"Next landmark: {Game.Trail.DistanceToNextLocation} miles");
                 driveStatus.AppendLine($"Miles traveled: {Game.Vehicle.Odometer} miles");
-                //driveStatus.AppendLine("--------------------------------");
                 return driveStatus.ToString();
             }
         }
@@ -86,21 +84,17 @@ namespace OregonTrail.Travel
             {
                 var showLocationName = Game.Trail.CurrentLocation.Status == LocationStatus.Arrived;
                 var locationStatus = new StringBuilder();
-                //locationStatus.AppendLine("--------------------------------");
-
                 // Only add the location name if we are on the next point, otherwise we should not show this.
                 locationStatus.AppendLine(showLocationName
                     ? Game.Trail.CurrentLocation.Name
                     : $"{Game.Trail.DistanceToNextLocation.ToString("N0")} miles to {Game.Trail.NextLocation.Name}");
 
                 locationStatus.AppendLine($"{Game.Time.Date}");
-                //locationStatus.AppendLine("--------------------------------");
                 locationStatus.AppendLine(
                     $"Weather: {Game.Trail.CurrentLocation.Weather.ToDescriptionAttribute()}");
                 locationStatus.AppendLine($"Health: {Game.Vehicle.PassengerHealthStatus.ToDescriptionAttribute()}");
                 locationStatus.AppendLine($"Pace: {Game.Vehicle.Pace.ToDescriptionAttribute()}");
                 locationStatus.AppendLine($"Rations: {Game.Vehicle.Ration.ToDescriptionAttribute()}");
-                //locationStatus.AppendLine("--------------------------------");
                 return locationStatus.ToString();
             }
         }

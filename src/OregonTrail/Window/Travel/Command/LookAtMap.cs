@@ -53,10 +53,10 @@ namespace OregonTrail.Travel.Command
 
             // Build up a table of location names and if the player has visited them.
             var locationsCompleted = UserData.Game.Trail.Locations.Count(
-                location => location.Status == LocationStatus.Arrived && location.ArrivalFlag);
+                location => location.Status == LocationStatus.Departed);
 
             var locationsPercentComplete = locationsCompleted/(decimal)UserData.Game.Trail.Locations.Count;
-            mapPrompt.AppendLine(locationsPercentComplete.ToString("P"));
+            mapPrompt.AppendLine((locationsPercentComplete*100).ToString("P"));
 
             return mapPrompt.ToString();
         }

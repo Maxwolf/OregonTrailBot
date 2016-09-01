@@ -49,7 +49,7 @@ namespace OregonTrail.Travel.Dialog
                 for (var i = 0; i < _skipChoices.Count; i++)
                     menuList.Add((i + 1).ToString());
 
-                return new[] {menuList.ToArray()};
+                return menuList.ToArray();
             }
         }
 

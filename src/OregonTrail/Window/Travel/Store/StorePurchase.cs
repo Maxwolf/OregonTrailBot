@@ -58,9 +58,9 @@ namespace OregonTrail.Travel.Store
             base.OnFormPostCreate();
 
             // Figure out what we owe already from other store items, then how many of the SimItem we can afford.
-            var _currentBalance =
+            var currentBalance =
                 (int) (UserData.Game.Vehicle.Balance - UserData.Store.TotalTransactionCost);
-            _purchaseLimit = (int) (_currentBalance/UserData.Store.SelectedItem.Cost);
+            _purchaseLimit = (int) (currentBalance/UserData.Store.SelectedItem.Cost);
 
             // Prevent negative numbers and set credit limit to zero if it drops below that.
             if (_purchaseLimit < 0)

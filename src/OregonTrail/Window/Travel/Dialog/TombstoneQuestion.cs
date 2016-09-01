@@ -50,8 +50,7 @@ namespace OregonTrail.Travel.Dialog
 
             // Build up message about there being something on the side of the road.
             pointReached.AppendLine(
-                $"{Environment.NewLine}You pass a gravesite. Would you");
-            pointReached.Append("like to look closer? Y/N");
+                $"You pass a gravesite. Would you like to look closer? Y/N");
 
             return pointReached.ToString();
         }

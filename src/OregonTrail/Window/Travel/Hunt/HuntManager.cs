@@ -27,29 +27,29 @@ namespace OregonTrail.Travel.Hunt
         /// <summary>
         ///     Default amount of time that every hunt is given, measured in ticks.
         /// </summary>
-        public const int HUNTINGTIME = 30;
+        public const int Huntingtime = 30;
 
         /// <summary>
         ///     Determines the maximum number of animals that will be spawned in this area for the player to hunt.
         /// </summary>
-        private const int MAXPREY = 15;
+        private const int MaxPrey = 15;
 
         /// <summary>
         ///     Determines the total weight of all the food the player is allowed to take away from a given hunting session.
         /// </summary>
-        public const int MAXFOOD = 100;
+        public const int MaxFood = 100;
 
         /// <summary>
         ///     Determines the total number of seconds a given prey item is allowed to be a target by the player, if this value is
         ///     exceeded the animal will sense the player and run away.
         /// </summary>
-        public const int MAXTARGETINGTIME = 10;
+        public const int MaxTargetingTime = 10;
 
         /// <summary>
         ///     Minimum amount of time that a prey item will be available to shoot by the player if it is selected as a valid
         ///     target.e
         /// </summary>
-        public const int MINTARGETINGTIME = 3;
+        public const int MinTargetingTime = 3;
 
         /// <summary>
         ///     Reference to running game simulation which created this class.
@@ -100,7 +100,7 @@ namespace OregonTrail.Travel.Hunt
             _preyEscaped = new List<PreyItem>();
 
             // Player has set amount of time in seconds to perform a hunt.
-            _secondsRemaining = HUNTINGTIME;
+            _secondsRemaining = Huntingtime;
 
             // Grab all of the shooting words from enum that holds them.
             _shootWords = Enum.GetValues(typeof (HuntWord)).Cast<HuntWord>().ToList();
@@ -130,7 +130,7 @@ namespace OregonTrail.Travel.Hunt
                     : $"Hunting near {_game.Trail.NextLocation.Name}");
 
                 // Represent seconds remaining as daylight left percentage.
-                var daylightPercentage = _secondsRemaining/(decimal) HUNTINGTIME;
+                var daylightPercentage = _secondsRemaining/(decimal) Huntingtime;
                 huntStatus.AppendLine($"Daylight Remaining: {(daylightPercentage*100).ToString("N0")}%");
 
                 // Current weather on the planes.
@@ -156,7 +156,8 @@ namespace OregonTrail.Travel.Hunt
                 // Prompt the player with information about what to do.
                 if (ShootingWord != HuntWord.None)
                 {
-                    huntStatus.AppendLine($"Type the word '{ShootingWord.ToString().ToLowerInvariant()}' to take a shot!");
+                    huntStatus.AppendLine(
+                        $"Type the word '{ShootingWord.ToString().ToLowerInvariant()}' to take a shot!");
                 }
                 else
                 {
@@ -177,7 +178,7 @@ namespace OregonTrail.Travel.Hunt
         /// <summary>
         ///     Gets the bear.
         /// </summary>
-        public static SimItem Bear
+        private static SimItem Bear
         {
             get { return new SimItem(Entities.Food, "Bear", "pounds", "pound", 2000, 0); }
         }
@@ -185,7 +186,7 @@ namespace OregonTrail.Travel.Hunt
         /// <summary>
         ///     You must use *all* the buffalo...
         /// </summary>
-        public static SimItem Buffalo
+        private static SimItem Buffalo
         {
             get
             {
@@ -197,7 +198,7 @@ namespace OregonTrail.Travel.Hunt
         /// <summary>
         ///     Gets the caribou.
         /// </summary>
-        public static SimItem Caribou
+        private static SimItem Caribou
         {
             get
             {
@@ -209,7 +210,7 @@ namespace OregonTrail.Travel.Hunt
         /// <summary>
         ///     Gets the deer.
         /// </summary>
-        public static SimItem Deer
+        private static SimItem Deer
         {
             get { return new SimItem(Entities.Food, "Deer", "pounds", "pound", 2000, 0, 50); }
         }
@@ -217,7 +218,7 @@ namespace OregonTrail.Travel.Hunt
         /// <summary>
         ///     Gets the duck.
         /// </summary>
-        public static SimItem Duck
+        private static SimItem Duck
         {
             get { return new SimItem(Entities.Food, "Duck", "pounds", "pound", 2000, 0); }
         }
@@ -225,7 +226,7 @@ namespace OregonTrail.Travel.Hunt
         /// <summary>
         ///     Gets the goose.
         /// </summary>
-        public static SimItem Goose
+        private static SimItem Goose
         {
             get { return new SimItem(Entities.Food, "Goose", "pounds", "pound", 2000, 0, 2); }
         }
@@ -233,7 +234,7 @@ namespace OregonTrail.Travel.Hunt
         /// <summary>
         ///     Gets the rabbit.
         /// </summary>
-        public static SimItem Rabbit
+        private static SimItem Rabbit
         {
             get { return new SimItem(Entities.Food, "Rabbit", "pounds", "pound", 2000, 0, 2); }
         }
@@ -241,7 +242,7 @@ namespace OregonTrail.Travel.Hunt
         /// <summary>
         ///     Gets the squirrel.
         /// </summary>
-        public static SimItem Squirrel
+        private static SimItem Squirrel
         {
             get { return new SimItem(Entities.Food, "Squirrel", "pounds", "pound", 2000, 0); }
         }
@@ -494,7 +495,7 @@ namespace OregonTrail.Travel.Hunt
         private void GeneratePrey()
         {
             // Check to make sure spawn count is above zero.
-            var preySpawnCount = _game.Random.Next(MAXPREY);
+            var preySpawnCount = _game.Random.Next(MaxPrey);
             if (preySpawnCount <= 0)
                 return;
 

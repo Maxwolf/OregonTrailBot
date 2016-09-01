@@ -51,7 +51,7 @@ namespace OregonTrail.Travel.RiverCrossing.Ferry
         {
             var ferryConfirm = new StringBuilder();
             ferryConfirm.AppendLine(
-                $"{Environment.NewLine}The ferry operator says that he will charge you {UserData.River.FerryCost.ToString("C2")} and that you will have to wait {UserData.River.FerryDelayInDays} days. Are you willing to do this?");
+                $"The ferry operator says that he will charge you {UserData.River.FerryCost.ToString("C2")} and that you will have to wait {UserData.River.FerryDelayInDays} days. Are you willing to do this?");
             return ferryConfirm.ToString();
         }
 

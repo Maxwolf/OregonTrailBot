@@ -1,6 +1,8 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
+using System.Collections.Generic;
+
 namespace OregonTrail.Travel.TalkToPeople
 {
     /// <summary>
@@ -14,13 +16,13 @@ namespace OregonTrail.Travel.TalkToPeople
         /// <summary>
         ///     Defines the default advice that will be shown on the talk to people form if no advice is loaded.
         /// </summary>
-        public const string DEFAULTADVICE = "[DEFAULT ADVICE]";
+        public const string DefaultAdvice = "[DEFAULT ADVICE]";
 
         /// <summary>
         ///     Advice intended for new players that are starting out on the trail, normally this advice is used on the first
         ///     location.
         /// </summary>
-        public static Advice[] Tutorial
+        public static IEnumerable<Advice> Tutorial
         {
             get
             {
@@ -32,7 +34,7 @@ namespace OregonTrail.Travel.TalkToPeople
                         "Did you read the Missouri Republican today? --Says some folk start for Oregon without carrying spare parts, not even an extra wagon axle. Must think they grow on trees! Hope they're lucky enough to find an abandoned wagon."),
                     new Advice("A town resident",
                         "Some folks seem to think that two oxen are enough to get them to Oregon! Two oxen can barely move a fully loaded wagon, and if one of them gets sick or dies, you won't be going anywhere. I wouldn't go overland with less than six."),
-                    new Advice("Aunt Rebeka",
+                    new Advice("Aunt Rebeca",
                         "With the crowds of people waiting to get on the ferry, we could be stranded here for days! Hope there's enough graze for all those animals -- not many people carry feed! I'd rather wait, though, than cross in a rickety wagon boat!")
                 };
                 return startingAdvice;
@@ -42,7 +44,7 @@ namespace OregonTrail.Travel.TalkToPeople
         /// <summary>
         ///     Advice intended to be used at the first river crossing the player vehicle encounters.
         /// </summary>
-        public static Advice[] River
+        public static IEnumerable<Advice> River
         {
             get
             {
@@ -75,7 +77,7 @@ namespace OregonTrail.Travel.TalkToPeople
         ///     Advice that is given out at any given landmark, the information here is non-specific and will make sense at any
         ///     landmark. Most of the advice is people warning about things they heard about other people ahead of them.
         /// </summary>
-        public static Advice[] Landmark
+        public static IEnumerable<Advice> Landmark
         {
             get
             {
@@ -114,7 +116,7 @@ namespace OregonTrail.Travel.TalkToPeople
         ///     Statements that will generally be said around areas that are more civilized along the route. There is a fair
         ///     mixture of different kinds of people experiencing different types of problems from beginning to end of the trail.
         /// </summary>
-        public static Advice[] Settlement
+        public static IEnumerable<Advice> Settlement
         {
             get
             {
@@ -153,7 +155,7 @@ namespace OregonTrail.Travel.TalkToPeople
         ///     Advice that is generally used on locations that are inserted into the trail from forks in the road. The people in
         ///     these comments mostly show anger about toll roads and difficulty with getting over the mountains.
         /// </summary>
-        public static Advice[] Mountain
+        public static IEnumerable<Advice> Mountain
         {
             get
             {
@@ -180,7 +182,7 @@ namespace OregonTrail.Travel.TalkToPeople
         ///     Advice from travelers that have been along most of the trail and are now deciding about which trail would be a
         ///     better risk for their vehicle party and offer up advice about their past decisions for replay value.
         /// </summary>
-        public static Advice[] Ending
+        public static IEnumerable<Advice> Ending
         {
             get
             {

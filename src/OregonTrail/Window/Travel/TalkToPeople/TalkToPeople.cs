@@ -78,7 +78,7 @@ namespace OregonTrail.Travel.TalkToPeople
 
             // Render out the advice to the form.
             return randomAdvice == null
-                ? $"{Environment.NewLine}AdviceRegistry.DEFAULTADVICE{Environment.NewLine}"
+                ? $"{Environment.NewLine}{AdviceRegistry.DefaultAdvice}{Environment.NewLine}"
                 : $"{Environment.NewLine}{randomAdvice.Name},{Environment.NewLine}{randomAdvice.Quote.WordWrap()}{Environment.NewLine}";
         }
 

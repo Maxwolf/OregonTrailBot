@@ -53,19 +53,9 @@ namespace OregonTrail.Travel.Dialog
             // Check if we are dealing with lack of oxen to pull or broken vehicle parts.
             var brokenVehicle = UserData.Game.Vehicle.BrokenPart != null;
 
-            if (brokenVehicle)
-            {
-                stuckPrompt.AppendLine($"{Environment.NewLine}You are unable to continue");
-                stuckPrompt.AppendLine(
-                    $"your journey. You're {UserData.Game.Vehicle.BrokenPart.Name.ToLowerInvariant()}");
-                stuckPrompt.AppendLine($"is broken.{Environment.NewLine}");
-            }
-            else
-            {
-                stuckPrompt.AppendLine($"{Environment.NewLine}You are unable to continue");
-                stuckPrompt.AppendLine("your journey. You have no");
-                stuckPrompt.AppendLine($"oxen to pull your wagon.{Environment.NewLine}");
-            }
+            stuckPrompt.AppendLine(brokenVehicle
+                ? $"You are unable to continue your journey. You're {UserData.Game.Vehicle.BrokenPart.Name.ToLowerInvariant()} is broken.{Environment.NewLine}"
+                : $"{Environment.NewLine}You are unable to continue your journey. You have no oxen to pull your wagon.{Environment.NewLine}");
 
             return stuckPrompt.ToString();
         }

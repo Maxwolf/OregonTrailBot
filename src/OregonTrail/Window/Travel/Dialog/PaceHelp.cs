@@ -39,28 +39,18 @@ namespace OregonTrail.Travel.Dialog
         protected override string OnDialogPrompt()
         {
             // Steady
-            var _paceHelp = new StringBuilder();
-            _paceHelp.Append($"{Environment.NewLine}steady - You travel about 8 hours a{Environment.NewLine}");
-            _paceHelp.Append($"day, taking frequent rests. You take{Environment.NewLine}");
-            _paceHelp.Append($"care not to get too tired.{Environment.NewLine}{Environment.NewLine}");
+            var paceHelp = new StringBuilder();
+            paceHelp.AppendLine(
+                $"steady - You travel about 8 hours a day, taking frequent rests. You take care not to get too tired.{Environment.NewLine}");
 
             // Strenuous
-            _paceHelp.Append($"strenuous - You travel about 12 hours{Environment.NewLine}");
-            _paceHelp.Append($"a day, starting just after sunrise{Environment.NewLine}");
-            _paceHelp.Append($"and stopping shortly before sunset.{Environment.NewLine}");
-            _paceHelp.Append($"You stop to rest only when necessary.{Environment.NewLine}");
-            _paceHelp.Append($"You finish each day feeling very{Environment.NewLine}");
-            _paceHelp.Append($"tired.{Environment.NewLine}{Environment.NewLine}");
+            paceHelp.AppendLine(
+                $"strenuous - You travel about 12 hours a day, starting just after sunrise and stopping shortly before sunset. You stop to rest only when necessary. You finish each day feeling very tired.{Environment.NewLine}");
 
             // Grueling
-            _paceHelp.Append($"grueling - You travel about 16 hours{Environment.NewLine}");
-            _paceHelp.Append($"a day, starting before sunrise and{Environment.NewLine}");
-            _paceHelp.Append($"continuing until dark. You almost{Environment.NewLine}");
-            _paceHelp.Append($"never stop to rest. You do not get{Environment.NewLine}");
-            _paceHelp.Append($"enough sleep at night. You finish{Environment.NewLine}");
-            _paceHelp.Append($"each day feeling absolutely{Environment.NewLine}");
-            _paceHelp.Append($"exhausted, and your health suffers.{Environment.NewLine}{Environment.NewLine}");
-            return _paceHelp.ToString();
+            paceHelp.AppendLine(
+                $"grueling - You travel about 16 hours a day, starting before sunrise and continuing until dark. You almost never stop to rest. You do not get enough sleep at night. You finish each day feeling absolutely exhausted, and your health suffers.{Environment.NewLine}");
+            return paceHelp.ToString();
         }
 
         /// <summary>

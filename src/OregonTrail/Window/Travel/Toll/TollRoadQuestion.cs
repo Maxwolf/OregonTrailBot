@@ -23,7 +23,7 @@ namespace OregonTrail.Travel.Toll
         /// <summary>
         ///     Figures out of the vehicle has enough cash to use the toll road, this is generally used as a check for the dialog.
         /// </summary>
-        private bool canAffordToll;
+        private bool _canAffordToll;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="InputForm{T}" /> class.
@@ -40,7 +40,7 @@ namespace OregonTrail.Travel.Toll
         /// <remarks>Default is FALSE. Setting to TRUE allows characters and input buffer to be read when submitted.</remarks>
         public override bool InputFillsBuffer
         {
-            get { return canAffordToll; }
+            get { return _canAffordToll; }
         }
 
         public override object MenuCommands
@@ -54,7 +54,7 @@ namespace OregonTrail.Travel.Toll
         /// </summary>
         protected override DialogType DialogType
         {
-            get { return canAffordToll ? DialogType.YesNo : DialogType.Prompt; }
+            get { return _canAffordToll ? DialogType.YesNo : DialogType.Prompt; }
         }
 
         /// <summary>
@@ -67,47 +67,36 @@ namespace OregonTrail.Travel.Toll
         {
             var tollPrompt = new StringBuilder();
 
-            canAffordToll = UserData.Game.Vehicle.Inventory[Entities.Cash].TotalValue >= UserData.Toll.Cost;
+            _canAffordToll = UserData.Game.Vehicle.Inventory[Entities.Cash].TotalValue >= UserData.Toll.Cost;
 
             // First portion of the message changes based on varying conditions.
             if (UserData.Toll.Road != null)
             {
                 // Fork in the road sent us here.
                 tollPrompt.AppendLine(
-                    $"{Environment.NewLine}You must pay {UserData.Toll.Cost.ToString("C0")} to travel the");
-                tollPrompt.AppendLine($"{UserData.Toll.Road.Name}.");
+                    $"You must pay {UserData.Toll.Cost.ToString("C0")} to travel the {UserData.Toll.Road.Name}.");
             }
             else if (UserData.Game.Trail.CurrentLocation != null)
             {
                 // Toll road was placed in-line on the trail, and will block player if they are broke.
                 tollPrompt.AppendLine(
-                    $"{Environment.NewLine}You must pay {UserData.Toll.Cost.ToString("C0")} to travel the");
-                tollPrompt.AppendLine($"{UserData.Game.Trail.CurrentLocation.Name}.");
+                    $"You must pay {UserData.Toll.Cost.ToString("C0")} to travel the {UserData.Game.Trail.CurrentLocation.Name}.");
             }
             else if (UserData.Game.Trail.NextLocation != null)
             {
                 tollPrompt.AppendLine(
-                    $"{Environment.NewLine}You must pay {UserData.Toll.Cost.ToString("C0")} to travel the");
-                tollPrompt.AppendLine($"{UserData.Game.Trail.NextLocation.Name}.");
+                    $"You must pay {UserData.Toll.Cost.ToString("C0")} to travel the {UserData.Game.Trail.NextLocation.Name}.");
             }
             else
             {
                 tollPrompt.AppendLine(
-                    $"{Environment.NewLine}You must pay {UserData.Toll.Cost.ToString("C0")} to travel the");
-                tollPrompt.AppendLine("indefinable road.");
+                    $"You must pay {UserData.Toll.Cost.ToString("C0")} to travel the indefinable road.");
             }
 
             // Check if the player has enough money to pay for the toll road.
-            if (UserData.Game.Vehicle.Inventory[Entities.Cash].TotalValue >= UserData.Toll.Cost)
-            {
-                tollPrompt.AppendLine($"{Environment.NewLine}Are you willing");
-                tollPrompt.Append("to do this? Y/N");
-            }
-            else
-            {
-                tollPrompt.AppendLine($"{Environment.NewLine}You don't have enough");
-                tollPrompt.Append($"cash for the toll road.");
-            }
+            tollPrompt.AppendLine(UserData.Game.Vehicle.Inventory[Entities.Cash].TotalValue >= UserData.Toll.Cost
+                ? "Are you willing to do this? Y/N"
+                : $"{Environment.NewLine}You don't have enough cash for the toll road.");
 
             return tollPrompt.ToString();
         }
@@ -120,7 +109,7 @@ namespace OregonTrail.Travel.Toll
         protected override void OnDialogResponse(DialogResponse reponse)
         {
             // Check if the player has enough monies to pay for the toll road.
-            if (!canAffordToll)
+            if (!_canAffordToll)
             {
                 SetForm(typeof (LocationFork));
                 return;

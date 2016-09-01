@@ -70,14 +70,14 @@ namespace OregonTrail.Travel.Store.Help
             _storeHelp.Clear();
 
             // Create the current state of our advice to player.
-            _storeHelp.Append(
-                $"{Environment.NewLine}Hello, I'm Matt. So you're going to Oregon! I can fix you up with what you need:{Environment.NewLine}{Environment.NewLine}");
+            _storeHelp.AppendLine(
+                $"Hello, I'm Matt. So you're going to Oregon! I can fix you up with what you need:{Environment.NewLine}");
 
-            _storeHelp.Append($" - a team of oxen to pull your vehicle{Environment.NewLine}{Environment.NewLine}");
-            _storeHelp.Append($" - clothing for both summer and winter{Environment.NewLine}{Environment.NewLine}");
-            _storeHelp.Append($" - plenty of food for the trip{Environment.NewLine}{Environment.NewLine}");
-            _storeHelp.Append($" - ammunition for your rifles{Environment.NewLine}{Environment.NewLine}");
-            _storeHelp.Append($" - spare parts for your wagon{Environment.NewLine}{Environment.NewLine}");
+            _storeHelp.AppendLine(" - a team of oxen to pull your vehicle");
+            _storeHelp.AppendLine(" - clothing for both summer and winter");
+            _storeHelp.AppendLine(" - plenty of food for the trip");
+            _storeHelp.AppendLine(" - ammunition for your rifles");
+            _storeHelp.AppendLine(" - spare parts for your wagon");
         }
 
         /// <summary>

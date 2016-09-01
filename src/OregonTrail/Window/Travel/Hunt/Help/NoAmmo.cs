@@ -37,8 +37,7 @@ namespace OregonTrail.Travel.Hunt.Help
         /// </returns>
         protected override string OnDialogPrompt()
         {
-            return $"{Environment.NewLine}You need more bullets{Environment.NewLine}" +
-                   $"to go hunting.{Environment.NewLine}{Environment.NewLine}";
+            return $"{Environment.NewLine}You need more bullets to go hunting.{Environment.NewLine}";
         }
 
         /// <summary>

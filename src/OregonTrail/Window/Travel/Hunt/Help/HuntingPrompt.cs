@@ -18,7 +18,7 @@ namespace OregonTrail.Travel.Hunt.Help
         /// <summary>
         ///     References the message we show to the user that explains how hunting works.
         /// </summary>
-        private StringBuilder huntHelp;
+        private StringBuilder _huntHelp;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="InputForm{T}" /> class.
@@ -27,7 +27,7 @@ namespace OregonTrail.Travel.Hunt.Help
         /// <param name="window">The window.</param>
         public HuntingPrompt(IWindow window) : base(window)
         {
-            huntHelp = new StringBuilder();
+            _huntHelp = new StringBuilder();
         }
 
         public override object MenuCommands
@@ -44,27 +44,25 @@ namespace OregonTrail.Travel.Hunt.Help
         protected override string OnDialogPrompt()
         {
             // Clear out previous hunting help messages.
-            huntHelp.Clear();
+            _huntHelp.Clear();
 
             // Create the prompt for explaining how hunting works.
-            huntHelp.AppendLine($"{Environment.NewLine}Hunting Instructions{Environment.NewLine}");
+            _huntHelp.AppendLine($"{Environment.NewLine}Hunting Instructions{Environment.NewLine}");
 
             // Explain how timer works, how killing works and animal weight limits.
             const string huntTextTop =
-                "Hunting has a timer which represents the total daylight remaining. When the timer reaches zero the hunt is over. " +
-                "You can only take 100 pounds of food back to the wagon, don't kill more than you keep since you just waste bullets.";
+                "Hunting has a timer which represents the total daylight remaining. When the timer reaches zero the hunt is over. You can only take 100 pounds of food back to the wagon, don't kill more than you keep since you just waste bullets.";
 
             // Explain how shooting works, how player has limited window of opportunity to shoot the animal.
             const string huntTextBottom =
-                "When animal appears you have until it disappears to type the shooting word shown. " +
-                "If you don't type fast enough you risk missing your shot and bullet on nothing!";
+                "When animal appears you have until it disappears to type the shooting word shown. If you don't type fast enough you risk missing your shot and bullet on nothing!";
 
             // Add the top and bottom hunting text on their own lines.
-            huntHelp.AppendLine(huntTextTop.WordWrap());
-            huntHelp.AppendLine(huntTextBottom.WordWrap());
+            _huntHelp.AppendLine(huntTextTop.WordWrap());
+            _huntHelp.AppendLine(huntTextBottom.WordWrap());
 
             // Returns the now processed hunting help prompt to renderer.
-            return huntHelp.ToString();
+            return _huntHelp.ToString();
         }
 
         /// <summary>

@@ -38,8 +38,7 @@ namespace OregonTrail.Travel.Hunt.Help
         {
             // Get the last known escaped prey item.
             return
-                $"{Environment.NewLine}The {UserData.Hunt.LastEscapee.Animal.Name.ToLowerInvariant()} senses danger " +
-                $"and runs away from you.{Environment.NewLine}{Environment.NewLine}";
+                $"{Environment.NewLine}The {UserData.Hunt.LastEscapee.Animal.Name.ToLowerInvariant()} senses danger and runs away from you.{Environment.NewLine}";
         }
 
         /// <summary>

@@ -36,8 +36,7 @@ namespace OregonTrail.Travel.Hunt.Help
         protected override string OnDialogPrompt()
         {
             return
-                $"{Environment.NewLine}You missed, and the {UserData.Hunt.LastEscapee.Animal.Name.ToLowerInvariant()} " +
-                $"got away!{Environment.NewLine}{Environment.NewLine}";
+                $"You missed, and the {UserData.Hunt.LastEscapee.Animal.Name.ToLowerInvariant()} got away!{Environment.NewLine}";
         }
 
         /// <summary>

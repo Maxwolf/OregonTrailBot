@@ -97,15 +97,12 @@ namespace OregonTrail.Travel.RiverCrossing
             _riverInfo = new StringBuilder();
 
             // Header text for above menu comes from river crossing info object.
-            //_riverInfo.AppendLine("--------------------------------");
             _riverInfo.AppendLine($"{riverLocation.Name}");
             _riverInfo.AppendLine($"{UserData.Game.Time.Date}");
-            //_riverInfo.AppendLine("--------------------------------");
             _riverInfo.AppendLine(
                 $"Weather: {riverLocation.Weather.ToDescriptionAttribute()}");
             _riverInfo.AppendLine($"River width: {UserData.River.RiverWidth.ToString("N0")} feet");
             _riverInfo.AppendLine($"River depth: {UserData.River.RiverDepth.ToString("N0")} feet");
-            //_riverInfo.AppendLine("--------------------------------");
             _riverInfo.AppendLine($"You may:{Environment.NewLine}");
 
             // Loop through all the river choice commands and print them out for the state.

@@ -58,7 +58,7 @@ namespace OregonTrail.Travel.Trade
             get
             {
                 var tradeTable = new StringBuilder();
-                tradeTable.AppendLine($"{Environment.NewLine}Your Supplies{Environment.NewLine}");
+                tradeTable.AppendLine($"Your Supplies{Environment.NewLine}");
 
                 // Build up a list with tuple in it to hold our data about supplies.
                 var suppliesList = new List<Tuple<string, string>>();
@@ -197,18 +197,17 @@ namespace OregonTrail.Travel.Trade
             {
                 // Generates the default prompt for trading that is shown if you have items to trade back or not.
                 var wrapText =
-                    $"You meet another emigrant who wants {_trades[_tradeIndex].WantedItem.Quantity.ToString("N0")} {_trades[_tradeIndex].WantedItem.Name.ToLowerInvariant()}. " +
-                    $"He will trade you {_trades[_tradeIndex].OfferedItem.Quantity.ToString("N0")} {_trades[_tradeIndex].OfferedItem.Name.ToLowerInvariant()}.";
+                    $"You meet another emigrant who wants {_trades[_tradeIndex].WantedItem.Quantity.ToString("N0")} {_trades[_tradeIndex].WantedItem.Name.ToLowerInvariant()}. He will trade you {_trades[_tradeIndex].OfferedItem.Quantity.ToString("N0")} {_trades[_tradeIndex].OfferedItem.Name.ToLowerInvariant()}.";
 
                 // Depending if the player has enough of what the trader wants we change up last part of message.
                 _supplyPrompt.Append(_playerCanTrade
                     ? $"{wrapText.WordWrap()}{Environment.NewLine}Are you willing to trade? Y/N"
-                    : $"{wrapText.WordWrap()}{Environment.NewLine}You don't have this.{Environment.NewLine}{Environment.NewLine}");
+                    : $"{wrapText.WordWrap()}{Environment.NewLine}You don't have this.{Environment.NewLine}");
             }
             else
             {
                 // Prompt is not shown if we have no traders generated.
-                _supplyPrompt.AppendLine($"Nobody wants to trade with you.{Environment.NewLine}");
+                _supplyPrompt.AppendLine($"Nobody wants to trade with you.");
             }
         }
 
@@ -229,9 +228,7 @@ namespace OregonTrail.Travel.Trade
 
             // Creates as many trade offers as generator says we should.
             for (var i = 0; i < totalTrades; i++)
-            {
                 _trades.Add(new TradeOffer(UserData.Game));
-            }
 
             // Cleanup the generated trades.
             var copyTrades = new List<TradeOffer>(_trades);

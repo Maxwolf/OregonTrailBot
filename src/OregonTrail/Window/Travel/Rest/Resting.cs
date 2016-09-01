@@ -125,18 +125,18 @@ namespace OregonTrail.Travel.Rest
             if (UserData.Game.Trail.CurrentLocation is ForkInRoad)
             {
                 if (_daysRested > 1)
-                    _restMessage.AppendLine($"{Environment.NewLine}You camp near the river for {_daysRested} days.");
+                    _restMessage.AppendLine($"You camp near the river for {_daysRested.ToString("N0")} days.");
                 else if (_daysRested == 1)
-                    _restMessage.AppendLine($"{Environment.NewLine}You camp near the river for a day.");
+                    _restMessage.AppendLine("You camp near the river for a day.");
                 else if (_daysRested <= 0)
-                    _restMessage.AppendLine($"{Environment.NewLine}Preparing to camp near the river...");
+                    _restMessage.AppendLine("Preparing to camp near the river...");
             }
             else
             {
                 if (_daysRested > 1)
-                    _restMessage.AppendLine($"{Environment.NewLine}You rest for {_daysRested} days");
+                    _restMessage.AppendLine($"You rest for {_daysRested.ToString("N0")} days");
                 else if (_daysRested == 1)
-                    _restMessage.AppendLine($"{Environment.NewLine}You rest for a day.");
+                    _restMessage.AppendLine("You rest for a day.");
                 //else if (_daysRested <= 0)
                 //    _restMessage.AppendLine($"{Environment.NewLine}Preparing to rest...");
             }

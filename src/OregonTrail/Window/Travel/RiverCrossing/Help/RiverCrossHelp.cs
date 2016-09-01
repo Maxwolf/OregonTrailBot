@@ -43,7 +43,7 @@ namespace OregonTrail.Travel.RiverCrossing.Help
 
             var riverPrompt = new StringBuilder();
             riverPrompt.AppendLine(
-                $"{Environment.NewLine}You must cross the river in order to continue. The river at this point is currently {UserData.River.RiverWidth} feet across, and {UserData.River.RiverDepth} feet deep in the middle.{Environment.NewLine}");
+                $"You must cross the river in order to continue. The river at this point is currently {UserData.River.RiverWidth} feet across, and {UserData.River.RiverDepth} feet deep in the middle.{Environment.NewLine}");
             return riverPrompt.ToString();
         }
 

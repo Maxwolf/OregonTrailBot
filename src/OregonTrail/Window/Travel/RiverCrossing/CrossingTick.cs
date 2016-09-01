@@ -121,7 +121,6 @@ namespace OregonTrail.Travel.RiverCrossing
             _crossingPrompt.Clear();
 
             // Shows basic status of vehicle and total river crossing percentage.
-            //_crossingPrompt.AppendLine("--------------------------------");
             _crossingPrompt.AppendLine(
                 $"{UserData.Game.Trail.CurrentLocation.Name}");
             _crossingPrompt.AppendLine(
@@ -136,7 +135,6 @@ namespace OregonTrail.Travel.RiverCrossing
                 $"River width: {UserData.River.RiverWidth.ToString("N0")} feet");
             _crossingPrompt.AppendLine(
                 $"River crossed: {_riverCrossingOfTotalWidth.ToString("N0")} feet");
-            //_crossingPrompt.AppendLine("--------------------------------");
 
             return _crossingPrompt.ToString();
         }

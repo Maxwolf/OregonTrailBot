@@ -39,7 +39,7 @@ namespace OregonTrail.Travel.RiverCrossing.Ferry
         protected override string OnDialogPrompt()
         {
             var ferrryNoMonies = new StringBuilder();
-            ferrryNoMonies.AppendLine($"{Environment.NewLine}You do not have enough monies to take the ferry.{Environment.NewLine}");
+            ferrryNoMonies.AppendLine($"You do not have enough monies to take the ferry.{Environment.NewLine}");
             return ferrryNoMonies.ToString();
         }
 

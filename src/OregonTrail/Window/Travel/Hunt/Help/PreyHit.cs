@@ -18,7 +18,7 @@ namespace OregonTrail.Travel.Hunt.Help
         /// <summary>
         ///     Holds the string data about what we hit with our bullets.
         /// </summary>
-        private StringBuilder hitPrompt;
+        private StringBuilder _hitPrompt;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="InputForm{T}" /> class.
@@ -27,12 +27,12 @@ namespace OregonTrail.Travel.Hunt.Help
         /// <param name="window">The window.</param>
         public PreyHit(IWindow window) : base(window)
         {
-            hitPrompt = new StringBuilder();
+            _hitPrompt = new StringBuilder();
         }
 
         public override object MenuCommands
         {
-            get { return new[] {"Ok"}; }
+            get { return new[] {"Nice"}; }
         }
 
         /// <summary>
@@ -47,21 +47,12 @@ namespace OregonTrail.Travel.Hunt.Help
             var target = UserData.Hunt.LastTarget;
 
             // Prompt for hitting an animal.
-            if (target.Animal.TotalWeight > 100)
-            {
-                // Compliment the player on killing big game.
-                hitPrompt.AppendLine($"{Environment.NewLine}You shot a giant {target.Animal.Name.ToLowerInvariant()}.");
-                hitPrompt.AppendLine($"Full bellies tonight!{Environment.NewLine}");
-            }
-            else
-            {
-                // Laugh at tiny creatures below one hundred pounds.
-                hitPrompt.AppendLine(
-                    $"{Environment.NewLine}You shot a {target.Animal.Name.ToLowerInvariant()}.{Environment.NewLine}");
-            }
+            _hitPrompt.AppendLine(target.Animal.TotalWeight > 100
+                ? $"You shot a giant {target.Animal.Name.ToLowerInvariant()}. Full bellies tonight!{Environment.NewLine}"
+                : $"You shot a {target.Animal.Name.ToLowerInvariant()}.{Environment.NewLine}");
 
             // Returns the hit message to the text renderer.
-            return hitPrompt.ToString();
+            return _hitPrompt.ToString();
         }
 
         /// <summary>

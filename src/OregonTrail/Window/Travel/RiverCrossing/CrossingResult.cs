@@ -57,9 +57,7 @@ namespace OregonTrail.Travel.RiverCrossing
                     if (UserData.Game.Random.NextBool())
                     {
                         // No loss in time, but warning to let the player know it's dangerous.
-                        _crossingResult.AppendLine($"{Environment.NewLine}It was a muddy crossing,");
-                        _crossingResult.AppendLine("but you did not get");
-                        _crossingResult.AppendLine($"stuck.{Environment.NewLine}");
+                        _crossingResult.AppendLine($"It was a muddy crossing, but you did not get stuck.{Environment.NewLine}");
                     }
                     else
                     {
@@ -71,46 +69,21 @@ namespace OregonTrail.Travel.RiverCrossing
 
                     break;
                 case RiverCrossChoice.Float:
-                    if (UserData.River.DisasterHappened)
-                    {
-                        _crossingResult.AppendLine($"{Environment.NewLine}Your party relieved");
-                        _crossingResult.AppendLine("to reach other side after");
-                        _crossingResult.AppendLine($"trouble floating across.{Environment.NewLine}");
-                    }
-                    else
-                    {
-                        _crossingResult.AppendLine($"{Environment.NewLine}You had no trouble");
-                        _crossingResult.AppendLine("floating the wagon");
-                        _crossingResult.AppendLine($"across.{Environment.NewLine}");
-                    }
+                    _crossingResult.AppendLine(UserData.River.DisasterHappened
+                        ? $"Your party relieved to reach other side after trouble floating across.{Environment.NewLine}"
+                        : $"You had no trouble floating the wagon across.{Environment.NewLine}");
 
                     break;
                 case RiverCrossChoice.Ferry:
-                    if (UserData.River.DisasterHappened)
-                    {
-                        _crossingResult.AppendLine($"{Environment.NewLine}The ferry operator");
-                        _crossingResult.AppendLine("apologizes for the");
-                        _crossingResult.AppendLine($"rough ride.{Environment.NewLine}");
-                    }
-                    else
-                    {
-                        _crossingResult.AppendLine($"{Environment.NewLine}The ferry got your party");
-                        _crossingResult.AppendLine($"and wagon safely across.{Environment.NewLine}");
-                    }
+                    _crossingResult.AppendLine(UserData.River.DisasterHappened
+                        ? $"The ferry operator apologizes for the rough ride.{Environment.NewLine}"
+                        : $"The ferry got your party and wagon safely across.{Environment.NewLine}");
 
                     break;
                 case RiverCrossChoice.Indian:
-                    if (UserData.River.DisasterHappened)
-                    {
-                        _crossingResult.AppendLine($"{Environment.NewLine}The Indian runs away");
-                        _crossingResult.AppendLine("as soon as you");
-                        _crossingResult.AppendLine($"reach the shore.{Environment.NewLine}");
-                    }
-                    else
-                    {
-                        _crossingResult.AppendLine($"{Environment.NewLine}The Indian helped your");
-                        _crossingResult.AppendLine($"wagon safely across.{Environment.NewLine}");
-                    }
+                    _crossingResult.AppendLine(UserData.River.DisasterHappened
+                        ? $"The Indian runs away as soon as you reach the shore.{Environment.NewLine}"
+                        : $"The Indian helped your wagon safely across.{Environment.NewLine}");
 
                     break;
                 case RiverCrossChoice.None:

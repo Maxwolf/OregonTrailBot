@@ -70,27 +70,27 @@ namespace OregonTrail.Travel.Hunt
             // Depending on kill weight we change response and message.
             if (killWeight <= 0)
             {
-                _huntScore.AppendLine($"{Environment.NewLine}You were unable to shoot any food.{Environment.NewLine}");
+                _huntScore.AppendLine($"You were unable to shoot any food.{Environment.NewLine}");
             }
             else if (killWeight > 0)
             {
                 // Message to let the player know they killed prey.
                 _huntScore.AppendLine(
-                    $"{Environment.NewLine}From the animals you shot, you got {killWeight.ToString("N0")} pounds of meat.{Environment.NewLine}");
+                    $"From the animals you shot, you got {killWeight.ToString("N0")} pounds of meat.");
 
                 // Adds the killing weight since it is safe at this point.
                 _finalKillWeight = killWeight;
 
                 // Player can only take MAXFOOD amount from hunt regardless of total weight.
-                if (killWeight <= HuntManager.MAXFOOD)
+                if (killWeight <= HuntManager.MaxFood)
                     return _huntScore.ToString();
 
                 // Forces the weight of the kill to become
-                _finalKillWeight = HuntManager.MAXFOOD;
+                _finalKillWeight = HuntManager.MaxFood;
 
                 // Player killed to many animals.
-                _huntScore.AppendLine(
-                    $"However, you were only able to carry {_finalKillWeight.ToString("N0")} pounds back to the wagon.{Environment.NewLine}");
+                _huntScore.Append(
+                    $" However, you were only able to carry {_finalKillWeight.ToString("N0")} pounds back to the wagon.");
             }
 
             // Return the hunting result to text renderer.

@@ -19,12 +19,12 @@ namespace OregonTrail.Travel.Hunt
         {
             // Randomly generate a shooting time up to total hunting time.
             Lifetime = 0;
-            LifetimeMax = game.Random.Next(HuntManager.HUNTINGTIME);
+            LifetimeMax = game.Random.Next(HuntManager.Huntingtime);
 
             // Randomly generate maximum amount of time this animal will be a valid target.
             TargetTime = 0;
-            TargetTimeMax = game.Random.Next(HuntManager.MINTARGETINGTIME,
-                HuntManager.MAXTARGETINGTIME);
+            TargetTimeMax = game.Random.Next(HuntManager.MinTargetingTime,
+                HuntManager.MaxTargetingTime);
 
             // Select a random animal that we can be from default animals.
             Animal = new SimItem(HuntManager.DefaultAnimals[preyIndex], 1);

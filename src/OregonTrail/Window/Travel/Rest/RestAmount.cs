@@ -37,7 +37,7 @@ namespace OregonTrail.Travel.Rest
         /// </returns>
         public override string OnRenderForm()
         {
-            return Environment.NewLine + "How many days would you like to rest?";
+            return "How many days would you like to rest?";
         }
 
         /// <summary>Fired when the game Windows current state is not null and input buffer does not match any known command.</summary>

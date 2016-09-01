@@ -44,8 +44,7 @@ namespace OregonTrail.Travel.Dialog
             var prompt = new StringBuilder();
             var nextPoint = UserData.Game.Trail.NextLocation;
             prompt.AppendLine(
-                $"{Environment.NewLine}From {UserData.Game.Trail.CurrentLocation.Name} it is {UserData.Game.Trail.DistanceToNextLocation}");
-            prompt.AppendLine($"miles to {nextPoint.Name}{Environment.NewLine}");
+                $"From {UserData.Game.Trail.CurrentLocation.Name} it is {UserData.Game.Trail.DistanceToNextLocation} miles to {nextPoint.Name}{Environment.NewLine}");
             return prompt.ToString();
         }
 

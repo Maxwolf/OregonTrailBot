@@ -18,7 +18,7 @@ namespace OregonTrail.Travel.Store.Help
         /// <summary>
         ///     The store debt.
         /// </summary>
-        private StringBuilder storeDebt;
+        private StringBuilder _storeDebt;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="StoreDebtWarning" /> class.
@@ -27,7 +27,7 @@ namespace OregonTrail.Travel.Store.Help
         /// <param name="window">The window.</param>
         public StoreDebtWarning(IWindow window) : base(window)
         {
-            storeDebt = new StringBuilder();
+            _storeDebt = new StringBuilder();
         }
 
         public override object MenuCommands
@@ -43,13 +43,11 @@ namespace OregonTrail.Travel.Store.Help
         /// </returns>
         protected override string OnDialogPrompt()
         {
-            storeDebt.Clear();
-            storeDebt.AppendLine($"{Environment.NewLine}Whoa there partner!");
-            storeDebt.AppendLine(
-                $"I see you got {UserData.Store.Transactions.Count} items worth {UserData.Store.TotalTransactionCost.ToString("C2")}.");
-            storeDebt.AppendLine($"You only got {UserData.Game.Vehicle.Balance.ToString("C2")}!");
-            storeDebt.AppendLine($"Put some items back in order to leave the store...{Environment.NewLine}");
-            return storeDebt.ToString();
+            _storeDebt.Clear();
+            _storeDebt.AppendLine("Whoa there partner!");
+            _storeDebt.AppendLine(
+                $"I see you got {UserData.Store.Transactions.Count} items worth {UserData.Store.TotalTransactionCost.ToString("C2")}. You only got {UserData.Game.Vehicle.Balance.ToString("C2")}! Put some items back in order to leave the store...{Environment.NewLine}");
+            return _storeDebt.ToString();
         }
 
         /// <summary>

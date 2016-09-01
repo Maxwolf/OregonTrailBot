@@ -38,7 +38,7 @@ namespace OregonTrail.Travel.RiverCrossing.Help
         {
             var fordRiver = new StringBuilder();
             fordRiver.AppendLine(
-                $"{Environment.NewLine}To ford a river means to pull your wagon across a shallow part of the river, with the oxen still attached.{Environment.NewLine}");
+                $"To ford a river means to pull your wagon across a shallow part of the river, with the oxen still attached.{Environment.NewLine}");
             return fordRiver.ToString();
         }
 
