@@ -118,6 +118,13 @@ namespace OregonTrail
         /// <param name="keyChar">The key Char.</param>
         public void AddCharToInputBuffer(char keyChar)
         {
+            // Check if the character is a space, just add it if so.
+            if (keyChar == ' ')
+            {
+                OnCharacterAddedToInputBuffer(' '.ToString());
+                return;
+            }
+
             // Filter to prevent non-characters like delete, insert, scroll lock, etc.
             if (!char.IsLetter(keyChar) && !char.IsNumber(keyChar))
                 return;

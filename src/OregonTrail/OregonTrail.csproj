@@ -53,6 +53,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\BotConfig.cs" />
+    <Compile Include="Config\BotInfo.cs" />
+    <Compile Include="Config\BotSession.cs" />
     <Compile Include="Core\InputManager.cs" />
     <Compile Include="Core\Randomizer.cs" />
     <Compile Include="Core\SceneGraph.cs" />

@@ -84,7 +84,7 @@ namespace OregonTrail
             UserData.OnPostCreate(game);
 
             // Determines if the menu system should show raw input names in the menu rendering or just number selections by enum value.
-            ShowCommandNamesInMenu = SimulationApp.SHOW_COMMANDS;
+            ShowCommandNamesInMenu = SimulationApp.ShowCommands;
 
             // Complain the generics implemented is not of an enum type.
             if (!typeof (TCommands).IsEnum)

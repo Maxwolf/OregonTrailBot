@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Telegram.Bot.Types;
 
 namespace OregonTrail
 {
@@ -15,19 +14,22 @@ namespace OregonTrail
     public sealed class GameSimulationApp : SimulationApp
     {
         /// <summary>
+        /// Session data that is currently controlling the 
+        /// </summary>
+        public BotSession Session { get; }
+
+        /// <summary>
         ///     Defines the limit on the number of players for the vehicle that will be allowed. This also determines how many
         ///     names are asked for in new game Windows.
         /// </summary>
-        // ReSharper disable once InconsistentNaming
-        public const int MAXPLAYERS = 4;
+        public const int MaxPlayers = 4;
 
         /// <summary>
         ///     Creates new instance of game simulation. Complains if instance already exists.
         /// </summary>
-        /// <param name="message">Unique identifier for this game.</param>
-        public GameSimulationApp(Message message) : base(message.Chat.Id)
+        public GameSimulationApp(BotSession session) : base(session)
         {
-            LeaderTuple = Tuple.Create(message.Chat.FirstName, message.Chat.Id);
+            Session = session;
             OnPostCreate();
         }
 
@@ -89,13 +91,6 @@ namespace OregonTrail
                 return windowList;
             }
         }
-
-        /// <summary>
-        ///     User that started the simulation and is currently interacting with the bot and controlling the session. This is
-        ///     reference point for this user so we can have their name, and ID without having to query the API after they start
-        ///     the game and session is created.
-        /// </summary>
-        public Tuple<string, long> LeaderTuple { get; private set; }
 
         /// <summary>
         ///     Advances the linear progression of time in the simulation, attempting to move the vehicle forward if it has the

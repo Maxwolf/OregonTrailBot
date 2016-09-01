@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace TrailBot
+namespace OregonTrail
 {
     /// <summary>
     ///     Defines a set of data that can be used to configure the bot and store data about past events like high scores,

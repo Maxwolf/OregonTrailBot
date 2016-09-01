@@ -13,17 +13,6 @@ namespace OregonTrail
     public sealed class MainMenu : Window<MainMenuCommands, NewGameInfo>
     {
         /// <summary>
-        ///     Asked for the first party member.
-        /// </summary>
-        public const string LeaderQuestion = "What is the first name of the wagon leader?";
-
-        /// <summary>
-        ///     Asked for every other party member name we want to collect.
-        /// </summary>
-        public const string MembersQuestion =
-            "What are the first names of the three other members in your party?";
-
-        /// <summary>
         ///     Initializes a new instance of the <see cref="Window{TCommands,TData}" /> class.
         /// </summary>
         /// <param name="game">Core simulation which is controlling the form factory.</param>

@@ -14,21 +14,29 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace TrailBot
 {
+    /// <summary>
+    ///     Oregon Trail Telegram Bot Server
+    ///     Created by Ron "Maxwolf" McDowell (ron.mcdowell@gmail.com)
+    ///     Date 9/1/2016
+    /// </summary>
     internal class Program
     {
         /// <summary>
         ///     Used by the API to communicate with the Telegram bot API network.
         /// </summary>
-        private static TelegramBotClient Bot;
+        private static TelegramBotClient _bot;
 
         /// <summary>
         ///     Stores all of the currently running game sessions based on room ID.
         /// </summary>
-        private static Dictionary<long, GameSimulationApp> _sessions;
+        private static Dictionary<long, BotSession> _sessions;
 
+        /// <summary>
+        ///     Last known number of unique sessions or games that are currently being served by the bot manager.
+        /// </summary>
         private static int _lastSessionCount;
 
-        private static void Main(string[] args)
+        private static void Main()
         {
             // Load bot configuration.
             var botConfig = new BotConfig(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
@@ -42,18 +50,18 @@ namespace TrailBot
             }
 
             // Create bot instance using key got from configuration.
-            Bot = new TelegramBotClient(botConfig.LoadedKey);
+            _bot = new TelegramBotClient(botConfig.LoadedKey);
 
             // Register events used by bot to tell us when things happen like messages coming in.
-            Bot.OnMessage += BotOnMessageReceived;
-            Bot.OnMessageEdited += BotOnMessageReceived;
-            Bot.OnReceiveError += BotOnReceiveError;
+            _bot.OnMessage += BotOnMessageReceived;
+            _bot.OnMessageEdited += BotOnMessageReceived;
+            _bot.OnReceiveError += BotOnReceiveError;
 
             // Get information about the bot the key gave us access to (also a test of systems).
-            var me = Bot.GetMeAsync().Result;
+            var me = _bot.GetMeAsync().Result;
 
             // Create empty sessions dictionary which is used to keep track of multiple running game states.
-            _sessions = new Dictionary<long, GameSimulationApp>();
+            _sessions = new Dictionary<long, BotSession>();
 
             // Create title for the console window so it can be properly identified in graphical environments.
             Console.Title = me.Username;
@@ -67,7 +75,7 @@ namespace TrailBot
             Console.CancelKeyPress += Console_CancelKeyPress;
 
             // Process bot commands.
-            Bot.StartReceiving();
+            _bot.StartReceiving();
 
             // Prevent console session from closing.
             while (_sessions != null)
@@ -80,7 +88,7 @@ namespace TrailBot
 
                 // Simulation takes any number of pulses to determine seconds elapsed.
                 foreach (var sim in _sessions)
-                    sim.Value.OnTick(true);
+                    sim.Value.Session.OnTick(true);
 
                 // Do not consume all of the CPU, allow other messages to occur.
                 Thread.Sleep(1);
@@ -92,7 +100,7 @@ namespace TrailBot
             Console.WriteLine("Press ANY KEY to close this window...");
             Console.ReadKey();
 
-            Bot.StopReceiving();
+            _bot.StopReceiving();
         }
 
         private static void UpdateServerInfo()
@@ -116,7 +124,7 @@ namespace TrailBot
         {
             // Destroy the simulation sessions.
             foreach (var sim in _sessions)
-                sim.Value.Destroy();
+                sim.Value.Session.Destroy();
 
             // Clear out and then destroy the dictionary which will exit the main loop and stop application.
             _sessions.Clear();
@@ -131,7 +139,7 @@ namespace TrailBot
             Debugger.Break();
         }
 
-        private static async void BotOnMessageReceived(object sender, MessageEventArgs messageEventArgs)
+        private static void BotOnMessageReceived(object sender, MessageEventArgs messageEventArgs)
         {
             var message = messageEventArgs.Message;
 
@@ -139,25 +147,7 @@ namespace TrailBot
             if (message == null || message.Type != MessageType.TextMessage)
                 return;
 
-            // Create new session if needed, otherwise pass message along.
-            if (_sessions.ContainsKey(message.Chat.Id))
-            {
-                // Get the current session based on ID we know exists now.
-                var game = _sessions[message.Chat.Id];
-                if (game == null)
-                    throw new NullReferenceException("Found session ID game instance is null!");
-
-                // Clear anything that was in the input buffer before this message.
-                game.InputManager.ClearBuffer();
-
-                // Add each character of the message into the simulation input buffer.
-                foreach (var msgChar in message.Text)
-                    game.InputManager.AddCharToInputBuffer(msgChar);
-
-                // Send whatever we got to the simulation for processing it will decide what it wants.
-                game.InputManager.SendInputBufferAsCommand();
-            }
-            else
+            if (_sessions.ContainsKey(message.Chat.Id) && message.Text.Contains("/quit"))
             {
                 // Skip messages that are internal mode switching or empty (populating) windows and forms.
                 if (messageEventArgs.Message.Text.Contains(SceneGraph.GAMEMODE_DEFAULT_TUI) ||
@@ -165,24 +155,139 @@ namespace TrailBot
                     return;
 
                 // Makes the bot appear to be thinking.
-                await Bot.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
+                _bot.SendChatActionAsync(message.Chat.Id, ChatAction.Typing).Wait();
 
                 // Tell the players what we are doing.
-                await Bot.SendTextMessageAsync(message.Chat.Id,
-                    $"Creating new Oregon Trail session with {message.Chat.FirstName} as the leader since they said start first.",
+                _bot.SendTextMessageAsync(message.Chat.Id,
+                    $"{message.From.FirstName} has quit the game, losing their progress. To start a new game type /start to become leader of new session.",
                     replyMarkup: new ReplyKeyboardHide(),
                     disableWebPagePreview: true,
-                    disableNotification: true);
+                    disableNotification: true).Wait();
+
+                // Destroy the session.
+                switch (message.Chat.Type)
+                {
+                    case ChatType.Private:
+                        _sessions[message.From.Id].Session.Destroy();
+                        break;
+                    case ChatType.Group:
+                    case ChatType.Channel:
+                    case ChatType.Supergroup:
+                        _sessions[message.Chat.Id].Session.Destroy();
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                // Remove session from list.
+                _sessions.Remove(message.Chat.Id);
+            }
+            else if (_sessions.ContainsKey(message.Chat.Id) && message.Text.Contains("/reset"))
+            {
+                // Skip messages that are internal mode switching or empty (populating) windows and forms.
+                if (messageEventArgs.Message.Text.Contains(SceneGraph.GAMEMODE_DEFAULT_TUI) ||
+                    messageEventArgs.Message.Text.Contains(SceneGraph.GAMEMODE_EMPTY_TUI))
+                    return;
+
+                // Restart the session now.
+                switch (message.Chat.Type)
+                {
+                    case ChatType.Private:
+                        // Makes the bot appear to be thinking.
+                        _bot.SendChatActionAsync(message.Chat.Id, ChatAction.Typing).Wait();
+                        _sessions[message.From.Id].Session.Restart();
+                        _bot.SendTextMessageAsync(message.Chat.Id,
+                            $"{message.From.FirstName} has reset the game, losing their progress. Starting a new session now with them as the leader again.",
+                            replyMarkup: new ReplyKeyboardHide(), disableWebPagePreview: true,
+                            disableNotification: true)
+                            .Wait();
+                        break;
+                    case ChatType.Group:
+                    case ChatType.Channel:
+                    case ChatType.Supergroup:
+                        // Makes the bot appear to be thinking.
+                        _bot.SendChatActionAsync(message.Chat.Id, ChatAction.Typing).Wait();
+                        _sessions[message.Chat.Id].Session.Restart();
+                        _bot.SendTextMessageAsync(message.Chat.Id,
+                            $"{message.From.FirstName} has reset the game, losing their progress. Starting a new session now with them as the leader again.",
+                            replyMarkup: new ReplyKeyboardHide(), disableWebPagePreview: true,
+                            disableNotification: true).Wait();
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+            else if (!_sessions.ContainsKey(message.Chat.Id) && message.Text.Contains("/start"))
+            {
+                // Skip messages that are internal mode switching or empty (populating) windows and forms.
+                if (messageEventArgs.Message.Text.Contains(SceneGraph.GAMEMODE_DEFAULT_TUI) ||
+                    messageEventArgs.Message.Text.Contains(SceneGraph.GAMEMODE_EMPTY_TUI))
+                    return;
 
                 // Makes the bot appear to be thinking.
-                await Bot.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
+                _bot.SendChatActionAsync(message.Chat.Id, ChatAction.Typing).Wait();
 
-                // Create a new game session using chat room ID as key in our dictionary.
-                _sessions.Add(message.Chat.Id, new GameSimulationApp(message));
+                _sessions.Add(message.Chat.Id, new BotSession(message));
+                _bot.SendTextMessageAsync(message.Chat.Id,
+                    $"Creating new Oregon Trail session with {message.From.FirstName} as the leader since they said start first.",
+                    replyMarkup: new ReplyKeyboardHide(), disableWebPagePreview: true,
+                    disableNotification: true).Wait();
 
                 // Hook delegate event for knowing when that simulation is updated.
-                if (_sessions.ContainsKey(message.Chat.Id))
-                    _sessions[message.Chat.Id].SceneGraph.ScreenBufferDirtyEvent += SceneGraphOnScreenBufferDirtyEvent;
+                _sessions[message.Chat.Id].Session.SceneGraph.ScreenBufferDirtyEvent +=
+                    SceneGraphOnScreenBufferDirtyEvent;
+            }
+            else if (_sessions.ContainsKey(message.Chat.Id) && message.Text.Contains("/join") &&
+                     _sessions[message.Chat.Id]?.Session?.WindowManager?.FocusedWindow?.CurrentForm is InputPlayerNames)
+            {
+                // Get the current session based on ID we know exists now.
+                var game = _sessions[message.Chat.Id];
+                if (game == null)
+                    throw new NullReferenceException("Found session ID game instance is null!");
+
+                // Prevent the leader of the session from clicking or typing join on himself.
+                if (message.From.Id == game.UserID)
+                    return;
+
+                // Clear anything that was in the input buffer before this message.
+                game.Session.InputManager.ClearBuffer();
+
+                // Allow user to join the session by using their name, that withholding use their last and if not that then whole username.
+                if (!string.IsNullOrEmpty(message.From.FirstName))
+                {
+                    foreach (var msgChar in message.From.FirstName)
+                        game.Session.InputManager.AddCharToInputBuffer(msgChar);
+                }
+                else if (!string.IsNullOrEmpty(message.From.LastName) && string.IsNullOrEmpty(message.From.FirstName))
+                {
+                    foreach (var msgChar in message.From.LastName)
+                        game.Session.InputManager.AddCharToInputBuffer(msgChar);
+                }
+                else
+                {
+                    foreach (var msgChar in message.From.Username)
+                        game.Session.InputManager.AddCharToInputBuffer(msgChar);
+                }
+
+                // Send whatever we got to the simulation for processing it will decide what it wants.
+                game.Session.InputManager.SendInputBufferAsCommand();
+            }
+            else if (_sessions.ContainsKey(message.Chat.Id))
+            {
+                // Get the current session based on ID we know exists now.
+                var game = _sessions[message.Chat.Id];
+                if (game == null)
+                    throw new NullReferenceException("Found session ID game instance is null!");
+
+                // Clear anything that was in the input buffer before this message.
+                game.Session.InputManager.ClearBuffer();
+
+                // Add each character of the message into the simulation input buffer.
+                foreach (var msgChar in message.Text)
+                    game.Session.InputManager.AddCharToInputBuffer(msgChar);
+
+                // Send whatever we got to the simulation for processing it will decide what it wants.
+                game.Session.InputManager.SendInputBufferAsCommand();
             }
         }
 
@@ -194,28 +299,25 @@ namespace TrailBot
         ///     Commands which will become buttons, NULL if user input required for things like amounts or
         ///     names.
         /// </param>
-        /// <param name="gameID">Unique identifier that is used to base the chat with bot to given user.</param>
-        private static async void SceneGraphOnScreenBufferDirtyEvent(string content, object commands, long gameID)
+        /// <param name="session">Contains the same session data which should be also being used on this game.</param>
+        private static void SceneGraphOnScreenBufferDirtyEvent(string content, object commands, BotSession session)
         {
             // Cast the commands as a string array.
             var menuCommands = commands as string[];
 
             // Skip messages that are internal mode switching or empty (populating) windows and forms.
-            if (content.Contains(SceneGraph.GAMEMODE_DEFAULT_TUI) ||
-                content.Contains(SceneGraph.GAMEMODE_EMPTY_TUI))
+            if (content.Contains(SceneGraph.GAMEMODE_DEFAULT_TUI) || content.Contains(SceneGraph.GAMEMODE_EMPTY_TUI))
                 return;
 
             // Check if there are multiple commands that can be pressed (or dialog with continue only).
             if ((menuCommands != null && menuCommands.Length <= 0) || menuCommands == null)
             {
                 // Makes the bot appear to be thinking.
-                await Bot.SendChatActionAsync(gameID, ChatAction.Typing);
+                _bot.SendChatActionAsync(session.ChatID, ChatAction.Typing).Wait();
 
                 // Instruct the program that it can pass along screen buffer when it changes.
-                await Bot.SendTextMessageAsync(gameID, content,
-                    replyMarkup: new ReplyKeyboardHide(),
-                    disableWebPagePreview: true,
-                    disableNotification: true);
+                _bot.SendTextMessageAsync(session.ChatID, content, replyMarkup: new ReplyKeyboardHide(),
+                    disableWebPagePreview: true, disableNotification: true).Wait();
             }
             else if (menuCommands.Length > 0)
             {
@@ -236,51 +338,55 @@ namespace TrailBot
                     }, true, true);
 
                     // Simulation can send photos to chat to help visualize locations.
-                    if (_sessions[gameID].WindowManager.FocusedWindow == null)
+                    if (_sessions[session.ChatID].Session.WindowManager.FocusedWindow == null)
                         return;
 
                     // Figures out where the image will be coming from.
                     var fileName = string.Empty;
                     var filePath = string.Empty;
-                    if (!string.IsNullOrEmpty(_sessions[gameID].WindowManager.FocusedWindow.ImagePath) &&
-                        _sessions[gameID].WindowManager.FocusedWindow.CurrentForm == null)
-                    {
-                        fileName = _sessions[gameID].WindowManager.FocusedWindow.ImagePath.Split('\\').Last();
-                        filePath = _sessions[gameID].WindowManager.FocusedWindow.ImagePath;
-                    }
-                    else if (_sessions[gameID].WindowManager.FocusedWindow.CurrentForm != null &&
-                             !string.IsNullOrEmpty(
-                                 _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath))
+                    if (
+                        !string.IsNullOrEmpty(_sessions[session.ChatID].Session.WindowManager.FocusedWindow.ImagePath) &&
+                        _sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm == null)
                     {
                         fileName =
-                            _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath.Split('\\').Last();
-                        filePath = _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath;
+                            _sessions[session.ChatID].Session.WindowManager.FocusedWindow.ImagePath.Split('\\').Last();
+                        filePath = _sessions[session.ChatID].Session.WindowManager.FocusedWindow.ImagePath;
+                    }
+                    else if (_sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm != null &&
+                             !string.IsNullOrEmpty(
+                                 _sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm.ImagePath))
+                    {
+                        fileName =
+                            _sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm.ImagePath.Split(
+                                '\\')
+                                .Last();
+                        filePath = _sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm.ImagePath;
                     }
 
                     // Abort if there is no valid filename.
                     if (string.IsNullOrEmpty(fileName))
                     {
                         // Makes the bot appear to be thinking.
-                        await Bot.SendChatActionAsync(gameID, ChatAction.Typing);
+                        _bot.SendChatActionAsync(session.ChatID, ChatAction.Typing).Wait();
 
                         // Text operations do not include photos.
-                        await Bot.SendTextMessageAsync(gameID, content,
-                            replyMarkup: keyboard,
+                        _bot.SendTextMessageAsync(session.ChatID, content, replyMarkup: keyboard,
                             disableWebPagePreview: true,
-                            disableNotification: true);
+                            disableNotification: true).Wait();
                     }
                     else
                     {
                         // Grabs the picture from the given path and then loads it into the Telegram API.
-                        using (
-                            var fileStream = new FileStream(
-                                filePath, FileMode.Open,
-                                FileAccess.Read, FileShare.Read))
+                        using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read)
+                            )
                         {
+                            // Makes the bot appear to be thinking.
+                            _bot.SendChatActionAsync(session.ChatID, ChatAction.UploadPhoto).Wait();
+
                             var fts = new FileToSend(fileName, fileStream);
-                            await Bot.SendPhotoAsync(gameID, fts, content,
-                                replyMarkup: keyboard,
-                                disableNotification: true);
+                            _bot.SendPhotoAsync(session.ChatID, fts, content, replyMarkup: keyboard,
+                                disableNotification: true)
+                                .Wait();
                         }
                     }
                 }
@@ -299,51 +405,48 @@ namespace TrailBot
                     // Send custom keyboard.
                     var keyboard = new ReplyKeyboardMarkup(new[]
                     {
-                        topRow.ToArray(),
-                        bottomRow.ToArray()
+                        topRow.ToArray(), bottomRow.ToArray()
                     }, true, true);
 
                     // Figures out where the image will be coming from.
                     string fileName;
                     string filePath;
-                    if (!string.IsNullOrEmpty(_sessions[gameID].WindowManager.FocusedWindow.ImagePath) &&
-                        _sessions[gameID].WindowManager.FocusedWindow.CurrentForm == null)
+                    if (
+                        !string.IsNullOrEmpty(_sessions[session.ChatID].Session.WindowManager.FocusedWindow.ImagePath) &&
+                        _sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm == null)
                     {
-                        filePath = _sessions[gameID].WindowManager.FocusedWindow.ImagePath;
-                        fileName = _sessions[gameID].WindowManager.FocusedWindow.ImagePath.Split('\\').Last();
-                        await Bot.SendChatActionAsync(gameID, ChatAction.UploadPhoto);
+                        filePath = _sessions[session.ChatID].Session.WindowManager.FocusedWindow.ImagePath;
+                        fileName =
+                            _sessions[session.ChatID].Session.WindowManager.FocusedWindow.ImagePath.Split('\\').Last();
 
                         // Grabs the picture from the given path and then loads it into the Telegram API.
                         using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read)
                             )
                         {
+                            _bot.SendChatActionAsync(session.ChatID, ChatAction.UploadPhoto).Wait();
                             var fts = new FileToSend(fileName, fileStream);
-                            await Bot.SendPhotoAsync(gameID, fts, content,
-                                replyMarkup: keyboard,
-                                disableNotification: true);
+                            _bot.SendPhotoAsync(session.ChatID, fts, content, replyMarkup: keyboard,
+                                disableNotification: true)
+                                .Wait();
                         }
                     }
-                    else if (_sessions[gameID].WindowManager.FocusedWindow.CurrentForm != null &&
+                    else if (_sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm != null &&
                              !string.IsNullOrEmpty(
-                                 _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath))
+                                 _sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm.ImagePath))
                     {
-                        filePath = _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath;
+                        filePath = _sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm.ImagePath;
                         fileName =
-                            _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath.Split('\\').Last();
-                        await Bot.SendChatActionAsync(gameID, ChatAction.UploadPhoto);
+                            _sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm.ImagePath.Split(
+                                '\\')
+                                .Last();
 
                         // Abort if there is no valid filename.
                         if (string.IsNullOrEmpty(fileName))
                         {
-                            await Bot.SendChatActionAsync(gameID, ChatAction.Typing);
-
                             // Send the message to chat room.
-                            await Bot.SendTextMessageAsync(
-                                gameID,
-                                content,
-                                replyMarkup: keyboard,
-                                disableWebPagePreview: true,
-                                disableNotification: true);
+                            _bot.SendChatActionAsync(session.ChatID, ChatAction.Typing).Wait();
+                            _bot.SendTextMessageAsync(session.ChatID, content, replyMarkup: keyboard,
+                                disableWebPagePreview: true, disableNotification: true).Wait();
                         }
                         else
                         {
@@ -352,24 +455,20 @@ namespace TrailBot
                                 var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read)
                                 )
                             {
+                                _bot.SendChatActionAsync(session.ChatID, ChatAction.UploadPhoto).Wait();
                                 var fts = new FileToSend(fileName, fileStream);
-                                await Bot.SendPhotoAsync(gameID, fts, content,
-                                    replyMarkup: keyboard,
-                                    disableNotification: true);
+                                _bot.SendPhotoAsync(session.ChatID, fts, content, replyMarkup: keyboard,
+                                    disableNotification: true).Wait();
                             }
                         }
                     }
                     else
                     {
-                        await Bot.SendChatActionAsync(gameID, ChatAction.Typing);
-
                         // Send the message to chat room.
-                        await Bot.SendTextMessageAsync(
-                            gameID,
-                            content,
-                            replyMarkup: keyboard,
+                        _bot.SendChatActionAsync(session.ChatID, ChatAction.Typing).Wait();
+                        _bot.SendTextMessageAsync(session.ChatID, content, replyMarkup: keyboard,
                             disableWebPagePreview: true,
-                            disableNotification: true);
+                            disableNotification: true).Wait();
                     }
                 }
             }

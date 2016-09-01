@@ -17,7 +17,7 @@ namespace OregonTrail
         /// <summary>
         ///     Fired when the screen back buffer has changed from what is currently being shown, this forces a redraw.
         /// </summary>
-        public delegate void ScreenBufferDirty(string tuiContent, object commands, long gameID);
+        public delegate void ScreenBufferDirty(string tuiContent, object commands, BotSession leader);
 
         /// <summary>
         ///     Default string used when game Windows has nothing better to say.
@@ -32,22 +32,24 @@ namespace OregonTrail
         public const string GAMEMODE_EMPTY_TUI = "[NO WINDOW ATTACHED]";
 
         /// <summary>
-        ///     Reference to simulation that is controlling the text user interface and actually filling the screen buffer with
-        ///     data.
+        ///     Core simulation which is controlling the window manager.
         /// </summary>
         private readonly SimulationApp _game;
 
-        private readonly long _gameID;
+        /// <summary>
+        ///     Current game session and all the controller information.
+        /// </summary>
+        private readonly BotSession _session;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="SceneGraph" /> class.
         /// </summary>
         /// <param name="game">Core simulation which is controlling the window manager.</param>
-        /// <param name="gameID"></param>
-        public SceneGraph(SimulationApp game, long gameID)
+        /// <param name="session">Current game session and all the controller information.</param>
+        public SceneGraph(SimulationApp game, BotSession session)
         {
             _game = game;
-            _gameID = gameID;
+            _session = session;
             ScreenBuffer = string.Empty;
         }
 
@@ -100,8 +102,7 @@ namespace OregonTrail
             ScreenBufferDirtyEvent?.Invoke($"{ScreenBuffer}",
                 _game.WindowManager.FocusedWindow.CurrentForm != null
                     ? _game?.WindowManager?.FocusedWindow?.CurrentForm.MenuCommands
-                    : _game?.WindowManager?.FocusedWindow?.MenuCommands,
-                _gameID);
+                    : _game?.WindowManager?.FocusedWindow?.MenuCommands, _session);
         }
 
         /// <summary>

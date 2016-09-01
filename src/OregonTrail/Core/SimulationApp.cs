@@ -17,15 +17,13 @@ namespace OregonTrail
         ///     Determines if the dynamic menu system should show the command names or only numbers. If false then only numbers
         ///     will be shown.
         /// </summary>
-        public const bool SHOW_COMMANDS = false;
+        public const bool ShowCommands = false;
 
         /// <summary>
         ///     Constant for the amount of time difference that should occur from last tick and current tick in milliseconds before
         ///     the simulation logic will be ticked.
         /// </summary>
-        private const double TICK_INTERVAL = 1000.0d;
-
-        private readonly long _gameID;
+        private const double TickInterval = 1000.0d;
 
         /// <summary>
         ///     Time and date of latest system tick, used to measure total elapsed time and tick simulation after each second.
@@ -42,10 +40,12 @@ namespace OregonTrail
         /// <summary>
         ///     Initializes a new instance of the <see cref="T:TrailGame.SimulationApp" /> class.
         /// </summary>
-        protected SimulationApp(long gameID)
+        protected SimulationApp(BotSession session)
         {
-            _gameID = gameID;
             IsClosing = false;
+
+            // Starter of the game and only one that can control it.
+            LeaderTuple = Tuple.Create(session.LeaderName, session.UserID);
 
             // Date and time the simulation was started, which we use as benchmark for all future time passed.
             _lastTickTime = DateTime.UtcNow;
@@ -57,11 +57,18 @@ namespace OregonTrail
             // Create modules needed for managing simulation.
             Random = new Randomizer();
             WindowManager = new WindowManager(this);
-            SceneGraph = new SceneGraph(this, gameID);
+            SceneGraph = new SceneGraph(this, session);
 
             // Input manager needs event hook for knowing when buffer is sent.
             InputManager = new InputManager(this);
         }
+
+        /// <summary>
+        ///     User that started the simulation and is currently interacting with the bot and controlling the session. This is
+        ///     reference point for this user so we can have their name, and ID without having to query the API after they start
+        ///     the game and session is created.
+        /// </summary>
+        public Tuple<string, int> LeaderTuple { get; private set; }
 
         /// <summary>
         ///     Determines if the simulation is currently closing down.
@@ -144,7 +151,7 @@ namespace OregonTrail
                 var elapsedSpan = new TimeSpan(elapsedTicks);
 
                 // Check if more than an entire second has gone by.
-                if (!(elapsedSpan.TotalMilliseconds > TICK_INTERVAL))
+                if (!(elapsedSpan.TotalMilliseconds > TickInterval))
                     return;
 
                 // Reset last tick time to current time for measuring towards next second tick.

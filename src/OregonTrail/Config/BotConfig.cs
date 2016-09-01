@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
 
-namespace TrailBot
+namespace OregonTrail
 {
     /// <summary>
     ///     Class that is used to manually control the loading and saving of data related to the simulation and bot keys used

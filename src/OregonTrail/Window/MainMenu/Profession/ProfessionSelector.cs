@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Telegram.Bot.Types.Enums;
 
 namespace OregonTrail
 {
@@ -122,19 +123,19 @@ namespace OregonTrail
                     UserData.PlayerProfession = Profession.Banker;
                     UserData.StartingMonies = 1600;
                     UserData.PlayerNameIndex = 0;
-                    SetForm(typeof (InputPlayerNames));
+                    FinishProfessionSelection();
                     break;
                 case Profession.Carpenter:
                     UserData.PlayerProfession = Profession.Carpenter;
                     UserData.StartingMonies = 800;
                     UserData.PlayerNameIndex = 0;
-                    SetForm(typeof (InputPlayerNames));
+                    FinishProfessionSelection();
                     break;
                 case Profession.Farmer:
                     UserData.PlayerProfession = Profession.Farmer;
                     UserData.StartingMonies = 400;
                     UserData.PlayerNameIndex = 0;
-                    SetForm(typeof (InputPlayerNames));
+                    FinishProfessionSelection();
                     break;
                 default:
                     UserData.PlayerProfession = Profession.Banker;
@@ -143,6 +144,15 @@ namespace OregonTrail
                     SetForm(typeof (ProfessionHelp));
                     break;
             }
+        }
+
+        /// <summary>
+        ///     Finalizes the selection of leader profession for point tabulation and starting monies purposes. Next step here is
+        ///     to decide if we need to enter usernames or not.
+        /// </summary>
+        private void FinishProfessionSelection()
+        {
+            SetForm(typeof(InputPlayerNames));
         }
     }
 }

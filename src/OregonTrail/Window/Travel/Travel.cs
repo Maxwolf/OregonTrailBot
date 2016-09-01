@@ -233,10 +233,6 @@ namespace OregonTrail
             if (GameOver)
                 return;
 
-            // Skip if the player has already arrived at this location.
-            if (!UserData.Game.Trail.CurrentLocation.ArrivalFlag)
-                return;
-
             // Check if passengers in the vehicle are dead, or player reached end of the trail.
             if (_game.Trail.CurrentLocation.LastLocation || _game.Vehicle.PassengersDead)
             {
@@ -246,7 +242,8 @@ namespace OregonTrail
             }
 
             // Check if player is just arriving at a new location.
-            if (_game.Trail.CurrentLocation.Status == LocationStatus.Arrived && !_game.Trail.CurrentLocation.ArrivalFlag &&
+            if (_game.Trail.CurrentLocation.Status == LocationStatus.Arrived &&
+                !_game.Trail.CurrentLocation.ArrivalFlag &&
                 !GameOver)
             {
                 _game.Trail.CurrentLocation.ArrivalFlag = true;
@@ -264,6 +261,10 @@ namespace OregonTrail
         /// </summary>
         public override void OnWindowAdded()
         {
+            // Skip if the player has already arrived at this location.
+            if (!UserData.Game.Trail.CurrentLocation.ArrivalFlag)
+                return;
+
             ArriveAtLocation();
         }
     }
