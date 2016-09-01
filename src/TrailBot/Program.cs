@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using OregonTrail;
 using Telegram.Bot;
@@ -18,8 +20,7 @@ namespace TrailBot
         /// <summary>
         ///     Used by the API to communicate with the Telegram bot API network.
         /// </summary>
-        private static readonly TelegramBotClient Bot =
-            new TelegramBotClient("227031115:AAElTAMDxnUxJ5_VuDn5LUUvQpNHnyT_V2Q");
+        private static TelegramBotClient Bot;
 
         /// <summary>
         ///     Stores all of the currently running game sessions based on room ID.
@@ -30,13 +31,29 @@ namespace TrailBot
 
         private static void Main(string[] args)
         {
+            // Load bot configuration.
+            var botConfig = new BotConfig(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+
+            // Complain if there is no key.
+            if (string.IsNullOrEmpty(botConfig.LoadedKey))
+                throw new SettingsPropertyNotFoundException(
+                    "Unable to load API key from JSON configuration, check for created file oregon.json and edit it.");
+
+            // Create bot instance using key got from configuration.
+            Bot = new TelegramBotClient(botConfig.LoadedKey);
+
+            // Register events used by bot to tell us when things happen like messages coming in.
             Bot.OnMessage += BotOnMessageReceived;
             Bot.OnMessageEdited += BotOnMessageReceived;
             Bot.OnReceiveError += BotOnReceiveError;
 
+            // Get information about the bot the key gave us access to (also a test of systems).
             var me = Bot.GetMeAsync().Result;
+
+            // Create empty sessions dictionary which is used to keep track of multiple running game states.
             _sessions = new Dictionary<long, GameSimulationApp>();
 
+            // Create title for the console window so it can be properly identified in graphical environments.
             Console.Title = me.Username;
 
             // Create console with title, no cursor, make CTRL-C act as input.
@@ -82,7 +99,8 @@ namespace TrailBot
             Console.Clear();
             Console.SetCursorPosition(0, 0);
             Console.CursorVisible = false;
-            Console.WriteLine($"Oregon Trail Telegram Bot Server{Environment.NewLine}Sessions: {_sessions.Count.ToString("N0")}");
+            Console.WriteLine(
+                $"Oregon Trail Telegram Bot Server{Environment.NewLine}Sessions: {_sessions.Count.ToString("N0")}");
         }
 
         /// <summary>
@@ -230,7 +248,8 @@ namespace TrailBot
                              !string.IsNullOrEmpty(
                                  _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath))
                     {
-                        fileName = _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath.Split('\\').Last();
+                        fileName =
+                            _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath.Split('\\').Last();
                         filePath = _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath;
                     }
 
@@ -291,7 +310,8 @@ namespace TrailBot
                         await Bot.SendChatActionAsync(gameID, ChatAction.UploadPhoto);
 
                         // Grabs the picture from the given path and then loads it into the Telegram API.
-                        using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                        using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read)
+                            )
                         {
                             var fts = new FileToSend(fileName, fileStream);
                             await Bot.SendPhotoAsync(gameID, fts, content,
@@ -300,11 +320,12 @@ namespace TrailBot
                         }
                     }
                     else if (_sessions[gameID].WindowManager.FocusedWindow.CurrentForm != null &&
-                        !string.IsNullOrEmpty(
-                            _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath))
+                             !string.IsNullOrEmpty(
+                                 _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath))
                     {
                         filePath = _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath;
-                        fileName = _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath.Split('\\').Last();
+                        fileName =
+                            _sessions[gameID].WindowManager.FocusedWindow.CurrentForm.ImagePath.Split('\\').Last();
                         await Bot.SendChatActionAsync(gameID, ChatAction.UploadPhoto);
 
                         // Abort if there is no valid filename.
@@ -323,7 +344,9 @@ namespace TrailBot
                         else
                         {
                             // Grabs the picture from the given path and then loads it into the Telegram API.
-                            using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                            using (
+                                var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read)
+                                )
                             {
                                 var fts = new FileToSend(fileName, fileStream);
                                 await Bot.SendPhotoAsync(gameID, fts, content,

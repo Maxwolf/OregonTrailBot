@@ -56,7 +56,7 @@ namespace OregonTrail.Travel.Command
                 location => location.Status == LocationStatus.Departed);
 
             var locationsPercentComplete = locationsCompleted/(decimal)UserData.Game.Trail.Locations.Count;
-            mapPrompt.AppendLine((locationsPercentComplete*100).ToString("P"));
+            mapPrompt.AppendLine(locationsPercentComplete.ToString("P"));
 
             return mapPrompt.ToString();
         }
