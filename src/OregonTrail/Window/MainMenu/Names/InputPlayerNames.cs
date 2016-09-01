@@ -49,6 +49,13 @@ namespace OregonTrail.MainMenu.Names
             // Create string builder so we only build up this data once.
             _inputNamesHelp = new StringBuilder();
 
+            // Add the leaders current username when we begin.
+            if (UserData.PlayerNames.Count <= 0 && UserData.PlayerNameIndex <= 0)
+            {
+                UserData.PlayerNames.Insert(UserData.PlayerNameIndex, UserData.Game.LeaderTuple.Item1);
+                UserData.PlayerNameIndex++;
+            }
+
             // Add the question text from constructor parameter.
             // ReSharper disable once SwitchStatementMissingSomeCases
             switch (UserData.PlayerNameIndex)

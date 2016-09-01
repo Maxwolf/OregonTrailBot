@@ -51,7 +51,7 @@ namespace OregonTrail.Travel.Rest
 
         public override object MenuCommands
         {
-            get { return null; }
+            get { return UserData.DaysToRest <= 0 ? new[] {"Ok"} : null; }
         }
 
         /// <summary>

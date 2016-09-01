@@ -1,6 +1,7 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
+using System;
 using System.Collections.Generic;
 using OregonTrail.Item;
 using OregonTrail.Time;

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -36,8 +35,11 @@ namespace TrailBot
 
             // Complain if there is no key.
             if (string.IsNullOrEmpty(botConfig.LoadedKey))
-                throw new SettingsPropertyNotFoundException(
+            {
+                Console.WriteLine(
                     "Unable to load API key from JSON configuration, check for created file oregon.json and edit it.");
+                return;
+            }
 
             // Create bot instance using key got from configuration.
             Bot = new TelegramBotClient(botConfig.LoadedKey);
@@ -162,19 +164,21 @@ namespace TrailBot
                     messageEventArgs.Message.Text.Contains(SceneGraph.GAMEMODE_EMPTY_TUI))
                     return;
 
-                //// Tell the players what we are doing.
-                //await Bot.SendTextMessageAsync(message.Chat.Id,
-                //    $"Creating new Oregon Trail session with token: {message.Chat.Id}",
-                //    replyMarkup: new ReplyKeyboardHide(),
-                //    parseMode: ParseMode.Markdown,
-                //    disableWebPagePreview: true,
-                //    disableNotification: true);
+                // Makes the bot appear to be thinking.
+                await Bot.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
+
+                // Tell the players what we are doing.
+                await Bot.SendTextMessageAsync(message.Chat.Id,
+                    $"Creating new Oregon Trail session with {message.Chat.FirstName} as the leader since they said start first.",
+                    replyMarkup: new ReplyKeyboardHide(),
+                    disableWebPagePreview: true,
+                    disableNotification: true);
 
                 // Makes the bot appear to be thinking.
                 await Bot.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
 
                 // Create a new game session using chat room ID as key in our dictionary.
-                _sessions.Add(message.Chat.Id, new GameSimulationApp(message.Chat.Id, Bot));
+                _sessions.Add(message.Chat.Id, new GameSimulationApp(message));
 
                 // Hook delegate event for knowing when that simulation is updated.
                 if (_sessions.ContainsKey(message.Chat.Id))

@@ -55,7 +55,7 @@ namespace OregonTrail.MainMenu.Options
             eraseTopTen.AppendLine($"If you erase the current Top Ten list, the names and scores will be replaced by those on the original list.{Environment.NewLine}");
 
             // Wait for use input...
-            eraseTopTen.Append("Do you want to do this? Y/N");
+            eraseTopTen.Append("Do you want to do this?");
             return eraseTopTen.ToString();
         }
 

@@ -49,8 +49,7 @@ namespace OregonTrail.RandomEvent
         {
             var brokenPrompt = new StringBuilder();
             brokenPrompt.AppendLine(
-                $"{Environment.NewLine}Broken {UserData.Game.Vehicle.BrokenPart.Name.ToLowerInvariant()}. Would you");
-            brokenPrompt.Append("like to try and repair it? Y/N");
+                $"Broken {UserData.Game.Vehicle.BrokenPart.Name.ToLowerInvariant()}. Would you like to try and repair it?");
             return brokenPrompt.ToString();
         }
 

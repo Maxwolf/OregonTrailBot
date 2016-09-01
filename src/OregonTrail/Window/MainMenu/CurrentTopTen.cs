@@ -61,7 +61,7 @@ namespace OregonTrail.MainMenu
 
             // Question about viewing point distribution information.
             currentTopTen.Append($"Would you like to see how{Environment.NewLine}");
-            currentTopTen.Append("points are earned? Y/N");
+            currentTopTen.Append("points are earned?");
             return currentTopTen.ToString();
         }
 

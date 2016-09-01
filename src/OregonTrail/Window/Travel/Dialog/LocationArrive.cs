@@ -92,7 +92,7 @@ namespace OregonTrail.Travel.Dialog
             {
                 // Build up message about location the player is arriving at.
                 pointReached.AppendLine(
-                    $"{Environment.NewLine}You are now at the {game.Trail.CurrentLocation.Name}. Would you like to look around? Y/N");
+                    $"You are now at the {game.Trail.CurrentLocation.Name}. Would you like to look around?");
             }
 
             // Wait for input on deciding if we should take a look around.

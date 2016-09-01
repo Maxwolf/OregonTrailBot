@@ -56,7 +56,7 @@ namespace OregonTrail.MainMenu.Options
             eraseEpitaphs.AppendLine(
                 $"There may be one tombstone on the first half of the trail and one tombstone on the second half. If you erase the tombstone messages, they will not be replaced until team leaders die along the trail.{Environment.NewLine}");
 
-            eraseEpitaphs.Append("Do you want to do this? Y/N");
+            eraseEpitaphs.Append("Do you want to do this?");
             return eraseEpitaphs.ToString();
         }
 

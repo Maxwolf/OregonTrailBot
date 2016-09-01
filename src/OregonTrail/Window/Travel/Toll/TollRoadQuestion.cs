@@ -95,8 +95,8 @@ namespace OregonTrail.Travel.Toll
 
             // Check if the player has enough money to pay for the toll road.
             tollPrompt.AppendLine(UserData.Game.Vehicle.Inventory[Entities.Cash].TotalValue >= UserData.Toll.Cost
-                ? "Are you willing to do this? Y/N"
-                : $"{Environment.NewLine}You don't have enough cash for the toll road.");
+                ? "Are you willing to do this?"
+                : "You don't have enough cash for the toll road.");
 
             return tollPrompt.ToString();
         }

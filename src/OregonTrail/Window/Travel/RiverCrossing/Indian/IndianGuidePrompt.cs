@@ -80,7 +80,7 @@ namespace OregonTrail.Travel.RiverCrossing.Indian
 
             // Change up the message based on if the player has enough clothing, they won't be able to get more if they don't here.
             indianGuidePrompt.AppendLine(HasEnoughClothingToTrade
-                ? "Will you accept this offer? Y/N"
+                ? "Will you accept this offer?"
                 : $"You don't have {UserData.River.IndianCost.ToString("N0")} sets of clothing.{Environment.NewLine}");
 
             // Renders out the Indian guide river crossing confirmation and or denial.

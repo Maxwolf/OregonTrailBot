@@ -242,6 +242,10 @@ namespace OregonTrail.Travel
             if (GameOver)
                 return;
 
+            // Skip if the player has already arrived at this location.
+            if (!UserData.Game.Trail.CurrentLocation.ArrivalFlag)
+                return;
+
             // Check if passengers in the vehicle are dead, or player reached end of the trail.
             if (_game.Trail.CurrentLocation.LastLocation || _game.Vehicle.PassengersDead)
             {

@@ -54,7 +54,7 @@ namespace OregonTrail.MainMenu.Names
             // Create string builder, counter, print info about party members.
             var confirmParty = new StringBuilder();
             confirmParty.AppendLine(
-                $"{Environment.NewLine}Are these names correct? Y/N{Environment.NewLine}");
+                $"{Environment.NewLine}Are these names correct?{Environment.NewLine}");
             var crewNumber = 1;
 
             // Loop through every player and print their name.
