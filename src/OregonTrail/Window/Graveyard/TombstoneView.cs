@@ -1,6 +1,8 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
+using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace OregonTrail
@@ -50,6 +52,10 @@ namespace OregonTrail
             }
             else
             {
+                // Add the image of the tombstone.
+                ImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "tombstone.jpg");
+
+                // Add the custom message the player made for this tombstone, or just the default if nothing else.
                 tombstoneViewer.AppendLine(UserData.Tombstone.ToString());
 
                 // Adds the underlying reason for the games failure if it was not obvious to the player by now.
