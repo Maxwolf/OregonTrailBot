@@ -5,12 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Location.Point;
-using OregonTrail.Travel.Command;
-using OregonTrail.Travel.Toll;
 
-namespace OregonTrail.Travel.Dialog
+namespace OregonTrail
 {
     /// <summary>
     ///     Defines a location that has the player make a choice about the next location they want to travel to, it is not a
@@ -29,7 +25,7 @@ namespace OregonTrail.Travel.Dialog
         ///     Defines the skip choices as they will be selected from the fork form. The purpose for this is because we want the
         ///     index for selecting them to start at one not zero.
         /// </summary>
-        private Dictionary<int, Location.Location> _skipChoices;
+        private Dictionary<int, Location> _skipChoices;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="LocationFork" /> class.
@@ -67,7 +63,7 @@ namespace OregonTrail.Travel.Dialog
                 throw new InvalidCastException("Unable to cast current location to fork in the road.");
 
             // Create a dictionary that represents all the choices with index starting at one not zero.
-            _skipChoices = new Dictionary<int, Location.Location>();
+            _skipChoices = new Dictionary<int, Location>();
             for (var index = 0; index < forkInRoad.SkipChoices.Count; index++)
             {
                 var skipChoice = forkInRoad.SkipChoices[index];

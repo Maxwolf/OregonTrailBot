@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace OregonTrail.Person
+namespace OregonTrail
 {
     /// <summary>
     ///     Overall health indicator for all entities in the simulation, we do not track health as a numeric value but as a

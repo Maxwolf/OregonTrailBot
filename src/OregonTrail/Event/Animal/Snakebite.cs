@@ -2,10 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Diagnostics.CodeAnalysis;
-using OregonTrail.Director;
-using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Animal
+namespace OregonTrail
 {
     /// <summary>
     ///     Processes an attack of snake biting one of the passengers in the vehicle at random. Depending on the outcome of the
@@ -26,7 +24,7 @@ namespace OregonTrail.Animal
         public override void Execute(RandomEventInfo eventExecutor)
         {
             // Cast the source entity as person.
-            var person = eventExecutor.SourceEntity as Person.Person;
+            var person = eventExecutor.SourceEntity as Person;
 
             // Skip if the source entity is not a person.
             if (person == null)

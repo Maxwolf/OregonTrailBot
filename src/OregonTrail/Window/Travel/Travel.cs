@@ -3,17 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Location;
-using OregonTrail.Location.Point;
-using OregonTrail.Travel.Command;
-using OregonTrail.Travel.Dialog;
-using OregonTrail.Travel.Hunt.Help;
-using OregonTrail.Travel.Rest;
-using OregonTrail.Travel.RiverCrossing.Help;
-using OregonTrail.Travel.Store.Help;
-using OregonTrail.Travel.Trade;
 
-namespace OregonTrail.Travel
+namespace OregonTrail
 {
     /// <summary>
     ///     Primary game Windows used for advancing simulation down the trail.
@@ -41,7 +32,7 @@ namespace OregonTrail.Travel
         /// </summary>
         private void TalkToPeople()
         {
-            SetForm(typeof (TalkToPeople.TalkToPeople));
+            SetForm(typeof (TalkToPeople));
         }
 
         /// <summary>
@@ -49,7 +40,7 @@ namespace OregonTrail.Travel
         /// </summary>
         private void BuySupplies()
         {
-            SetForm(typeof (Store.Store));
+            SetForm(typeof (Store));
         }
 
         /// <summary>
@@ -72,7 +63,7 @@ namespace OregonTrail.Travel
                 // Toll road logic is done from fork in the road, good game design dictates we only offer this as a choice, never forced.
                 SetForm(typeof (LocationDepart));
             }
-            else if (_game.Trail.CurrentLocation is Location.Point.RiverCrossing)
+            else if (_game.Trail.CurrentLocation is RiverCrossing)
             {
                 SetForm(typeof (RiverCrossHelp));
             }
@@ -250,7 +241,7 @@ namespace OregonTrail.Travel
             if (_game.Trail.CurrentLocation.LastLocation || _game.Vehicle.PassengersDead)
             {
                 GameOver = true;
-                _game.WindowManager.Add(typeof (GameOver.GameOver), _game);
+                _game.WindowManager.Add(typeof (GameOver), _game);
                 return;
             }
 

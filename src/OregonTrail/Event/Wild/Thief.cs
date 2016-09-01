@@ -4,10 +4,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using OregonTrail.Director;
-using OregonTrail.Prefab;
 
-namespace OregonTrail.Wild
+namespace OregonTrail
 {
     /// <summary>
     ///     Robber who can come in the middle of the night and steal things from the vehicle inventory. He is also very

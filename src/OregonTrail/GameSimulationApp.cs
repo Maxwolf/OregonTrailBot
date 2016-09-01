@@ -4,12 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OregonTrail.Director;
-using OregonTrail.MainMenu;
-using OregonTrail.Scoring;
-using OregonTrail.Time;
-using OregonTrail.Tombstone;
-using OregonTrail.Trail;
 using Telegram.Bot.Types;
 
 namespace OregonTrail
@@ -57,7 +51,7 @@ namespace OregonTrail
         ///     Current vessel which the player character and his party are traveling inside of, provides means of transportation
         ///     other than walking.
         /// </summary>
-        public Vehicle.Vehicle Vehicle { get; private set; }
+        public Vehicle Vehicle { get; private set; }
 
         /// <summary>
         ///     Total number of turns that have taken place. Typically a game will not go past eighteen (18) turns or 20+ weeks
@@ -85,11 +79,11 @@ namespace OregonTrail
             {
                 var windowList = new List<Type>
                 {
-                    typeof (Travel.Travel),
-                    typeof (MainMenu.MainMenu),
-                    typeof (RandomEvent.RandomEvent),
-                    typeof (Graveyard.Graveyard),
-                    typeof (GameOver.GameOver)
+                    typeof (Travel),
+                    typeof (MainMenu),
+                    typeof (RandomEvent),
+                    typeof (Graveyard),
+                    typeof (GameOver)
                 };
 
                 return windowList;
@@ -137,7 +131,7 @@ namespace OregonTrail
             {
                 // First name in list is always the leader.
                 var personLeader = startingInfo.PlayerNames.IndexOf(name) == 0 && crewNumber == 1;
-                Vehicle.AddPerson(new Person.Person(startingInfo.PlayerProfession, name, personLeader, this));
+                Vehicle.AddPerson(new Person(startingInfo.PlayerProfession, name, personLeader, this));
                 crewNumber++;
             }
 
@@ -218,16 +212,16 @@ namespace OregonTrail
             // Vehicle, weather, conditions, climate, tail, stats, event director, etc..
             EventDirector = new EventDirectorModule(this);
             Trail = new TrailModule(this);
-            Vehicle = new Vehicle.Vehicle(this);
+            Vehicle = new Vehicle(this);
 
             // Resets the window manager in the base simulation.
             base.Restart();
 
             // Attach traveling Windows since that is the default and bottom most game Windows.
-            WindowManager.Add(typeof (Travel.Travel), this);
+            WindowManager.Add(typeof (Travel), this);
 
             // Add the new game configuration screen that asks for names, profession, and lets user buy initial items.
-            WindowManager.Add(typeof (MainMenu.MainMenu), this);
+            WindowManager.Add(typeof (MainMenu), this);
         }
     }
 }

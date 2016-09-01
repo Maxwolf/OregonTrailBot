@@ -1,10 +1,7 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Director;
-using OregonTrail.RandomEvent;
-
-namespace OregonTrail.Prefab
+namespace OregonTrail
 {
     /// <summary>
     ///     Intended to be used to make adding the infected flag to people easier. If an event wants to act as some sort of
@@ -24,7 +21,7 @@ namespace OregonTrail.Prefab
         public override void Execute(RandomEventInfo eventExecutor)
         {
             // Cast the source entity as person.
-            var person = eventExecutor.SourceEntity as Person.Person;
+            var person = eventExecutor.SourceEntity as Person;
 
             // Sets flag on person making them more susceptible to further complications.
             person?.Infect();
@@ -39,7 +36,7 @@ namespace OregonTrail.Prefab
         protected override string OnRender(RandomEventInfo eventExecutor)
         {
             // Cast the source entity as person.
-            var person = eventExecutor.SourceEntity as Person.Person;
+            var person = eventExecutor.SourceEntity as Person;
 
             // Skip if the source entity is not a person.
             return person == null ? string.Empty : OnPostInfection(person);
@@ -48,6 +45,6 @@ namespace OregonTrail.Prefab
         /// <summary>Fired after the event has executed and the infection flag set on the person.</summary>
         /// <param name="person">Person whom is now infected by whatever you say they are here.</param>
         /// <returns>Name or type of infection the person is currently affected with.</returns>
-        protected abstract string OnPostInfection(Person.Person person);
+        protected abstract string OnPostInfection(Person person);
     }
 }

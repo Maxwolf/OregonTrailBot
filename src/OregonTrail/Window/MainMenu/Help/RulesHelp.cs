@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.MainMenu.Help
+namespace OregonTrail
 {
     /// <summary>
     ///     Shows basic information about how the game works, how traveling works, rules for winning and losing.

@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Vehicle;
 
-namespace OregonTrail.RandomEvent
+namespace OregonTrail
 {
     /// <summary>
     ///     Skips over a set amount of time that an event would like to move past. The days will be ticked normally, and not

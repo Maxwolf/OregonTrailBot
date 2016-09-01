@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.Travel.Store.Help
+namespace OregonTrail
 {
     /// <summary>
     ///     If the player cannot afford to leave the store because they have attempted to purchase more items than they are

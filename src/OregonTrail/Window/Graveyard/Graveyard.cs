@@ -1,7 +1,7 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-namespace OregonTrail.Graveyard
+namespace OregonTrail
 {
     /// <summary>
     ///     Displays the name of a previous player whom traveled the trail and died at a given mile marker. There is also an

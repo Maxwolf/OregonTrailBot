@@ -3,11 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
-using OregonTrail.Travel.Command;
 
-namespace OregonTrail.Travel.Dialog
+namespace OregonTrail
 {
     /// <summary>
     ///     Asks the player if they would like to stop and check out a tombstone that is on this particular mile marker.
@@ -69,7 +66,7 @@ namespace OregonTrail.Travel.Dialog
                     break;
                 case DialogResponse.Yes:
                 case DialogResponse.Custom:
-                    UserData.Game.WindowManager.Add(typeof (Graveyard.Graveyard), UserData.Game);
+                    UserData.Game.WindowManager.Add(typeof (Graveyard), UserData.Game);
 
                     // Goes back to continue on trail form below us.
                     ClearForm();

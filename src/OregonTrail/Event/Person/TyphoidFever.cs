@@ -2,10 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Diagnostics.CodeAnalysis;
-using OregonTrail.Director;
-using OregonTrail.Prefab;
 
-namespace OregonTrail.Person
+namespace OregonTrail
 {
     /// <summary>
     ///     An infectious bacterial fever with an eruption of red spots on the chest and abdomen and severe intestinal

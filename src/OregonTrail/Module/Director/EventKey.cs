@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OregonTrail.Director
+namespace OregonTrail
 {
     /// <summary>
     ///     Acts like a unique identifier for each event that is to be registered in the system and defines several special
@@ -13,7 +13,7 @@ namespace OregonTrail.Director
     public sealed class EventKey : IComparer<EventKey>, IComparable<EventKey>, IEquatable<EventKey>,
         IEqualityComparer<EventKey>
     {
-        /// <summary>Initializes a new instance of the <see cref="T:OregonTrail.Director.EventKey" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="T:OregonTrail.EventKey" /> class.</summary>
         /// <param name="category">The category.</param>
         /// <param name="name">The name.</param>
         /// <param name="executionType">The execution Type.</param>

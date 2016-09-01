@@ -4,10 +4,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using OregonTrail.Director;
-using OregonTrail.Prefab;
 
-namespace OregonTrail.Vehicle
+namespace OregonTrail
 {
     /// <summary>
     ///     Fire in the vehicle occurs, there is a chance that some of the inventory items or people were burned to death.

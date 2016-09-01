@@ -2,10 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Diagnostics.CodeAnalysis;
-using OregonTrail.Director;
-using OregonTrail.Prefab;
 
-namespace OregonTrail.Person
+namespace OregonTrail
 {
     /// <summary>
     ///     Fever, also known as pyrexia and febrile response, is defined as having a temperature above the normal range due to

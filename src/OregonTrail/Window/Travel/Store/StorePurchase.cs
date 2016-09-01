@@ -3,12 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Item;
-using OregonTrail.Location;
-using OregonTrail.Travel.Store.Help;
 
-namespace OregonTrail.Travel.Store
+namespace OregonTrail
 {
     /// <summary>
     ///     Allows the player to purchase a number of oxen to pull their vehicle.

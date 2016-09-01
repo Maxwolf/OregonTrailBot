@@ -5,9 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using OregonTrail.Location.Point;
 
-namespace OregonTrail.Trail
+namespace OregonTrail
 {
     /// <summary>
     ///     Wrapper object for the trail, defines all the locations and total trail length. The purpose of this class is to
@@ -21,7 +20,7 @@ namespace OregonTrail.Trail
         /// <summary>
         ///     Reference to all locations in this trail, indexed in the order they should be visited by vehicle.
         /// </summary>
-        private List<Location.Location> _locations;
+        private List<Location> _locations;
 
         /// <summary>
         ///     Keeps track of the total length of the trail as it will be generated after recusing through every possible
@@ -38,7 +37,7 @@ namespace OregonTrail.Trail
         /// <param name="lengthMin">Minimum length of any given trail segment.</param>
         /// <param name="lengthMax">Maximum length of any given trail segment.</param>
         /// <param name="game">Simulation instance.</param>
-        public Trail(IEnumerable<Location.Location> locations, int lengthMin, int lengthMax, GameSimulationApp game)
+        public Trail(IEnumerable<Location> locations, int lengthMin, int lengthMax, GameSimulationApp game)
         {
             _game = game;
 
@@ -47,7 +46,7 @@ namespace OregonTrail.Trail
                 throw new ArgumentNullException(nameof(locations), "List of locations for trail was null!");
 
             // Create a new empty trail dictionary.
-            _locations = new List<Location.Location>(locations);
+            _locations = new List<Location>(locations);
 
             // Check the trail has minimum of two locations for starting end ending the simulation.
             if (_locations.Count <= 1)
@@ -78,7 +77,7 @@ namespace OregonTrail.Trail
         /// <summary>
         ///     Reference to all locations in this trail, indexed in the order they should be visited by vehicle.
         /// </summary>
-        public ReadOnlyCollection<Location.Location> Locations
+        public ReadOnlyCollection<Location> Locations
         {
             get { return _locations.AsReadOnly(); }
         }
@@ -123,7 +122,7 @@ namespace OregonTrail.Trail
         ///     Level of depth we have gone in regards to locations leading to locations leading to
         ///     locations.
         /// </param>
-        private void GenerateDistancesRecursive(IEnumerable<Location.Location> locations, int locationDepth = 0)
+        private void GenerateDistancesRecursive(IEnumerable<Location> locations, int locationDepth = 0)
         {
             // Loop through every location we have been given access to via parameter.
             foreach (var location in locations)
@@ -162,7 +161,7 @@ namespace OregonTrail.Trail
         /// <summary>Forcefully inserts skip location into location list after current location.</summary>
         /// <param name="skipIndex">Index in the location list we will add the new one.</param>
         /// <param name="skipLocation">Location that the trail module will point to after current location.</param>
-        public void InsertLocation(int skipIndex, Location.Location skipLocation)
+        public void InsertLocation(int skipIndex, Location skipLocation)
         {
             _locations.Insert(skipIndex, skipLocation);
 

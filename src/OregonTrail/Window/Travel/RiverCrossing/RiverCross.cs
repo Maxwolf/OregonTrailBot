@@ -5,13 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Travel.Rest;
-using OregonTrail.Travel.RiverCrossing.Ferry;
-using OregonTrail.Travel.RiverCrossing.Help;
-using OregonTrail.Travel.RiverCrossing.Indian;
 
-namespace OregonTrail.Travel.RiverCrossing
+namespace OregonTrail
 {
     /// <summary>
     ///     Manages a boolean event where the player needs to make a choice before they can move onto the next location on the
@@ -83,7 +78,7 @@ namespace OregonTrail.Travel.RiverCrossing
             base.OnFormPostCreate();
 
             // Cast the current location as river crossing.
-            var riverLocation = UserData.Game.Trail.CurrentLocation as Location.Point.RiverCrossing;
+            var riverLocation = UserData.Game.Trail.CurrentLocation as RiverCrossing;
             if (riverLocation == null)
                 throw new InvalidCastException(
                     "Unable to cast location as river crossing even though it returns as one!");

@@ -3,11 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
-using OregonTrail.MainMenu.Help;
 
-namespace OregonTrail.MainMenu
+namespace OregonTrail
 {
     /// <summary>
     ///     References the top ten players in regards to final score they earned at the end of the game, this list is by

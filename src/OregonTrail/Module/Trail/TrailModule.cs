@@ -2,10 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Collections.ObjectModel;
-using OregonTrail.Location;
-using OregonTrail.Vehicle;
 
-namespace OregonTrail.Trail
+namespace OregonTrail
 {
     /// <summary>
     ///     Holds all the points of interest that make up the entire trail the players vehicle will be traveling along. Keeps
@@ -60,7 +58,7 @@ namespace OregonTrail.Trail
         /// <summary>
         ///     Reference to all locations in this trail, indexed in the order they should be visited by vehicle.
         /// </summary>
-        public ReadOnlyCollection<Location.Location> Locations
+        public ReadOnlyCollection<Location> Locations
         {
             get { return Trail.Locations; }
         }
@@ -78,7 +76,7 @@ namespace OregonTrail.Trail
         ///     Returns the current point of interest the players vehicle is on. Lazy initialization of path when accessed by first
         ///     attached Windows getting current point.
         /// </summary>
-        public Location.Location CurrentLocation
+        public Location CurrentLocation
         {
             get { return Locations[LocationIndex]; }
         }
@@ -87,7 +85,7 @@ namespace OregonTrail.Trail
         ///     Locates the next point of interest if it exists in the list, if this method returns NULL then that means the next
         ///     point of interest is the end of the game when the distance to point reaches zero.
         /// </summary>
-        public Location.Location NextLocation
+        public Location NextLocation
         {
             get
             {
@@ -189,12 +187,12 @@ namespace OregonTrail.Trail
             CurrentLocation.Status = LocationStatus.Arrived;
 
             // Check for end of game if we are at the end of the trail.
-            _game.WindowManager.Add(typeof (Travel.Travel), _game);
+            _game.WindowManager.Add(typeof (Travel), _game);
         }
 
         /// <summary>Forcefully inserts skip location into location list after current location.</summary>
         /// <param name="skipChoice">Location that the trail module will point to after current location.</param>
-        public void InsertLocation(Location.Location skipChoice)
+        public void InsertLocation(Location skipChoice)
         {
             Trail.InsertLocation(LocationIndex + 1, skipChoice);
         }

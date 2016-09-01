@@ -3,11 +3,8 @@
 
 using System.Collections.Generic;
 using System.Text;
-using OregonTrail.Director;
-using OregonTrail.Prefab;
-using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Weather
+namespace OregonTrail
 {
     /// <summary>
     ///     Bad hail storm damages supplies, this uses the item destroyer prefab like the river crossings do.
@@ -40,7 +37,7 @@ namespace OregonTrail.Weather
             base.Execute(eventExecutor);
 
             // Cast the source entity as vehicle.
-            var vehicle = eventExecutor.SourceEntity as Vehicle.Vehicle;
+            var vehicle = eventExecutor.SourceEntity as Vehicle;
 
             // Reduce the total possible mileage of the vehicle this turn.
             vehicle?.ReduceMileage(vehicle.Mileage - 5 - eventExecutor.Game.Random.Next()*10);

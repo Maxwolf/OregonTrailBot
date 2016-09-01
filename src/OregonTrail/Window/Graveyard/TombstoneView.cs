@@ -1,12 +1,9 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.Graveyard
+namespace OregonTrail
 {
     /// <summary>
     ///     Form that is used to show data about a tombstone. It will look for a tombstone at the current vehicle odometer, if
@@ -26,7 +23,7 @@ namespace OregonTrail.Graveyard
 
         public override object MenuCommands
         {
-            get { return new[] {"Ok"}; }
+            get { return new[] {"Reset"}; }
         }
 
         /// <summary>
@@ -44,19 +41,19 @@ namespace OregonTrail.Graveyard
             if (UserData.Game.Vehicle.PassengerLivingCount > 0)
             {
                 // Grab the current Tombstone based on players progress on the trail so far.
-                Tombstone.Tombstone foundTombstone;
+                Tombstone foundTombstone;
                 UserData.Game.Tombstone.FindTombstone(
                     UserData.Game.Vehicle.Odometer,
                     out foundTombstone);
 
-                tombstoneViewer.AppendLine($"{Environment.NewLine}{foundTombstone}");
+                tombstoneViewer.AppendLine(foundTombstone.ToString());
             }
             else
             {
-                tombstoneViewer.AppendLine($"{Environment.NewLine}{UserData.Tombstone}");
+                tombstoneViewer.AppendLine(UserData.Tombstone.ToString());
 
                 // Adds the underlying reason for the games failure if it was not obvious to the player by now.
-                tombstoneViewer.AppendLine($"All the members of your party have died.{Environment.NewLine}");
+                tombstoneViewer.AppendLine("All the members of your party have died.");
             }
 
             // Write out the tombstone text and epitaph message to the game window.

@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace OregonTrail.Tombstone
+namespace OregonTrail
 {
     /// <summary>
     ///     Keeps track of all the tombstones in a nice collection and also supports saving them to disk and loading them again

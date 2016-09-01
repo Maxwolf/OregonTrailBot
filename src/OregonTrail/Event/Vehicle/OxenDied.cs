@@ -2,10 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Diagnostics.CodeAnalysis;
-using OregonTrail.Director;
-using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Vehicle
+namespace OregonTrail
 {
     /// <summary>
     ///     Oxen is damaged, which decreases the ability for the vehicle to be pulled forward. It is possible for this event to

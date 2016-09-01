@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.MainMenu.Help
+namespace OregonTrail
 {
     /// <summary>
     ///     Third and final panel on point information, explains how players profession selection affects final scoring as a
@@ -40,7 +38,8 @@ namespace OregonTrail.MainMenu.Help
             var pointsProfession = new StringBuilder();
             pointsProfession.Append(
                 $"{Environment.NewLine}On Arriving in Oregon{Environment.NewLine}{Environment.NewLine}");
-            pointsProfession.AppendLine("You receive points for your occupation in the new land. Because more farmers and carpenters were needed than bankers, you receive double points upon arriving in Oregon as a carpenter, and triple points for arriving as a farmer.{Environment.NewLine}");
+            pointsProfession.AppendLine(
+                "You receive points for your occupation in the new land. Because more farmers and carpenters were needed than bankers, you receive double points upon arriving in Oregon as a carpenter, and triple points for arriving as a farmer.{Environment.NewLine}");
             return pointsProfession.ToString();
         }
 

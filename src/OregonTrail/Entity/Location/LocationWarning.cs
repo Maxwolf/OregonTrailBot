@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace OregonTrail.Location
+namespace OregonTrail
 {
     /// <summary>
     ///     Defines all of the possible warnings that we would want to inform the user about while they are traveling on the

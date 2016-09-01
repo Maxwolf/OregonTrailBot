@@ -3,7 +3,7 @@
 
 using System;
 
-namespace OregonTrail.Menu
+namespace OregonTrail
 {
     /// <summary>
     ///     Defines a choice in the dynamic action selection system for a given game mode. This is intended to be used by a

@@ -3,11 +3,8 @@
 
 using System.Collections.Generic;
 using System.Text;
-using OregonTrail.Director;
-using OregonTrail.Prefab;
-using OregonTrail.RandomEvent;
 
-namespace OregonTrail.River
+namespace OregonTrail
 {
     /// <summary>
     ///     When crossing a river there is a chance that your wagon will flood if you choose to caulk and float across the
@@ -40,7 +37,7 @@ namespace OregonTrail.River
             base.Execute(eventExecutor);
 
             // Cast the source entity as vehicle.
-            var vehicle = eventExecutor.SourceEntity as Vehicle.Vehicle;
+            var vehicle = eventExecutor.SourceEntity as Vehicle;
 
             // Reduce the total possible mileage of the vehicle this turn.
             vehicle?.ReduceMileage(20 - 20*eventExecutor.Game.Random.Next());

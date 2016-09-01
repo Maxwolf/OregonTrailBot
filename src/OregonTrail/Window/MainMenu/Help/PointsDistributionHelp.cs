@@ -4,11 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
-using OregonTrail.Person;
 
-namespace OregonTrail.MainMenu.Help
+namespace OregonTrail
 {
     /// <summary>
     ///     First panel on point information, shows how health of party members contributes to final score.
@@ -41,7 +38,8 @@ namespace OregonTrail.MainMenu.Help
             // Build up string of help about points for people.
             var pointsHealth = new StringBuilder();
             pointsHealth.AppendLine($"{Environment.NewLine}On Arriving in Oregon{Environment.NewLine}");
-            pointsHealth.AppendLine("Your most important resource is the people you have with you. You receive points for each member of your party who arrives safely; you receive more points if they arrive in good health!{Environment.NewLine}");
+            pointsHealth.AppendLine(
+                "Your most important resource is the people you have with you. You receive points for each member of your party who arrives safely; you receive more points if they arrive in good health!{Environment.NewLine}");
 
             // Repair status reference dictionary.
             var repairLevels = new Dictionary<string, int>();

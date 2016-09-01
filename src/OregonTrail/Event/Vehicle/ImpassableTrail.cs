@@ -2,11 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Diagnostics.CodeAnalysis;
-using OregonTrail.Director;
-using OregonTrail.Prefab;
-using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Vehicle
+namespace OregonTrail
 {
     /// <summary>
     ///     Wastes the players time by forcing them to go around a section of the trail that has been blocked by some natural

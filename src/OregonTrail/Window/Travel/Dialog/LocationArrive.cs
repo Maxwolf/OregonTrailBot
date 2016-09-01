@@ -3,11 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
-using OregonTrail.Vehicle;
 
-namespace OregonTrail.Travel.Dialog
+namespace OregonTrail
 {
     /// <summary>
     ///     State that is attached when the event is fired for reaching a new point of interest on the trail. Default action is

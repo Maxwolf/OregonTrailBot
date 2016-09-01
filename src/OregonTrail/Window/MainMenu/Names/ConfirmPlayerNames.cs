@@ -3,11 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
-using OregonTrail.MainMenu.Start_Month;
 
-namespace OregonTrail.MainMenu.Names
+namespace OregonTrail
 {
     /// <summary>
     ///     Prints out every entered player name in the user data for simulation initialization. Confirms with the player they

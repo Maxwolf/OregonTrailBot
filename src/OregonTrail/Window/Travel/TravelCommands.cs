@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace OregonTrail.Travel
+namespace OregonTrail
 {
     /// <summary>
     ///     All of the commands associated with the traveling game Windows which is one of the primary simulation game modes

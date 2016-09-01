@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.MainMenu.Options
+namespace OregonTrail
 {
     /// <summary>
     ///     Erases all the saved JSON Tombstone epitaphs on the disk so other players will not encounter them, new ones can

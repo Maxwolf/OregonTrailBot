@@ -4,10 +4,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using OregonTrail.Director;
-using OregonTrail.Prefab;
 
-namespace OregonTrail.Vehicle
+namespace OregonTrail
 {
     /// <summary>
     ///     Vehicle was going around a bend, hit a bump, rough trail, or any of the following it now tipped over and supplies

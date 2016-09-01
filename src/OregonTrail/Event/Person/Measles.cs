@@ -2,10 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Diagnostics.CodeAnalysis;
-using OregonTrail.Director;
-using OregonTrail.Prefab;
 
-namespace OregonTrail.Person
+namespace OregonTrail
 {
     /// <summary>
     ///     Measles, also known as morbilli, rubeola or red measles, is a highly contagious infection caused by the measles

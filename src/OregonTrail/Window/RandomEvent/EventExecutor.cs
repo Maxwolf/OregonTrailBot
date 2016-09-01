@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.RandomEvent
+namespace OregonTrail
 {
     /// <summary>
     ///     Used when the event director fires event that game simulation subscribes to which passes along events that should

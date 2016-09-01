@@ -5,12 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OregonTrail.Director;
-using OregonTrail.Person;
-using OregonTrail.RandomEvent;
-using OregonTrail.Vehicle;
 
-namespace OregonTrail.Prefab
+namespace OregonTrail
 {
     /// <summary>
     ///     Prefab class that is used to destroy some items at random from the vehicle inventory. Will return a list of items
@@ -54,7 +50,7 @@ namespace OregonTrail.Prefab
             var drownedPassengers = game.Vehicle.Passengers.TryKill(game);
 
             // If the killed passenger list contains any entries we print them out.
-            var passengers = drownedPassengers as IList<Person.Person> ?? drownedPassengers.ToList();
+            var passengers = drownedPassengers as IList<Person> ?? drownedPassengers.ToList();
             foreach (var person in passengers)
             {
                 // Only proceed if person is actually dead.

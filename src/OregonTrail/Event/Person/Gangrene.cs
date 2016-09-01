@@ -2,10 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Diagnostics.CodeAnalysis;
-using OregonTrail.Director;
-using OregonTrail.Prefab;
 
-namespace OregonTrail.Person
+namespace OregonTrail
 {
     /// <summary>
     ///     Localized death and decomposition of body tissue, resulting from either obstructed circulation or bacterial

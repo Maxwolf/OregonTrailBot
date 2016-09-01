@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace OregonTrail.Form
+namespace OregonTrail
 {
     /// <summary>Forms are attached to windows.</summary>
     /// <typeparam name="TData">UserData type.</typeparam>

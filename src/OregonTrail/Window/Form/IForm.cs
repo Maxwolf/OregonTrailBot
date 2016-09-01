@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace OregonTrail.Form
+namespace OregonTrail
 {
     /// <summary>
     ///     Defines interface for game mode state which can show data, accept input, add new game modes, set new state, and

@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace OregonTrail.Location.Weather
+namespace OregonTrail
 {
     /// <summary>
     ///     Determines what the environment is like and goes into helping calculate roll chance. For example, experiencing

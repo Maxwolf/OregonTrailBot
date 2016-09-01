@@ -3,11 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
-using OregonTrail.Scoring;
 
-namespace OregonTrail.MainMenu.Options
+namespace OregonTrail
 {
     /// <summary>
     ///     Shows the player hard-coded top ten list as it is known internally in static list.

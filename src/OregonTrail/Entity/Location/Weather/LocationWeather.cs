@@ -3,11 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using OregonTrail.Time;
-using OregonTrail.Vehicle;
-using OregonTrail.Weather;
 
-namespace OregonTrail.Location.Weather
+namespace OregonTrail
 {
     /// <summary>
     ///     Controls the weather, temperature, environment for getting food, illness probability, and various other factors

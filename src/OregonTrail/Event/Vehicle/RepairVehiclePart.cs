@@ -2,10 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
-using OregonTrail.Director;
-using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Vehicle
+namespace OregonTrail
 {
     /// <summary>
     ///     Manually triggered when random event system damages or makes equipment on the vehicle malfunction. This gives the

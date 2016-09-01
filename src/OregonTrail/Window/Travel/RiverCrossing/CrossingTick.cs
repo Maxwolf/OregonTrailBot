@@ -3,11 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.River;
-using OregonTrail.Vehicle;
 
-namespace OregonTrail.Travel.RiverCrossing
+namespace OregonTrail
 {
     /// <summary>
     ///     Runs the player over the river based on the crossing information. Depending on what happens a message will be

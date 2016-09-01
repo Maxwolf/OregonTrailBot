@@ -5,11 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.MainMenu.Help;
-using OregonTrail.Time;
 
-namespace OregonTrail.MainMenu.Start_Month
+namespace OregonTrail
 {
     /// <summary>
     ///     Offers the player the ability to change the starting month of the simulation, this affects how many resources will

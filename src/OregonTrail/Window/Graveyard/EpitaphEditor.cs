@@ -3,14 +3,12 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
 
-namespace OregonTrail.Graveyard
+namespace OregonTrail
 {
     /// <summary>
     ///     Allows for the message on the Tombstone to be edited or added, either way this window will get the job done.
-    ///     Will
-    ///     limit the input of the epitaph also and do basic whitespace checks and trimming.
+    ///     Will limit the input of the epitaph also and do basic whitespace checks and trimming.
     /// </summary>
     [ParentWindow(typeof (Graveyard))]
     public sealed class EpitaphEditor : Form<TombstoneInfo>
@@ -19,8 +17,7 @@ namespace OregonTrail.Graveyard
         ///     Defines how long a epitaph on a tombstone can be in characters which will make up the entire string (spaces
         ///     included).
         /// </summary>
-        // ReSharper disable once InconsistentNaming
-        private const int EPITAPH_MAXLENGTH = 38;
+        private const int EpitaphMax = 38;
 
         /// <summary>
         ///     String builder that will hold representation of the tombstone for the player to see.
@@ -43,12 +40,21 @@ namespace OregonTrail.Graveyard
         /// <remarks>Default is FALSE. Setting to TRUE allows characters and input buffer to be read when submitted.</remarks>
         public override bool InputFillsBuffer
         {
-            get { return UserData.Game.InputManager.InputBuffer.Length <= EPITAPH_MAXLENGTH; }
+            get { return UserData.Game.InputManager.InputBuffer.Length <= EpitaphMax; }
         }
 
         public override object MenuCommands
         {
             get { return null; }
+        }
+
+        /// <summary>
+        ///     Determines if this dialog state is allowed to receive any input at all, even empty line returns. This is useful for
+        ///     preventing the player from leaving a particular dialog until you are ready or finished processing some data.
+        /// </summary>
+        public override bool AllowInput
+        {
+            get { return true; }
         }
 
         /// <summary>
@@ -71,7 +77,7 @@ namespace OregonTrail.Graveyard
         public override void OnInputBufferReturned(string input)
         {
             // Trims the string and then cuts off any excess characters that go beyond our allowed limit.
-            UserData.Tombstone.Epitaph = input.Trim().Truncate(EPITAPH_MAXLENGTH);
+            UserData.Tombstone.Epitaph = input.Trim().Truncate(EpitaphMax);
 
             // Confirm with the player this is what they wanted the tombstone to say. Since we truncate need to confirm.
             SetForm(typeof (EpitaphConfirm));

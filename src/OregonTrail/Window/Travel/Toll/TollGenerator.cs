@@ -1,9 +1,7 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Location.Point;
-
-namespace OregonTrail.Travel.Toll
+namespace OregonTrail
 {
     /// <summary>
     ///     Generates a new toll amount and keeps track of the location to be inserted if the deal goes through with the
@@ -12,7 +10,7 @@ namespace OregonTrail.Travel.Toll
     public sealed class TollGenerator
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="T:OregonTrail.Travel.Toll.TollGenerator" /> class.
+        ///     Initializes a new instance of the <see cref="T:OregonTrail.TollGenerator" /> class.
         /// </summary>
         /// <param name="tollRoad">Location that is going to cost the player money in order to use the path to travel to it.</param>
         /// <param name="game">Simulation instance.</param>

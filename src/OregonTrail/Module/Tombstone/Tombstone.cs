@@ -3,7 +3,7 @@
 
 using System;
 
-namespace OregonTrail.Tombstone
+namespace OregonTrail
 {
     /// <summary>
     ///     Facilitates a tombstone base class that supports shallow copies of itself to be created.

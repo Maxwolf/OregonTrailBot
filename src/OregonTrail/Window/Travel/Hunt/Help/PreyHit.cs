@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.Travel.Hunt.Help
+namespace OregonTrail
 {
     /// <summary>
     ///     Called when the player successfully hits an animal with the bullet and the animal was added to growing list of

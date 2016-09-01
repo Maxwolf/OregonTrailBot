@@ -1,9 +1,7 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Location.Weather;
-
-namespace OregonTrail.Location.Point
+namespace OregonTrail
 {
     /// <summary>
     ///     Defines a location on the trail where the player is required to pay monies in order to use it. Typically this is
@@ -14,7 +12,7 @@ namespace OregonTrail.Location.Point
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="TollRoad" /> class. Initializes a new instance of the
-        ///     <see cref="T:OregonTrail.Location.Location" /> class.
+        ///     <see cref="T:OregonTrail.Location" /> class.
         /// </summary>
         /// <param name="name">Display name of the location as it should be known to the player.</param>
         /// <param name="climateType">Defines the type of weather the location will have overall.</param>

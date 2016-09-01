@@ -2,10 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Text;
-using OregonTrail.Director;
-using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Vehicle
+namespace OregonTrail
 {
     /// <summary>
     ///     Manually triggered event for when the player decides to not and repair their vehicle and instead opts to use spare

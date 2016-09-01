@@ -1,12 +1,9 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using System;
 using System.Collections.Generic;
-using OregonTrail.Item;
-using OregonTrail.Time;
 
-namespace OregonTrail.MainMenu
+namespace OregonTrail
 {
     /// <summary>
     ///     Holds all of the information required to kick-start a running game simulation onto a trail path with people,
@@ -22,7 +19,7 @@ namespace OregonTrail.MainMenu
         /// <summary>
         ///     The _player profession.
         /// </summary>
-        private Person.Profession _playerProfession;
+        private Profession _playerProfession;
 
         /// <summary>
         ///     The _starting inventory.
@@ -62,7 +59,7 @@ namespace OregonTrail.MainMenu
         ///     Determines what profession the player character is, this information is applied to the entire party as the group
         ///     leader affects every players stats.
         /// </summary>
-        public Person.Profession PlayerProfession
+        public Profession PlayerProfession
         {
             get { return _playerProfession; }
             set
@@ -123,7 +120,7 @@ namespace OregonTrail.MainMenu
         {
             PlayerNameIndex = 0;
             _playerNames = new List<string>();
-            _playerProfession = Person.Profession.Banker;
+            _playerProfession = Profession.Banker;
             _startingInventory = new List<SimItem>();
             _startingMonies = 0;
             _startingMonth = Month.March;

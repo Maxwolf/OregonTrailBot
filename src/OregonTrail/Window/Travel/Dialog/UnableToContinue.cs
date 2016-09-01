@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.Travel.Dialog
+namespace OregonTrail
 {
     /// <summary>
     ///     Something has happened with the players vehicle and they are no longer able to continue on the trail. This form is

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace OregonTrail.Director
+namespace OregonTrail
 {
     /// <summary>
     ///     Used to tag the base event item class so we can grab all inheriting types that use it.

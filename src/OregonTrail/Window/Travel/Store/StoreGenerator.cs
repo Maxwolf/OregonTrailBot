@@ -2,10 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Collections.Generic;
-using OregonTrail.Item;
-using OregonTrail.Location;
 
-namespace OregonTrail.Travel.Store
+namespace OregonTrail
 {
     /// <summary>
     ///     Before any items are removed, or added to the store all the interactions are stored in receipt info object. When
@@ -101,7 +99,7 @@ namespace OregonTrail.Travel.Store
         /// </summary>
         private void Reset()
         {
-            _totalTransactions = new Dictionary<Entities, SimItem>(Vehicle.Vehicle.DefaultInventory);
+            _totalTransactions = new Dictionary<Entities, SimItem>(Vehicle.DefaultInventory);
         }
 
         /// <summary>Adds an SimItem to the list of pending transactions. If it already exists it will be replaced.</summary>

@@ -3,9 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
 
-namespace OregonTrail.MainMenu.Names
+namespace OregonTrail
 {
     /// <summary>
     ///     Gets the name of a player for a particular index in the player name user data object. This will also offer the user

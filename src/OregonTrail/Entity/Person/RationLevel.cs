@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace OregonTrail.Person
+namespace OregonTrail
 {
     /// <summary>
     ///     Amount of food people in party eat each day can change.

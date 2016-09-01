@@ -3,11 +3,8 @@
 
 using System.Collections.Generic;
 using System.Text;
-using OregonTrail.Director;
-using OregonTrail.Prefab;
-using OregonTrail.RandomEvent;
 
-namespace OregonTrail.River
+namespace OregonTrail
 {
     /// <summary>
     ///     Player forded the river and it was to deep, they have been washed out by the current and some items destroyed.
@@ -39,7 +36,7 @@ namespace OregonTrail.River
             base.Execute(eventExecutor);
 
             // Cast the source entity as vehicle.
-            var vehicle = eventExecutor.SourceEntity as Vehicle.Vehicle;
+            var vehicle = eventExecutor.SourceEntity as Vehicle;
 
             // Reduce the total possible mileage of the vehicle this turn.
             vehicle?.ReduceMileage(20 - 20*eventExecutor.Game.Random.Next());

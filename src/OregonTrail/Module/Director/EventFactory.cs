@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace OregonTrail.Director
+namespace OregonTrail
 {
     /// <summary>
     ///     Factory pattern for creating director event items from type references.
@@ -19,7 +19,7 @@ namespace OregonTrail.Director
         private readonly GameSimulationApp _game;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="T:OregonTrail.Director.EventFactory" /> class.
+        ///     Initializes a new instance of the <see cref="T:OregonTrail.EventFactory" /> class.
         /// </summary>
         /// <param name="game">Simulation instance.</param>
         public EventFactory(GameSimulationApp game)

@@ -3,9 +3,8 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using OregonTrail.Location.Weather;
 
-namespace OregonTrail.Location.Point
+namespace OregonTrail
 {
     /// <summary>
     ///     Offers the vehicle multiple different choices about where it would like to split off and begin traveling to.
@@ -23,7 +22,7 @@ namespace OregonTrail.Location.Point
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ForkInRoad" /> class. Initializes a new instance of the
-        ///     <see cref="T:OregonTrail.Location.Location" /> class.
+        ///     <see cref="T:OregonTrail.Location" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="climateType">The climate Type.</param>

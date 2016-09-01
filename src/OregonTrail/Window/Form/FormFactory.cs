@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OregonTrail.Form
+namespace OregonTrail
 {
     /// <summary>
     ///     Keeps track of all the possible states a given game Windows can have by using attributes and reflection to keep
@@ -16,7 +16,7 @@ namespace OregonTrail.Form
         private readonly SimulationApp _game;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="T:OregonTrail.Form.FormFactory" /> class.
+        ///     Initializes a new instance of the <see cref="T:OregonTrail.FormFactory" /> class.
         /// </summary>
         /// <param name="game"></param>
         public FormFactory(SimulationApp game)

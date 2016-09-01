@@ -3,7 +3,7 @@
 
 using System.Text;
 
-namespace OregonTrail.Form.Input
+namespace OregonTrail
 {
     /// <summary>
     ///     Represents a dialog box that acts like a pop-up where it displays some piece of data, accepts any key for input and

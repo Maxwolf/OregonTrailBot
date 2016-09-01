@@ -3,11 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
-using OregonTrail.Travel.Command;
 
-namespace OregonTrail.Travel.Dialog
+namespace OregonTrail
 {
     /// <summary>
     ///     Attached when the player wants to continue on the trail, and doing so will force them to leave that point and be

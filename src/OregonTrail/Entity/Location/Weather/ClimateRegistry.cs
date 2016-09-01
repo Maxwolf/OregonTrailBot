@@ -2,9 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Collections.Generic;
-using OregonTrail.Time;
 
-namespace OregonTrail.Location.Weather
+namespace OregonTrail
 {
     /// <summary>
     ///     Holds a bunch of static data about various climate types that is used in the location weather simulation.

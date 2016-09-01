@@ -1,15 +1,11 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using OregonTrail.MainMenu.Help;
-using OregonTrail.MainMenu.Options;
-using OregonTrail.MainMenu.Profession;
 
-namespace OregonTrail.MainMenu
+namespace OregonTrail
 {
     /// <summary>
     ///     Allows the configuration of party names, player profession, and purchasing initial items for trip.

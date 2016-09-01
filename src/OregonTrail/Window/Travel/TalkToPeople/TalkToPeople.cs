@@ -4,11 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
-using OregonTrail.Location.Point;
 
-namespace OregonTrail.Travel.TalkToPeople
+namespace OregonTrail
 {
     /// <summary>
     ///     Attaches a game state that will loop through random advice that is associated with the given point of interest.
@@ -62,7 +59,7 @@ namespace OregonTrail.Travel.TalkToPeople
                 // Settlements have shops, more people, and lots of people scared about stories they hear.
                 advice = new List<Advice>(AdviceRegistry.Settlement);
             }
-            else if (UserData.Game.Trail.CurrentLocation is Location.Point.RiverCrossing)
+            else if (UserData.Game.Trail.CurrentLocation is RiverCrossing)
             {
                 // Can talk to people working near the river as operators or as people about to cross.
                 advice = new List<Advice>(AdviceRegistry.River);

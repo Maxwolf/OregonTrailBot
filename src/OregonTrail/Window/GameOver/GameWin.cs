@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.GameOver
+namespace OregonTrail
 {
     /// <summary>
     ///     Attached when the party leader dies, or the vehicle reaches the end of the trail.
@@ -42,7 +40,8 @@ namespace OregonTrail.GameOver
         /// </returns>
         protected override string OnDialogPrompt()
         {
-            _gameOver.AppendLine($"{Environment.NewLine}Congratulations! You have made it to Oregon! Let's see how many points you have received.{Environment.NewLine}");
+            _gameOver.AppendLine(
+                $"{Environment.NewLine}Congratulations! You have made it to Oregon! Let's see how many points you have received.{Environment.NewLine}");
             return _gameOver.ToString();
         }
 

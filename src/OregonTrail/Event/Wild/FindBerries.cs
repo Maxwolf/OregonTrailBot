@@ -2,10 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Diagnostics.CodeAnalysis;
-using OregonTrail.Director;
-using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Wild
+namespace OregonTrail
 {
     /// <summary>
     ///     Vehicle comes across some wild berries which the party picks up to eat.
@@ -25,7 +23,7 @@ namespace OregonTrail.Wild
         public override void Execute(RandomEventInfo eventExecutor)
         {
             // Cast the source entity as vehicle.
-            var vehicle = eventExecutor.SourceEntity as Vehicle.Vehicle;
+            var vehicle = eventExecutor.SourceEntity as Vehicle;
 
             // Add the berries to vehicle food stores.
             vehicle?.Inventory[Entities.Food].AddQuantity(5);

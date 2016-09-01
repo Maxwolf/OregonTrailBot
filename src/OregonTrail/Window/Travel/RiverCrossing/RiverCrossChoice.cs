@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace OregonTrail.Travel.RiverCrossing
+namespace OregonTrail
 {
     /// <summary>
     ///     Determines what kind of river crossing the player would like to perform the time comes to dice roll the probability

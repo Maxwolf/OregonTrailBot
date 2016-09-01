@@ -3,12 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
-using OregonTrail.Travel.Rest;
-using OregonTrail.Vehicle;
 
-namespace OregonTrail.Travel.RiverCrossing.Ferry
+namespace OregonTrail
 {
     /// <summary>
     ///     Explains to the user how many monies and days they will be charged to cross the river using the ferry and to

@@ -2,10 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.Travel.Hunt.Help
+namespace OregonTrail
 {
     /// <summary>
     ///     Shown when the player does not have enough bullets to go hunting, this prevents them from wasting the time of

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace OregonTrail.Item
+namespace OregonTrail
 {
     /// <summary>
     ///     Defines a base SimItem which can represent almost any commodity the player can purchase for the party or

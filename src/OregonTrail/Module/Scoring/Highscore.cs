@@ -1,7 +1,7 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-namespace OregonTrail.Scoring
+namespace OregonTrail
 {
     /// <summary>
     ///     Defines an object that keeps track of a particular high score of a given simulation round. This includes the name
@@ -16,7 +16,7 @@ namespace OregonTrail.Scoring
         /// </summary>
         private readonly Performance _rating;
 
-        /// <summary>Initializes a new instance of the <see cref="T:OregonTrail.Scoring.Highscore" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="T:OregonTrail.Highscore" /> class.</summary>
         /// <param name="name">The name.</param>
         /// <param name="points">The points.</param>
         public Highscore(string name, int points)

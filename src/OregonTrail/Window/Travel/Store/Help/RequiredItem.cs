@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.Travel.Store.Help
+namespace OregonTrail
 {
     /// <summary>
     ///     Informs the player they need to purchase at least a single one of the specified SimItem in order to

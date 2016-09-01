@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace OregonTrail.Travel.TalkToPeople
+namespace OregonTrail
 {
     /// <summary>
     ///     References all the advice that people will offer up to the player when they talk to people. The difference pieces

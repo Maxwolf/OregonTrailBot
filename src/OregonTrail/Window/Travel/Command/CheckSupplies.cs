@@ -4,10 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.Travel.Command
+namespace OregonTrail
 {
     /// <summary>
     ///     Shows all the players supplies that they currently have in their vehicle inventory, along with the amount of money

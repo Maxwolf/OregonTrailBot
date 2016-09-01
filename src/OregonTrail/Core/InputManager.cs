@@ -72,7 +72,7 @@ namespace OregonTrail
             if (_commandQueue.Count <= 0)
                 return;
 
-            // Dequeue the next command to send and pass along to currently active game Windows if it exists.
+            // Grab the next command to send and pass along to currently active game Windows if it exists.
             _simUnit.WindowManager.FocusedWindow?.SendCommand(_commandQueue.Dequeue());
         }
 

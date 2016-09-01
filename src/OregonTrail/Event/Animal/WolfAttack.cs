@@ -4,10 +4,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using OregonTrail.Director;
-using OregonTrail.Prefab;
 
-namespace OregonTrail.Animal
+namespace OregonTrail
 {
     /// <summary>
     ///     A pack of wolves is attacking the vehicle party! If there are not enough bullets to stop them then they will

@@ -1,10 +1,7 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Location.Weather;
-using OregonTrail.Travel.RiverCrossing;
-
-namespace OregonTrail.Location.Point
+namespace OregonTrail
 {
     /// <summary>
     ///     Defines a river that the vehicle must cross when it encounters it. There are several options that can be used that
@@ -15,7 +12,7 @@ namespace OregonTrail.Location.Point
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="RiverCrossing" /> class. Initializes a new instance of the
-        ///     <see cref="T:OregonTrail.Location.Location" /> class.
+        ///     <see cref="T:OregonTrail.Location" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="climateType">The climate Type.</param>

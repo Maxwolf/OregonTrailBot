@@ -3,12 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
-using OregonTrail.Travel.Dialog;
-using OregonTrail.Vehicle;
 
-namespace OregonTrail.Travel.RiverCrossing
+namespace OregonTrail
 {
     /// <summary>
     ///     Displays the final crossing result for the river crossing location. No matter what choice the player made, what
@@ -57,7 +53,8 @@ namespace OregonTrail.Travel.RiverCrossing
                     if (UserData.Game.Random.NextBool())
                     {
                         // No loss in time, but warning to let the player know it's dangerous.
-                        _crossingResult.AppendLine($"It was a muddy crossing, but you did not get stuck.{Environment.NewLine}");
+                        _crossingResult.AppendLine(
+                            $"It was a muddy crossing, but you did not get stuck.{Environment.NewLine}");
                     }
                     else
                     {

@@ -2,10 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Diagnostics.CodeAnalysis;
-using OregonTrail.Director;
-using OregonTrail.Prefab;
 
-namespace OregonTrail.Person
+namespace OregonTrail
 {
     /// <summary>
     ///     One of the members of the vehicle passenger manifest broke their arm somehow.

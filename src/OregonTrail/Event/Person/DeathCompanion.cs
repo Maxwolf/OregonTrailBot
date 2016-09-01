@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Director;
-using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Person
+namespace OregonTrail
 {
     /// <summary>
     ///     Called when one of your party members dies that is not the leader of the group, the game will still be able to

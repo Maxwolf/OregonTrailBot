@@ -6,13 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
-using OregonTrail.Location;
-using OregonTrail.Location.Point;
-using OregonTrail.Travel.Dialog;
 
-namespace OregonTrail.Travel.Command
+namespace OregonTrail
 {
     /// <summary>
     ///     Shows the player their vehicle and list of all the points in the trail they could possibly travel to. It marks the
@@ -55,7 +50,7 @@ namespace OregonTrail.Travel.Command
             var locationsCompleted = UserData.Game.Trail.Locations.Count(
                 location => location.Status == LocationStatus.Departed);
 
-            var locationsPercentComplete = locationsCompleted/(decimal)UserData.Game.Trail.Locations.Count;
+            var locationsPercentComplete = locationsCompleted/(decimal) UserData.Game.Trail.Locations.Count;
             mapPrompt.AppendLine(locationsPercentComplete.ToString("P"));
 
             return mapPrompt.ToString();

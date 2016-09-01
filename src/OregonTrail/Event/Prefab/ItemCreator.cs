@@ -4,10 +4,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OregonTrail.Director;
-using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Prefab
+namespace OregonTrail
 {
     /// <summary>
     ///     Prefab class that is used to destroy some items at random from the vehicle inventory. Will return a list of items

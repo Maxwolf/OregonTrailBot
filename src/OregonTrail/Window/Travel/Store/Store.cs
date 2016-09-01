@@ -5,13 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Item;
-using OregonTrail.Location;
-using OregonTrail.Travel.Dialog;
-using OregonTrail.Travel.Store.Help;
 
-namespace OregonTrail.Travel.Store
+namespace OregonTrail
 {
     /// <summary>
     ///     Manages a general store where the player can buy food, clothes, bullets, and parts for their vehicle.

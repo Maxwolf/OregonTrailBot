@@ -5,10 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OregonTrail.Item;
-using OregonTrail.Location;
 
-namespace OregonTrail.Travel.Hunt
+namespace OregonTrail
 {
     /// <summary>
     ///     Represents all of the data related to a hunt where the player wants to kill the prey with bullets and then collect
@@ -87,7 +85,7 @@ namespace OregonTrail.Travel.Hunt
         private PreyItem _target;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="T:OregonTrail.Travel.Hunt.HuntManager" /> class.
+        ///     Initializes a new instance of the <see cref="T:OregonTrail.HuntManager" /> class.
         /// </summary>
         /// <param name="game">Simulation instance.</param>
         public HuntManager(GameSimulationApp game)

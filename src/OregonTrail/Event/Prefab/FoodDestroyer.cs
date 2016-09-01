@@ -1,10 +1,7 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Director;
-using OregonTrail.RandomEvent;
-
-namespace OregonTrail.Prefab
+namespace OregonTrail
 {
     /// <summary>
     ///     Destroys a random amount of food from the vehicles inventory, the amount of food destroyed typically will be about
@@ -23,7 +20,7 @@ namespace OregonTrail.Prefab
         public override void Execute(RandomEventInfo eventExecutor)
         {
             // Cast the source entity as vehicle.
-            var vehicle = eventExecutor.SourceEntity as Vehicle.Vehicle;
+            var vehicle = eventExecutor.SourceEntity as Vehicle;
 
             // Skip if the source entity is not a vehicle.
             if (vehicle == null)

@@ -4,10 +4,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using OregonTrail.Director;
-using OregonTrail.Prefab;
 
-namespace OregonTrail.Wild
+namespace OregonTrail
 {
     /// <summary>
     ///     Deals with a random event that involves strangers approaching your vehicle. Once they do this the player is given

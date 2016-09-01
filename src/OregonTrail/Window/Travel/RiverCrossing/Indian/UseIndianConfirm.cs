@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.Travel.RiverCrossing.Indian
+namespace OregonTrail
 {
     /// <summary>
     ///     Confirms with the player the decision they made about crossing the riving using the Indian guide in exchange for a
@@ -39,7 +37,8 @@ namespace OregonTrail.Travel.RiverCrossing.Indian
         protected override string OnDialogPrompt()
         {
             var indianConfirmPrompt = new StringBuilder();
-            indianConfirmPrompt.AppendLine($"The Shoshoni guide will help you float your wagon across.{Environment.NewLine}");
+            indianConfirmPrompt.AppendLine(
+                $"The Shoshoni guide will help you float your wagon across.{Environment.NewLine}");
             return indianConfirmPrompt.ToString();
         }
 

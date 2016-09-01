@@ -3,10 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using OregonTrail.Director;
-using OregonTrail.Prefab;
 
-namespace OregonTrail.Weather
+namespace OregonTrail
 {
     /// <summary>
     ///     Severe weather will cause destruction of items and waste your time, but nobody will get killed.

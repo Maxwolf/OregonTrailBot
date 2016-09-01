@@ -1,9 +1,7 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Item;
-
-namespace OregonTrail.Travel.Hunt
+namespace OregonTrail
 {
     /// <summary>
     ///     Defines a given animal the player can shoot and kill for it's meat. Depending on weather and current conditions the
@@ -12,7 +10,7 @@ namespace OregonTrail.Travel.Hunt
     public sealed class PreyItem : ITick
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="T:OregonTrail.Travel.Hunt.PreyItem" /> class.
+        ///     Initializes a new instance of the <see cref="T:OregonTrail.PreyItem" /> class.
         /// </summary>
         /// <param name="game">Simulation instance.</param>
         public PreyItem(GameSimulationApp game, int preyIndex)

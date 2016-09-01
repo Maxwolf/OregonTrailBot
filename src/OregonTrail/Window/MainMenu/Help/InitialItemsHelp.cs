@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.MainMenu.Help
+namespace OregonTrail
 {
     /// <summary>
     ///     Spawns a new game Windows in the game simulation while maintaining the state of previous one so when we bounce back
@@ -42,7 +40,8 @@ namespace OregonTrail.MainMenu.Help
         {
             // Create text we will display to user about the store before they actually load that game Windows.
             var storeHelp = new StringBuilder();
-            storeHelp.AppendLine($"{Environment.NewLine}Before leaving Independence you should buy equipment and supplies. You have {UserData.StartingMonies.ToString("C2")} in cash, but you don't have to spend it all now.{Environment.NewLine}");
+            storeHelp.AppendLine(
+                $"{Environment.NewLine}Before leaving Independence you should buy equipment and supplies. You have {UserData.StartingMonies.ToString("C2")} in cash, but you don't have to spend it all now.{Environment.NewLine}");
             return storeHelp.ToString();
         }
 

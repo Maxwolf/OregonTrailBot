@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace OregonTrail.Scoring
+namespace OregonTrail
 {
     /// <summary>
     ///     Defines a rating the player can get based on the number of points they receive during the entire course of the

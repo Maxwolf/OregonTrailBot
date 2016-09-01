@@ -2,11 +2,9 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
-using System.Reflection;
 using System.Text;
-using OregonTrail.Form;
 
-namespace OregonTrail.MainMenu.Options
+namespace OregonTrail
 {
     /// <summary>
     ///     Glorified options menu for the game that allows player to remove top ten high scores, remove saved games, erase

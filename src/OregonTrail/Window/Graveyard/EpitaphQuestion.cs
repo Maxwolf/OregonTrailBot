@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.Graveyard
+namespace OregonTrail
 {
     /// <summary>
     ///     Asks the user if they would like to write a custom message on their Tombstone for other users to see when the

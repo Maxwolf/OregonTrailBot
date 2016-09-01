@@ -1,9 +1,7 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Director;
-
-namespace OregonTrail.RandomEvent
+namespace OregonTrail
 {
     /// <summary>
     ///     Random event window is attached by the event director which then listens for the event it will throw at it over

@@ -4,11 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
-using OregonTrail.Vehicle;
 
-namespace OregonTrail.Travel.Trade
+namespace OregonTrail
 {
     /// <summary>
     ///     Handles the interaction of the player party and another AI controlled party that offers up items for trading which

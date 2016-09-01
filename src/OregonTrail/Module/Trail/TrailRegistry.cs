@@ -2,11 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Collections.Generic;
-using OregonTrail.Location.Point;
-using OregonTrail.Location.Weather;
-using OregonTrail.Travel.RiverCrossing;
 
-namespace OregonTrail.Trail
+namespace OregonTrail
 {
     /// <summary>
     ///     Complete trails the player can travel on using the simulation. Some are remakes and others new.
@@ -25,7 +22,7 @@ namespace OregonTrail.Trail
         /// </summary>
         public Trail OregonTrail()
         {
-            var oregonTrail = new Location.Location[]
+            var oregonTrail = new Location[]
             {
                 new Settlement("Independence", Climate.Moderate, _game),
                 new RiverCrossing("Kansas River Crossing", Climate.Continental, _game, RiverOption.FerryOperator),
@@ -34,7 +31,7 @@ namespace OregonTrail.Trail
                 new Landmark("Chimney Rock", Climate.Moderate, _game),
                 new Settlement("Fort Laramie", Climate.Moderate, _game),
                 new Landmark("Independence Rock", Climate.Moderate, _game),
-                new ForkInRoad("South Pass", Climate.Dry, new List<Location.Location>
+                new ForkInRoad("South Pass", Climate.Dry, new List<Location>
                 {
                     new Settlement("Fort Bridger", Climate.Dry, _game),
                     new Landmark("Green River Shortcut", Climate.Dry, _game)
@@ -44,10 +41,10 @@ namespace OregonTrail.Trail
                 new Settlement("Fort Hall", Climate.Moderate, _game),
                 new RiverCrossing("Snake River Crossing", Climate.Moderate, _game, RiverOption.IndianGuide),
                 new Settlement("Fort Boise", Climate.Polar, _game),
-                new ForkInRoad("Blue Mountains", Climate.Polar, new List<Location.Location>
+                new ForkInRoad("Blue Mountains", Climate.Polar, new List<Location>
                 {
                     new Settlement("Fort Walla Walla", Climate.Polar, _game),
-                    new ForkInRoad("The Dalles", Climate.Polar, new List<Location.Location>
+                    new ForkInRoad("The Dalles", Climate.Polar, new List<Location>
                     {
                         new RiverCrossing("Columbia River", Climate.Moderate, _game),
                         new TollRoad("Barlow Toll Road", Climate.Moderate, _game)
@@ -64,13 +61,13 @@ namespace OregonTrail.Trail
         /// </summary>
         public Trail TestTrail()
         {
-            var testTrail = new Location.Location[]
+            var testTrail = new Location[]
             {
                 new Settlement("Start Settlement", Climate.Moderate, _game),
-                new ForkInRoad("Fork In Road", Climate.Polar, new List<Location.Location>
+                new ForkInRoad("Fork In Road", Climate.Polar, new List<Location>
                 {
                     new Settlement("Inserted Settlement", Climate.Polar, _game),
-                    new ForkInRoad("Inserted Fork In Road", Climate.Polar, new List<Location.Location>
+                    new ForkInRoad("Inserted Fork In Road", Climate.Polar, new List<Location>
                     {
                         new RiverCrossing("Inserted River Crossing (default)", Climate.Moderate, _game),
                         new TollRoad("Inserted Toll Road", Climate.Moderate, _game)
@@ -91,7 +88,7 @@ namespace OregonTrail.Trail
         /// </summary>
         public Trail WinTrail()
         {
-            var testPoints = new Location.Location[]
+            var testPoints = new Location[]
             {
                 new Settlement("Start Of Test", Climate.Moderate, _game),
                 new Settlement("End Of Test", Climate.Dry, _game)
@@ -105,7 +102,7 @@ namespace OregonTrail.Trail
         /// </summary>
         public Trail FailTrail()
         {
-            var testFail = new Location.Location[]
+            var testFail = new Location[]
             {
                 new Settlement("Start Of Test", Climate.Moderate, _game),
                 new RiverCrossing("Wolf River Crossing", Climate.Continental, _game, RiverOption.IndianGuide),

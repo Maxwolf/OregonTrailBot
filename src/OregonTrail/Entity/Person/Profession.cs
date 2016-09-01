@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace OregonTrail.Person
+namespace OregonTrail
 {
     /// <summary>
     ///     The profession.

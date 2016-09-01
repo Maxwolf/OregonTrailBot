@@ -3,7 +3,7 @@
 
 using System;
 
-namespace OregonTrail.Travel.RiverCrossing
+namespace OregonTrail
 {
     /// <summary>
     ///     Special data class that is used to generate river data in the travel info as requested. Creation of this object
@@ -12,13 +12,13 @@ namespace OregonTrail.Travel.RiverCrossing
     public sealed class RiverGenerator
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="T:OregonTrail.Travel.RiverCrossing.RiverGenerator" /> class.
+        ///     Initializes a new instance of the <see cref="T:OregonTrail.RiverGenerator" /> class.
         /// </summary>
         /// <param name="game"></param>
         public RiverGenerator(GameSimulationApp game)
         {
             // Cast the current location as river crossing.
-            var riverLocation = game.Trail.CurrentLocation as Location.Point.RiverCrossing;
+            var riverLocation = game.Trail.CurrentLocation as RiverCrossing;
             if (riverLocation == null)
                 throw new InvalidCastException(
                     "Unable to cast location as river crossing even though it returns as one!");

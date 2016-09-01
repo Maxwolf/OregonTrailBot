@@ -2,10 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.Travel.Hunt.Help
+namespace OregonTrail
 {
     /// <summary>
     ///     Called when the player fires a shot and it misses the intended target.

@@ -1,11 +1,7 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Director;
-using OregonTrail.Prefab;
-using OregonTrail.RandomEvent;
-
-namespace OregonTrail.Vehicle
+namespace OregonTrail
 {
     /// <summary>
     ///     Vehicle has lost the trail and ended up in the deep woods, now they need to find their way back onto the trail.

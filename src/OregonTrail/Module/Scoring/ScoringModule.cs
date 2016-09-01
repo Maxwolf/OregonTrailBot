@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OregonTrail.Scoring
+namespace OregonTrail
 {
     /// <summary>
     ///     Keeps track of all the high scores, loads them from a default set that can always be reset to. If there are no

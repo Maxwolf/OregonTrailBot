@@ -1,9 +1,7 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Item;
-
-namespace OregonTrail.Travel.Trade
+namespace OregonTrail
 {
     /// <summary>
     ///     Represents an offer that automatically generates itself when constructor is called. Randomly selects a want, and
@@ -13,7 +11,7 @@ namespace OregonTrail.Travel.Trade
     public sealed class TradeOffer
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="T:OregonTrail.Travel.Trade.TradeOffer" /> class.
+        ///     Initializes a new instance of the <see cref="T:OregonTrail.TradeOffer" /> class.
         /// </summary>
         /// <param name="game"></param>
         public TradeOffer(GameSimulationApp game)

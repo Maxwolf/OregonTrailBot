@@ -3,12 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
-using OregonTrail.Location.Point;
-using OregonTrail.Travel.Dialog;
 
-namespace OregonTrail.Travel.Toll
+namespace OregonTrail
 {
     /// <summary>
     ///     Prompts the user with a question about the toll road location they are attempting to progress to. Depending on

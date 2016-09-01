@@ -1,10 +1,7 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using OregonTrail.Director;
-using OregonTrail.RandomEvent;
-
-namespace OregonTrail.Person
+namespace OregonTrail
 {
     /// <summary>
     ///     To start to get worse. It appeared that person was going to get well; then, unfortunately, they took a turn for the

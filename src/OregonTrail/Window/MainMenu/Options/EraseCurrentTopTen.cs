@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.MainMenu.Options
+namespace OregonTrail
 {
     /// <summary>
     ///     Confirm the player wishes to the destroy the current top ten list and reset it back to the hard-coded default
@@ -52,7 +50,8 @@ namespace OregonTrail.MainMenu.Options
             eraseTopTen.AppendLine($"{Environment.NewLine}Erase Top Ten list{Environment.NewLine}");
 
             // Ask the user question if they really want to remove the top ten list.
-            eraseTopTen.AppendLine($"If you erase the current Top Ten list, the names and scores will be replaced by those on the original list.{Environment.NewLine}");
+            eraseTopTen.AppendLine(
+                $"If you erase the current Top Ten list, the names and scores will be replaced by those on the original list.{Environment.NewLine}");
 
             // Wait for use input...
             eraseTopTen.Append("Do you want to do this?");

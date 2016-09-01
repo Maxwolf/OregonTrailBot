@@ -4,10 +4,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using OregonTrail.Director;
-using OregonTrail.Prefab;
 
-namespace OregonTrail.Animal
+namespace OregonTrail
 {
     /// <summary>
     ///     The buffalo stampede by the vehicle and can destroy items and trample people to death.

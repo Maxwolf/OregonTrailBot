@@ -3,7 +3,7 @@
 
 using System;
 
-namespace OregonTrail.Form
+namespace OregonTrail
 {
     /// <summary>
     ///     Used to map game Windows states to their respective parent modes by Windows type enumeration value. All of this is
@@ -16,7 +16,7 @@ namespace OregonTrail.Form
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
     public sealed class ParentWindowAttribute : Attribute
     {
-        /// <summary>Initializes a new instance of the <see cref="T:OregonTrail.Form.ParentWindowAttribute" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="T:OregonTrail.ParentWindowAttribute" /> class.</summary>
         /// <param name="parentWindow">The parent Window.</param>
         public ParentWindowAttribute(Type parentWindow)
         {

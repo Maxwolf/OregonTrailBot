@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.Travel.RiverCrossing.Help
+namespace OregonTrail
 {
     /// <summary>
     ///     Information about what fording a river means and how it works for the player vehicle and their party members.

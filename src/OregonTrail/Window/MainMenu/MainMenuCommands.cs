@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace OregonTrail.MainMenu
+namespace OregonTrail
 {
     /// <summary>
     ///     List of all the commands for starting a new game, this is basically the main menu of the simulation.

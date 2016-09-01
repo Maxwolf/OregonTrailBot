@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.Travel.RiverCrossing.Help
+namespace OregonTrail
 {
     /// <summary>
     ///     Shown to the user the first time they cross a river, this way it can be explained to them they must cross it in

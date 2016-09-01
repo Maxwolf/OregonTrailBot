@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.Travel.RiverCrossing.Indian
+namespace OregonTrail
 {
     /// <summary>
     ///     Prompts the player with a yes or no question regarding if they would like to use the services offered by the Indian
@@ -76,7 +74,8 @@ namespace OregonTrail.Travel.RiverCrossing.Indian
         {
             // Builds up the first part about the Indian guide for river crossing.
             var indianGuidePrompt = new StringBuilder();
-            indianGuidePrompt.AppendLine($"A Shoshoni guide says that he will take your wagon across the river in exchange for {UserData.River.IndianCost.ToString("N0")} sets of clothing.{Environment.NewLine}");
+            indianGuidePrompt.AppendLine(
+                $"A Shoshoni guide says that he will take your wagon across the river in exchange for {UserData.River.IndianCost.ToString("N0")} sets of clothing.{Environment.NewLine}");
 
             // Change up the message based on if the player has enough clothing, they won't be able to get more if they don't here.
             indianGuidePrompt.AppendLine(HasEnoughClothingToTrade

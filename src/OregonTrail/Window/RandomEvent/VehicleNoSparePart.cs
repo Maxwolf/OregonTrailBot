@@ -2,11 +2,8 @@
 // Timestamp 02/01/2016@11:23 PM
 
 using System;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
-using OregonTrail.Vehicle;
 
-namespace OregonTrail.RandomEvent
+namespace OregonTrail
 {
     /// <summary>
     ///     Special form to communicate to the player the vehicle has no spare parts in the inventory which can be used to
@@ -67,7 +64,7 @@ namespace OregonTrail.RandomEvent
         protected override void OnDialogResponse(DialogResponse reponse)
         {
             // Check to make sure the source entity is a vehicle.
-            var vehicle = UserData.SourceEntity as Vehicle.Vehicle;
+            var vehicle = UserData.SourceEntity as Vehicle;
             if (vehicle == null)
                 return;
 

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace OregonTrail.Director
+namespace OregonTrail
 {
     /// <summary>
     ///     Numbers events and allows them to propagate through it and to other parts of the simulation. Lives inside of the
@@ -101,7 +101,7 @@ namespace OregonTrail.Director
         private void ExecuteEvent(IEntity sourceEntity, EventProduct directorEvent)
         {
             // Attach random event game Windows before triggering event since it will listen for it using event delegate.
-            _game.WindowManager.Add(typeof (RandomEvent.RandomEvent), _game);
+            _game.WindowManager.Add(typeof (RandomEvent), _game);
 
             // Fire off event so primary game simulation knows we executed an event with an event.
             OnEventTriggered?.Invoke(sourceEntity, directorEvent);

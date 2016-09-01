@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.Travel.RiverCrossing.Ferry
+namespace OregonTrail
 {
     /// <summary>
     ///     The ferry help.

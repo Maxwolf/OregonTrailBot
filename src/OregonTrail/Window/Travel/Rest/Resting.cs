@@ -1,16 +1,9 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Location;
-using OregonTrail.Location.Point;
-using OregonTrail.Travel.Dialog;
-using OregonTrail.Travel.RiverCrossing;
-using OregonTrail.Vehicle;
 
-namespace OregonTrail.Travel.Rest
+namespace OregonTrail
 {
     /// <summary>
     ///     Keeps track of a set number of days and every time the game Windows is ticked a day is simulated and days to rest
@@ -83,7 +76,7 @@ namespace OregonTrail.Travel.Rest
             // Check if we are at a river crossing and need to subtract from ferry days also.
             if (UserData.River != null &&
                 UserData.River.FerryDelayInDays > 0 &&
-                UserData.Game.Trail.CurrentLocation is Location.Point.RiverCrossing)
+                UserData.Game.Trail.CurrentLocation is RiverCrossing)
                 UserData.River.FerryDelayInDays--;
 
             // Decrease number of days needed to rest, increment number of days rested.
@@ -180,7 +173,7 @@ namespace OregonTrail.Travel.Rest
             {
                 ClearForm();
             }
-            else if (UserData.Game.Trail.CurrentLocation is Location.Point.RiverCrossing)
+            else if (UserData.Game.Trail.CurrentLocation is RiverCrossing)
             {
                 UserData.DaysToRest = 0;
 

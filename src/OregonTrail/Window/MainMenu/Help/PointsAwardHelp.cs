@@ -4,12 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
-using OregonTrail.Item;
-using OregonTrail.Scoring;
 
-namespace OregonTrail.MainMenu.Help
+namespace OregonTrail
 {
     /// <summary>
     ///     Second panel on point information, shows how the number of resources you end the game with contribute to your final
@@ -65,7 +61,8 @@ namespace OregonTrail.MainMenu.Help
         {
             var pointsHelp = new StringBuilder();
             pointsHelp.Append($"{Environment.NewLine}On Arriving in Oregon{Environment.NewLine}{Environment.NewLine}");
-            pointsHelp.Append($"The resources you arrive with will{Environment.NewLine} help you get started in the new{Environment.NewLine} land. You receive points for each{Environment.NewLine} item you bring safely to Oregon.{Environment.NewLine}{Environment.NewLine}");
+            pointsHelp.Append(
+                $"The resources you arrive with will{Environment.NewLine} help you get started in the new{Environment.NewLine} land. You receive points for each{Environment.NewLine} item you bring safely to Oregon.{Environment.NewLine}{Environment.NewLine}");
 
             // Build up the table of resource points and how they work for player.
             var partyTable = ResourcePoints.ToStringTable(

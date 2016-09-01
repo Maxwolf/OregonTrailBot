@@ -5,10 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using OregonTrail.Item;
-using OregonTrail.Person;
 
-namespace OregonTrail.Vehicle
+namespace OregonTrail
 {
     /// <summary>
     ///     Vessel that holds all the players, their inventory, money, and keeps track of total miles traveled in the form of
@@ -34,7 +32,7 @@ namespace OregonTrail.Vehicle
         /// <summary>
         ///     References all of the people inside of the vehicle.
         /// </summary>
-        private List<Person.Person> _passengers;
+        private List<Person> _passengers;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="T:TrailEntities.Entities.Vehicle" /> class.
@@ -85,7 +83,7 @@ namespace OregonTrail.Vehicle
         /// <summary>
         ///     References all of the people inside of the vehicle.
         /// </summary>
-        public ReadOnlyCollection<Person.Person> Passengers
+        public ReadOnlyCollection<Person> Passengers
         {
             get { return _passengers.AsReadOnly(); }
         }
@@ -261,12 +259,12 @@ namespace OregonTrail.Vehicle
         /// <summary>
         ///     Locates the leader in the passenger manifest and returns the person object that represents them.
         /// </summary>
-        public Person.Person PassengerLeader
+        public Person PassengerLeader
         {
             get
             {
                 // Leaders profession, used to determine points multiplier at end.
-                Person.Person leaderPerson = null;
+                Person leaderPerson = null;
 
                 // Check if passenger manifest exists.
                 if (Passengers == null)
@@ -551,7 +549,7 @@ namespace OregonTrail.Vehicle
 
         /// <summary>Adds a new person object to the list of vehicle passengers.</summary>
         /// <param name="person">Person that wishes to become a vehicle passenger.</param>
-        public void AddPerson(Person.Person person)
+        public void AddPerson(Person person)
         {
             _passengers.Add(person);
         }
@@ -582,7 +580,7 @@ namespace OregonTrail.Vehicle
             _inventory = new Dictionary<Entities, SimItem>(DefaultInventory);
 
             // Passengers the vehicle will be moving along the trail.
-            _passengers = new List<Person.Person>();
+            _passengers = new List<Person>();
 
             // Money the passengers use collectively to purchase items.
             Balance = startingMonies;

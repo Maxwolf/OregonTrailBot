@@ -1,10 +1,7 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
-using System;
-using OregonTrail.Form;
-
-namespace OregonTrail.Travel.Rest
+namespace OregonTrail
 {
     /// <summary>
     ///     Attaches a state that will ask the player how long they would like to rest in the number of days, zero is a valid

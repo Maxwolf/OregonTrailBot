@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.MainMenu.Profession
+namespace OregonTrail
 {
     /// <summary>
     ///     Shows information about what the player leader professions mean and how it affects the party, vehicle, game

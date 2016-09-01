@@ -3,11 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
-using OregonTrail.Travel.RiverCrossing.Ferry;
 
-namespace OregonTrail.Travel.RiverCrossing.Help
+namespace OregonTrail
 {
     /// <summary>
     ///     The caulk river help.
@@ -38,7 +35,8 @@ namespace OregonTrail.Travel.RiverCrossing.Help
         protected override string OnDialogPrompt()
         {
             var caulkWagon = new StringBuilder();
-            caulkWagon.AppendLine($"To caulk the wagon means to seal it so that no water can get in. The wagon can then be floated across like a boat{Environment.NewLine}");
+            caulkWagon.AppendLine(
+                $"To caulk the wagon means to seal it so that no water can get in. The wagon can then be floated across like a boat{Environment.NewLine}");
             return caulkWagon.ToString();
         }
 

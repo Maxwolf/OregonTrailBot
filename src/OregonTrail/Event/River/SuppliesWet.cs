@@ -2,11 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Diagnostics.CodeAnalysis;
-using OregonTrail.Director;
-using OregonTrail.Prefab;
-using OregonTrail.RandomEvent;
 
-namespace OregonTrail.River
+namespace OregonTrail
 {
     /// <summary>
     ///     Does not destroy items or drown people but will make you lose time gathering your things and drying them out.

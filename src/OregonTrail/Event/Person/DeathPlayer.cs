@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Director;
-using OregonTrail.RandomEvent;
 
-namespace OregonTrail.Person
+namespace OregonTrail
 {
     /// <summary>
     ///     Party leader has died! This will end the entire simulation since the others cannot go on without the leader.

@@ -3,12 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Location;
-using OregonTrail.Travel.Dialog;
-using OregonTrail.Vehicle;
 
-namespace OregonTrail.Travel.Command
+namespace OregonTrail
 {
     /// <summary>
     ///     Attached to the travel Windows when the player requests to continue on the trail. This shows a ping-pong progress

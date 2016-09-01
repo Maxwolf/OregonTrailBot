@@ -3,9 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
 
-namespace OregonTrail.Travel.Store.Help
+namespace OregonTrail
 {
     /// <summary>
     ///     Offers up some free information about what items are important to the player and what they mean for the during the

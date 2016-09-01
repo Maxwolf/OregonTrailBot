@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.Travel.Hunt.Help
+namespace OregonTrail
 {
     /// <summary>
     ///     Prompt that proceeds the hunting mode when accessed from the travel menu. Explains to the player how the controls

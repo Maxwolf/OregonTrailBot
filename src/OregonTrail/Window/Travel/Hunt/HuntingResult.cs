@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.Travel.Hunt
+namespace OregonTrail
 {
     /// <summary>
     ///     Tabulates results about the hunting session after it ends, depending on the performance of the player and how many

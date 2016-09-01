@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Person;
 
-namespace OregonTrail.Travel.Command
+namespace OregonTrail
 {
     /// <summary>
     ///     Allows the player to change the amount of food their party members will have access to in a given day, the purpose
@@ -44,7 +42,8 @@ namespace OregonTrail.Travel.Command
             base.OnFormPostCreate();
 
             _ration = new StringBuilder();
-            _ration.AppendLine($"Change food rations (currently \"{UserData.Game.Vehicle.Ration.ToDescriptionAttribute()}\"){Environment.NewLine} The amount of food the people in your party eat each day can change. These amounts are:{Environment.NewLine}");
+            _ration.AppendLine(
+                $"Change food rations (currently \"{UserData.Game.Vehicle.Ration.ToDescriptionAttribute()}\"){Environment.NewLine} The amount of food the people in your party eat each day can change. These amounts are:{Environment.NewLine}");
             _ration.AppendLine("1. filling - meals are large and generous.");
             _ration.AppendLine("2. meager - meals are small, but adequate.");
             _ration.AppendLine("3. bare bones - meals are very small, everyone stays hungry.");

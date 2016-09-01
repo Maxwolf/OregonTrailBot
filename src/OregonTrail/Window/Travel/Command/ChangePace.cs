@@ -3,11 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Travel.Dialog;
-using OregonTrail.Vehicle;
 
-namespace OregonTrail.Travel.Command
+namespace OregonTrail
 {
     /// <summary>
     ///     Allows the player to alter how many 'miles' their vehicle will attempt to travel in a given day, this also changes

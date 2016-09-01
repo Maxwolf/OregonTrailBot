@@ -4,13 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
-using OregonTrail.Item;
-using OregonTrail.Person;
-using OregonTrail.Scoring;
 
-namespace OregonTrail.GameOver
+namespace OregonTrail
 {
     /// <summary>
     ///     Shows point tabulation based on current simulation statistics. This way if the player dies or finishes the game we

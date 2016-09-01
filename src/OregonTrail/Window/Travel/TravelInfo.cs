@@ -2,14 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System.Text;
-using OregonTrail.Location;
-using OregonTrail.Location.Point;
-using OregonTrail.Travel.Hunt;
-using OregonTrail.Travel.RiverCrossing;
-using OregonTrail.Travel.Store;
-using OregonTrail.Travel.Toll;
 
-namespace OregonTrail.Travel
+namespace OregonTrail
 {
     /// <summary>
     ///     Holds all the information about traveling that we want to know, such as how long we need to go until next point,

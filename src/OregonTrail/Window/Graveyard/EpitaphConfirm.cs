@@ -3,10 +3,8 @@
 
 using System;
 using System.Text;
-using OregonTrail.Form;
-using OregonTrail.Form.Input;
 
-namespace OregonTrail.Graveyard
+namespace OregonTrail
 {
     /// <summary>
     ///     Confirms with the user if there is any changes they would like to make to their Tombstone before it gets saved
@@ -75,7 +73,7 @@ namespace OregonTrail.Graveyard
             {
                 case DialogResponse.Custom:
                 case DialogResponse.No:
-                    UserData.Game.Tombstone.Add(UserData.Tombstone.Clone() as Tombstone.Tombstone);
+                    UserData.Game.Tombstone.Add(UserData.Tombstone.Clone() as Tombstone);
                     SetForm(typeof (TombstoneView));
                     break;
                 case DialogResponse.Yes:

@@ -4,9 +4,8 @@
 using System;
 using System.IO;
 using System.Reflection;
-using OregonTrail.Location.Weather;
 
-namespace OregonTrail.Location
+namespace OregonTrail
 {
     /// <summary>
     ///     Defines a location in the game that is added to a list of points that make up the entire trail which the player and
@@ -20,7 +19,7 @@ namespace OregonTrail.Location
         /// </summary>
         private LocationWeather _weather;
 
-        /// <summary>Initializes a new instance of the <see cref="T:OregonTrail.Location.Location" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="T:OregonTrail.Location" /> class.</summary>
         /// <param name="name">Display name of the location as it should be known to the player.</param>
         /// <param name="climateType">Defines the type of weather the location will have overall.</param>
         /// <param name="game">Simulation instance.</param>
@@ -66,7 +65,7 @@ namespace OregonTrail.Location
         /// <summary>
         ///     Current weather condition this location is experiencing.
         /// </summary>
-        public Weather.Weather Weather
+        public Weather Weather
         {
             get { return _weather.Condition; }
         }

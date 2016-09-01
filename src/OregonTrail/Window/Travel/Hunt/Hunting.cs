@@ -2,10 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
-using OregonTrail.Form;
-using OregonTrail.Travel.Hunt.Help;
 
-namespace OregonTrail.Travel.Hunt
+namespace OregonTrail
 {
     /// <summary>
     ///     Used to allow the players party to hunt for wild animals, shooting bullet items into the animals will successfully
