@@ -54,7 +54,7 @@ namespace OregonTrail
         /// </summary>
         public override bool AllowInput
         {
-            get { return true; }
+            get { return string.IsNullOrEmpty(UserData.Tombstone.Epitaph); }
         }
 
         /// <summary>
