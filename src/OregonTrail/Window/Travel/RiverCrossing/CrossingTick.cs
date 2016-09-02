@@ -2,6 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace OregonTrail
@@ -67,7 +69,7 @@ namespace OregonTrail
         {
             get
             {
-                return _riverCrossingOfTotalWidth >= UserData.River.RiverWidth
+                return _finishedCrossingRiver
                     ? new[] {"Finish Crossing"}
                     : null;
             }
@@ -103,17 +105,7 @@ namespace OregonTrail
                 // Clear out the cost for the ferry since it has been paid for now.
                 UserData.River.IndianCost = 0;
             }
-        }
 
-        /// <summary>
-        ///     Returns a text only representation of the current game Windows state. Could be a statement, information, question
-        ///     waiting input, etc.
-        /// </summary>
-        /// <returns>
-        ///     The <see cref="string" />.
-        /// </returns>
-        public override string OnRenderForm()
-        {
             // Clears the string buffer for this render pass.
             _crossingPrompt.Clear();
 
@@ -133,6 +125,19 @@ namespace OregonTrail
             //_crossingPrompt.AppendLine(
             //    $"River crossed: {_riverCrossingOfTotalWidth.ToString("N0")} feet");
 
+            // Image of the wagon traveling over the water.
+            ImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "river.gif");
+        }
+
+        /// <summary>
+        ///     Returns a text only representation of the current game Windows state. Could be a statement, information, question
+        ///     waiting input, etc.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="string" />.
+        /// </returns>
+        public override string OnRenderForm()
+        {
             return _crossingPrompt.ToString();
         }
 
