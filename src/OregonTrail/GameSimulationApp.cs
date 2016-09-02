@@ -14,11 +14,6 @@ namespace OregonTrail
     public sealed class GameSimulationApp : SimulationApp
     {
         /// <summary>
-        /// Session data that is currently controlling the 
-        /// </summary>
-        public BotSession Session { get; }
-
-        /// <summary>
         ///     Defines the limit on the number of players for the vehicle that will be allowed. This also determines how many
         ///     names are asked for in new game Windows.
         /// </summary>
@@ -32,6 +27,11 @@ namespace OregonTrail
             Session = session;
             OnPostCreate();
         }
+
+        /// <summary>
+        ///     Session data that is currently controlling the
+        /// </summary>
+        public BotSession Session { get; }
 
         /// <summary>
         ///     Keeps track of all the points of interest we want to visit from beginning to end that makeup the entire journey.

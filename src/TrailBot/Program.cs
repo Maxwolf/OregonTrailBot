@@ -293,7 +293,8 @@ namespace TrailBot
 
                 // Check that session is not null.
                 if (game.Session == null)
-                    throw new NullReferenceException("Session for ID is currently null and trying to have input passed into it!");
+                    throw new NullReferenceException(
+                        "Session for ID is currently null and trying to have input passed into it!");
 
                 // Group sessions need to ignore the player during this stage.
                 if (game.Session?.WindowManager?.FocusedWindow?.CurrentForm is InputPlayerNames &&

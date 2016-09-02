@@ -32,7 +32,7 @@ namespace OregonTrail
 
         public override object MenuCommands
         {
-            get { return new[] { "Generate Names" }; }
+            get { return new[] {"Generate Names"}; }
         }
 
         /// <summary>
@@ -97,7 +97,9 @@ namespace OregonTrail
 
                 // First name in list is always the leader.
                 var isLeader = UserData.PlayerNames.IndexOf(name) == 0 && crewNumber == 1;
-                _inputNamesHelp.AppendFormat(isLeader ? $" {crewNumber} - {name} (leader){Environment.NewLine}" : $" {crewNumber} - {name}{Environment.NewLine}");
+                _inputNamesHelp.AppendFormat(isLeader
+                    ? $" {crewNumber} - {name} (leader){Environment.NewLine}"
+                    : $" {crewNumber} - {name}{Environment.NewLine}");
                 crewNumber++;
             }
         }
@@ -150,7 +152,9 @@ namespace OregonTrail
         {
             string[] names =
             {
-                "Bob", "Joe", "Sally", "Tim", "Steve", "Zeke", "Suzan", "Rebekah", "Young", "Margret", "Kristy", "Bush", "Joanna", "Chrystal", "Gene", "Angela", "Ruthann", "Viva", "Iris", "Anderson", "Siobhan", "Trump", "Jolie", "Carlene", "Kerry", "Buck"
+                "Bob", "Joe", "Sally", "Tim", "Steve", "Zeke", "Suzan", "Rebekah", "Young", "Margret", "Kristy", "Bush",
+                "Joanna", "Chrystal", "Gene", "Angela", "Ruthann", "Viva", "Iris", "Anderson", "Siobhan", "Trump",
+                "Jolie", "Carlene", "Kerry", "Buck"
             };
             return names[UserData.Game.Random.Next(names.Length)];
         }

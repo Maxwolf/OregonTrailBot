@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Telegram.Bot.Types.Enums;
 
 namespace OregonTrail
 {
@@ -152,7 +151,7 @@ namespace OregonTrail
         /// </summary>
         private void FinishProfessionSelection()
         {
-            SetForm(typeof(InputPlayerNames));
+            SetForm(typeof (InputPlayerNames));
         }
     }
 }
