@@ -315,16 +315,8 @@ namespace TrailBot
                 // Makes the bot appear to be thinking.
                 _bot.SendChatActionAsync(session.ChatID, ChatAction.Typing).Wait();
 
-                // Send custom keyboard.
-                var button = new List<KeyboardButton> {new KeyboardButton("0")};
-
-                var keyboard = new ReplyKeyboardMarkup(new[]
-                {
-                    button.ToArray()
-                }, true, true);
-
                 // Instruct the program that it can pass along screen buffer when it changes.
-                _bot.SendTextMessageAsync(session.ChatID, content, replyMarkup: keyboard,
+                _bot.SendTextMessageAsync(session.ChatID, content, replyMarkup: new ReplyKeyboardHide(),
                     disableWebPagePreview: true, disableNotification: true).Wait();
             }
             else if (menuCommands.Length > 0)

@@ -3,6 +3,7 @@
 
 using System;
 using System.Text;
+using Telegram.Bot.Types.Enums;
 
 namespace OregonTrail
 {
@@ -91,10 +92,20 @@ namespace OregonTrail
             var pluralMatchesName = UserData.Store.SelectedItem.PluralForm.Equals(UserData.Store.SelectedItem.Name,
                 StringComparison.InvariantCultureIgnoreCase);
 
-            // Print text about purchasing the selected item.
-            _itemBuyText.AppendLine(pluralMatchesName
-                ? $"{Environment.NewLine}You can afford {_purchaseLimit} {UserData.Store.SelectedItem.Name.ToLowerInvariant()}."
-                : $"{Environment.NewLine}You can afford {_purchaseLimit} {UserData.Store.SelectedItem.PluralForm.ToLowerInvariant()} of {UserData.Store.SelectedItem.Name.ToLowerInvariant()}.");
+            if (UserData.Game.Session.GameType == ChatType.Private)
+            {
+                // Print text about purchasing the selected item.
+                _itemBuyText.AppendLine(pluralMatchesName
+                    ? $"{Environment.NewLine}You can afford {_purchaseLimit} {UserData.Store.SelectedItem.Name.ToLowerInvariant()}."
+                    : $"{Environment.NewLine}You can afford {_purchaseLimit} {UserData.Store.SelectedItem.PluralForm.ToLowerInvariant()} of {UserData.Store.SelectedItem.Name.ToLowerInvariant()}.");
+            }
+            else
+            {
+                // Print text about purchasing the selected item.
+                _itemBuyText.AppendLine(pluralMatchesName
+                    ? $"{Environment.NewLine}You can afford {_purchaseLimit} {UserData.Store.SelectedItem.Name.ToLowerInvariant()}. Reply to this message to tell me how many you want."
+                    : $"{Environment.NewLine}You can afford {_purchaseLimit} {UserData.Store.SelectedItem.PluralForm.ToLowerInvariant()} of {UserData.Store.SelectedItem.Name.ToLowerInvariant()}. Reply to this message to tell me how many you want.");
+            }
 
             // Wait for user input...
             _itemBuyText.Append($"How many {UserData.Store.SelectedItem.PluralForm.ToLowerInvariant()} to buy?");

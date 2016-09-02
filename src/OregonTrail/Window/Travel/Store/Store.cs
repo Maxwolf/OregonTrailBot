@@ -174,7 +174,6 @@ namespace OregonTrail
             }
 
             // Footer text for below menu.
-            //_storePrompt.AppendLine("--------------------------------");
             _storePrompt.AppendLine();
 
             // Calculate how much monies the player has and the total amount of monies owed to store for pending transaction receipt.
@@ -202,6 +201,7 @@ namespace OregonTrail
             Enum.TryParse(input, out selectedItem);
 
             // Figure out what to do based on selection.
+            // ReSharper disable once SwitchStatementMissingSomeCases
             switch (selectedItem)
             {
                 case Entities.Animal:
