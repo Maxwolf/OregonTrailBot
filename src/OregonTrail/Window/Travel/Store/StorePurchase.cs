@@ -103,8 +103,8 @@ namespace OregonTrail
             {
                 // Print text about purchasing the selected item.
                 _itemBuyText.AppendLine(pluralMatchesName
-                    ? $"{Environment.NewLine}You can afford {_purchaseLimit} {UserData.Store.SelectedItem.Name.ToLowerInvariant()}. Reply to this message to tell me how many you want."
-                    : $"{Environment.NewLine}You can afford {_purchaseLimit} {UserData.Store.SelectedItem.PluralForm.ToLowerInvariant()} of {UserData.Store.SelectedItem.Name.ToLowerInvariant()}. Reply to this message to tell me how many you want.");
+                    ? $"{Environment.NewLine}You can afford {_purchaseLimit} {UserData.Store.SelectedItem.Name.ToLowerInvariant()}."
+                    : $"{Environment.NewLine}You can afford {_purchaseLimit} {UserData.Store.SelectedItem.PluralForm.ToLowerInvariant()} of {UserData.Store.SelectedItem.Name.ToLowerInvariant()}.");
             }
 
             // Wait for user input...

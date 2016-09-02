@@ -147,7 +147,9 @@ namespace TrailBot
             if (message == null || message.Type != MessageType.TextMessage)
                 return;
 
-            if (_sessions.ContainsKey(message.Chat.Id) && _sessions[message.Chat.Id].UserID == message.From.Id && message.Text.Contains("/quit"))
+            if (_sessions.ContainsKey(message.Chat.Id) &&
+                _sessions[message.Chat.Id].UserID == message.From.Id &&
+                message.Text.Contains("/quit"))
             {
                 // Skip messages that are internal mode switching or empty (populating) windows and forms.
                 if (messageEventArgs.Message.Text.Contains(SceneGraph.GAMEMODE_DEFAULT_TUI) ||
@@ -157,7 +159,7 @@ namespace TrailBot
                 // Makes the bot appear to be thinking.
                 _bot.SendChatActionAsync(message.Chat.Id, ChatAction.Typing).Wait();
 
-                // Tell the players what we are doing.
+                // Send the notification to the chat room.
                 _bot.SendTextMessageAsync(message.Chat.Id,
                     $"{message.From.FirstName} has quit the game, losing their progress. To start a new game type /start to become leader of new session.",
                     replyMarkup: new ReplyKeyboardHide(),
@@ -182,7 +184,9 @@ namespace TrailBot
                 // Remove session from list.
                 _sessions.Remove(message.Chat.Id);
             }
-            else if (_sessions.ContainsKey(message.Chat.Id) && _sessions[message.Chat.Id].UserID == message.From.Id && message.Text.Contains("/reset"))
+            else if (_sessions.ContainsKey(message.Chat.Id) &&
+                     _sessions[message.Chat.Id].UserID == message.From.Id &&
+                     message.Text.Contains("/reset"))
             {
                 // Skip messages that are internal mode switching or empty (populating) windows and forms.
                 if (messageEventArgs.Message.Text.Contains(SceneGraph.GAMEMODE_DEFAULT_TUI) ||
@@ -196,9 +200,11 @@ namespace TrailBot
                         // Makes the bot appear to be thinking.
                         _bot.SendChatActionAsync(message.Chat.Id, ChatAction.Typing).Wait();
                         _sessions[message.From.Id].Session.Restart();
+                        // Send the notification to the chat room.
                         _bot.SendTextMessageAsync(message.Chat.Id,
                             $"{message.From.FirstName} has reset the game, losing their progress. Starting a new session now with them as the leader again.",
-                            replyMarkup: new ReplyKeyboardHide(), disableWebPagePreview: true,
+                            replyMarkup: new ReplyKeyboardHide(),
+                            disableWebPagePreview: true,
                             disableNotification: true)
                             .Wait();
                         break;
@@ -208,9 +214,11 @@ namespace TrailBot
                         // Makes the bot appear to be thinking.
                         _bot.SendChatActionAsync(message.Chat.Id, ChatAction.Typing).Wait();
                         _sessions[message.Chat.Id].Session.Restart();
+                        // Send the notification to the chat room.
                         _bot.SendTextMessageAsync(message.Chat.Id,
                             $"{message.From.FirstName} has reset the game, losing their progress. Starting a new session now with them as the leader again.",
-                            replyMarkup: new ReplyKeyboardHide(), disableWebPagePreview: true,
+                            replyMarkup: new ReplyKeyboardHide(),
+                            disableWebPagePreview: true,
                             disableNotification: true).Wait();
                         break;
                     default:
@@ -218,9 +226,9 @@ namespace TrailBot
                 }
             }
             else if (_sessions.ContainsKey(message.Chat.Id) &&
-                _sessions[message.Chat.Id].UserID == message.From.Id &&
-                message.Text.Contains("/join") &&
-                    _sessions[message.Chat.Id]?.Session?.WindowManager?.FocusedWindow?.CurrentForm is InputPlayerNames)
+                     _sessions[message.Chat.Id].UserID != message.From.Id &&
+                     message.Text.Contains("/join") &&
+                     _sessions[message.Chat.Id]?.Session?.WindowManager?.FocusedWindow?.CurrentForm is InputPlayerNames)
             {
                 // Get the current session based on ID we know exists now.
                 var game = _sessions[message.Chat.Id];
@@ -254,7 +262,8 @@ namespace TrailBot
                 // Send whatever we got to the simulation for processing it will decide what it wants.
                 game.Session.InputManager.SendInputBufferAsCommand();
             }
-            else if (!_sessions.ContainsKey(message.Chat.Id) && message.Text.Contains("/start"))
+            else if (!_sessions.ContainsKey(message.Chat.Id) &&
+                     message.Text.Contains("/start"))
             {
                 // Skip messages that are internal mode switching or empty (populating) windows and forms.
                 if (messageEventArgs.Message.Text.Contains(SceneGraph.GAMEMODE_DEFAULT_TUI) ||
@@ -274,12 +283,22 @@ namespace TrailBot
                 _sessions[message.Chat.Id].Session.SceneGraph.ScreenBufferDirtyEvent +=
                     SceneGraphOnScreenBufferDirtyEvent;
             }
-            else if (_sessions.ContainsKey(message.Chat.Id))
+            else if (_sessions.ContainsKey(message.Chat.Id) &&
+                     _sessions[message.Chat.Id].UserID == message.From.Id)
             {
                 // Get the current session based on ID we know exists now.
                 var game = _sessions[message.Chat.Id];
                 if (game == null)
                     throw new NullReferenceException("Found session ID game instance is null!");
+
+                // Check that session is not null.
+                if (game.Session == null)
+                    throw new NullReferenceException("Session for ID is currently null and trying to have input passed into it!");
+
+                // Group sessions need to ignore the player during this stage.
+                if (game.Session?.WindowManager?.FocusedWindow?.CurrentForm is InputPlayerNames &&
+                    game.GameType != ChatType.Private)
+                    return;
 
                 // Clear anything that was in the input buffer before this message.
                 game.Session.InputManager.ClearBuffer();
@@ -317,9 +336,22 @@ namespace TrailBot
                 // Makes the bot appear to be thinking.
                 _bot.SendChatActionAsync(session.ChatID, ChatAction.Typing).Wait();
 
-                // Instruct the program that it can pass along screen buffer when it changes.
-                _bot.SendTextMessageAsync(session.ChatID, content, replyMarkup: new ReplyKeyboardHide(),
-                    disableWebPagePreview: true, disableNotification: true).Wait();
+                if (session.GameType == ChatType.Private)
+                {
+                    _bot.SendTextMessageAsync(session.ChatID, content,
+                        replyMarkup: new ReplyKeyboardHide(),
+                        disableWebPagePreview: true,
+                        disableNotification: true).Wait();
+                }
+                else
+                {
+                    // Send the text user interface to chat room.
+                    var forceReply = new ForceReply {Force = true, Selective = true};
+                    _bot.SendTextMessageAsync(session.ChatID, $"@{session.LeaderUsername}{Environment.NewLine}{content}",
+                        replyMarkup: forceReply,
+                        disableWebPagePreview: true,
+                        disableNotification: true).Wait();
+                }
             }
             else if (menuCommands.Length > 0)
             {
@@ -330,16 +362,6 @@ namespace TrailBot
                 var window = _sessions[session.ChatID].Session.WindowManager.FocusedWindow;
                 if (halfCommandCount <= 0)
                 {
-                    // Send custom keyboard.
-                    var button = new List<KeyboardButton>();
-                    foreach (var t in menuCommands)
-                        button.Add(new KeyboardButton(t));
-
-                    var keyboard = new ReplyKeyboardMarkup(new[]
-                    {
-                        button.ToArray()
-                    }, true, true);
-
                     // Simulation can send photos to chat to help visualize locations.
                     if (window == null)
                         return;
@@ -359,16 +381,41 @@ namespace TrailBot
                         filePath = window.CurrentForm.ImagePath;
                     }
 
+                    // Send custom keyboard.
+                    var button = new List<KeyboardButton>();
+                    foreach (var t in menuCommands)
+                        button.Add(new KeyboardButton(t));
+
+                    var keyboard = new ReplyKeyboardMarkup(new[]
+                    {
+                        button.ToArray()
+                    }, true, true)
+                    {Selective = true, OneTimeKeyboard = true, ResizeKeyboard = true};
+
                     // Abort if there is no valid filename.
                     if (string.IsNullOrEmpty(fileName))
                     {
                         // Makes the bot appear to be thinking.
                         _bot.SendChatActionAsync(session.ChatID, ChatAction.Typing).Wait();
 
-                        // Text operations do not include photos.
-                        _bot.SendTextMessageAsync(session.ChatID, content, replyMarkup: keyboard,
-                            disableWebPagePreview: true,
-                            disableNotification: true).Wait();
+                        // Change up behavior depending on private or group chats.
+                        if (session.GameType == ChatType.Private)
+                        {
+                            // Private session gets the keyboard and the content.
+                            _bot.SendTextMessageAsync(session.ChatID, content,
+                                replyMarkup: keyboard,
+                                disableWebPagePreview: true,
+                                disableNotification: true).Wait();
+                        }
+                        else
+                        {
+                            // Send the keyboard to the session leader.
+                            _bot.SendTextMessageAsync(session.ChatID,
+                                $"@{session.LeaderUsername}{Environment.NewLine}{content}",
+                                replyMarkup: keyboard,
+                                disableWebPagePreview: true,
+                                disableNotification: true).Wait();
+                        }
                     }
                     else
                     {
@@ -380,9 +427,25 @@ namespace TrailBot
                             _bot.SendChatActionAsync(session.ChatID, ChatAction.UploadPhoto).Wait();
 
                             var fts = new FileToSend(fileName, fileStream);
-                            _bot.SendPhotoAsync(session.ChatID, fts, content, replyMarkup: keyboard,
-                                disableNotification: true)
-                                .Wait();
+
+                            if (session.GameType == ChatType.Private)
+                            {
+                                _bot.SendPhotoAsync(session.ChatID, fts, content, replyMarkup: keyboard,
+                                    disableNotification: true)
+                                    .Wait();
+                            }
+                            else
+                            {
+                                // Send a message the user can reply to.
+                                _bot.SendPhotoAsync(session.ChatID, fts, string.Empty).Wait();
+
+                                // Group messages cannot send a picture and also spawn a keyboard so make them separate.
+                                _bot.SendTextMessageAsync(session.ChatID,
+                                    $"@{session.LeaderUsername}{Environment.NewLine}{content}",
+                                    replyMarkup: keyboard,
+                                    disableWebPagePreview: true,
+                                    disableNotification: true).Wait();
+                            }
                         }
                     }
                 }
@@ -402,7 +465,7 @@ namespace TrailBot
                     var keyboard = new ReplyKeyboardMarkup(new[]
                     {
                         topRow.ToArray(), bottomRow.ToArray()
-                    }, true, true);
+                    }, true, true) {Selective = true};
 
                     // Figures out where the image will be coming from.
                     string fileName;
@@ -418,9 +481,26 @@ namespace TrailBot
                             new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
                         {
                             _bot.SendChatActionAsync(session.ChatID, ChatAction.UploadPhoto).Wait();
+
                             var fts = new FileToSend(fileName, fileStream);
-                            _bot.SendPhotoAsync(session.ChatID, fts, content, replyMarkup: keyboard,
-                                disableNotification: true).Wait();
+
+                            if (session.GameType == ChatType.Private)
+                            {
+                                _bot.SendPhotoAsync(session.ChatID, fts, content, replyMarkup: keyboard,
+                                    disableNotification: true).Wait();
+                            }
+                            else
+                            {
+                                // Send a message the user can reply to.
+                                _bot.SendPhotoAsync(session.ChatID, fts, string.Empty).Wait();
+
+                                // Group messages cannot send a picture and also spawn a keyboard so make them separate.
+                                _bot.SendTextMessageAsync(session.ChatID,
+                                    $"@{session.LeaderUsername}{Environment.NewLine}{content}",
+                                    replyMarkup: keyboard,
+                                    disableWebPagePreview: true,
+                                    disableNotification: true).Wait();
+                            }
                         }
                     }
                     else if (!string.IsNullOrEmpty(window.CurrentForm?.ImagePath))
@@ -433,8 +513,18 @@ namespace TrailBot
                         {
                             // Send the message to chat room.
                             _bot.SendChatActionAsync(session.ChatID, ChatAction.Typing).Wait();
-                            _bot.SendTextMessageAsync(session.ChatID, content, replyMarkup: keyboard,
-                                disableWebPagePreview: true, disableNotification: true).Wait();
+
+                            if (session.GameType == ChatType.Private)
+                            {
+                                _bot.SendTextMessageAsync(session.ChatID, content, replyMarkup: keyboard,
+                                    disableWebPagePreview: true, disableNotification: true).Wait();
+                            }
+                            else
+                            {
+                                _bot.SendTextMessageAsync(session.ChatID,
+                                    $"@{session.LeaderUsername}{Environment.NewLine}{content}", replyMarkup: keyboard,
+                                    disableWebPagePreview: true, disableNotification: true).Wait();
+                            }
                         }
                         else
                         {
@@ -444,9 +534,26 @@ namespace TrailBot
                                 )
                             {
                                 _bot.SendChatActionAsync(session.ChatID, ChatAction.UploadPhoto).Wait();
+
                                 var fts = new FileToSend(fileName, fileStream);
-                                _bot.SendPhotoAsync(session.ChatID, fts, content, replyMarkup: keyboard,
-                                    disableNotification: true).Wait();
+
+                                if (session.GameType == ChatType.Private)
+                                {
+                                    _bot.SendPhotoAsync(session.ChatID, fts, content, replyMarkup: keyboard,
+                                        disableNotification: true).Wait();
+                                }
+                                else
+                                {
+                                    // Send a message the user can reply to.
+                                    _bot.SendPhotoAsync(session.ChatID, fts, string.Empty).Wait();
+
+                                    // Group messages cannot send a picture and also spawn a keyboard so make them separate.
+                                    _bot.SendTextMessageAsync(session.ChatID,
+                                        $"@{session.LeaderUsername}{Environment.NewLine}{content}",
+                                        replyMarkup: keyboard,
+                                        disableWebPagePreview: true,
+                                        disableNotification: true).Wait();
+                                }
                             }
                         }
                     }
@@ -454,9 +561,22 @@ namespace TrailBot
                     {
                         // Send the message to chat room.
                         _bot.SendChatActionAsync(session.ChatID, ChatAction.Typing).Wait();
-                        _bot.SendTextMessageAsync(session.ChatID, content, replyMarkup: keyboard,
-                            disableWebPagePreview: true,
-                            disableNotification: true).Wait();
+
+                        if (session.GameType == ChatType.Private)
+                        {
+                            _bot.SendTextMessageAsync(session.ChatID, content,
+                                replyMarkup: keyboard,
+                                disableWebPagePreview: true,
+                                disableNotification: true).Wait();
+                        }
+                        else
+                        {
+                            _bot.SendTextMessageAsync(session.ChatID,
+                                $"@{session.LeaderUsername}{Environment.NewLine}{content}",
+                                replyMarkup: keyboard,
+                                disableWebPagePreview: true,
+                                disableNotification: true).Wait();
+                        }
                     }
                 }
             }

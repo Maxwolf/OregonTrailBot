@@ -32,12 +32,21 @@ namespace OregonTrail
             else
                 LeaderName = message.From.Username;
 
+            // Used to make users reply directly to the bot by making their clients auto reply to messages from him due to being @mentioned in the message context.
+            LeaderUsername = message.From.Username;
+
             // Previous message is always blank.
             PreviousMessage = string.Empty;
 
             // Actually creates the game simulation using information contained in this object so far.
             Session = new GameSimulationApp(MemberwiseClone() as BotSession);
         }
+
+        /// <summary>
+        ///     Used to make users reply directly to the bot by making their clients auto reply to messages from him due to being
+        ///     @mentioned in the message context.
+        /// </summary>
+        public string LeaderUsername { get; set; }
 
         /// <summary>
         ///     Used to determine if the current session is in a group or a private session between the bot and a single user. The

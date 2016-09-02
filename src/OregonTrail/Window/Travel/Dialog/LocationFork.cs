@@ -42,7 +42,7 @@ namespace OregonTrail
             get
             {
                 var menuList = new List<string>();
-                for (var i = 0; i < _skipChoices.Count; i++)
+                for (var i = 0; i < _skipChoices.Count+1; i++)
                     menuList.Add((i + 1).ToString());
 
                 return menuList.ToArray();
