@@ -2,6 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace OregonTrail
@@ -22,6 +24,8 @@ namespace OregonTrail
         /// <param name="window">The window.</param>
         public LocationDepart(IWindow window) : base(window)
         {
+            // Image of the wagon traveling on the trail.
+            ImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "travel.gif");
         }
 
         public override object MenuCommands

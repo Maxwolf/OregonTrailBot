@@ -62,17 +62,12 @@ namespace OregonTrail
         /// </summary>
         public override bool AllowInput
         {
-            get { return _finishedCrossingRiver; }
+            get { return false; }
         }
 
         public override object MenuCommands
         {
-            get
-            {
-                return _finishedCrossingRiver
-                    ? new[] {"Finish Crossing"}
-                    : null;
-            }
+            get { return null; }
         }
 
         /// <summary>
@@ -106,6 +101,13 @@ namespace OregonTrail
                 UserData.River.IndianCost = 0;
             }
 
+            ImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "river.gif");
+
+            UpdateRiverInfo();
+        }
+
+        private void UpdateRiverInfo()
+        {
             // Clears the string buffer for this render pass.
             _crossingPrompt.Clear();
 
@@ -125,8 +127,7 @@ namespace OregonTrail
             //_crossingPrompt.AppendLine(
             //    $"River crossed: {_riverCrossingOfTotalWidth.ToString("N0")} feet");
 
-            // Image of the wagon traveling over the water.
-            ImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "river.gif");
+            _crossingPrompt.AppendLine("River crossing in progress...");
         }
 
         /// <summary>
@@ -139,6 +140,13 @@ namespace OregonTrail
         public override string OnRenderForm()
         {
             return _crossingPrompt.ToString();
+        }
+
+        public override void OnFormActivate()
+        {
+            base.OnFormActivate();
+
+            UpdateRiverInfo();
         }
 
         /// <summary>
@@ -163,9 +171,20 @@ namespace OregonTrail
             if (systemTick)
                 return;
 
+            // Remove the image path once we hit the river.
+            if (UserData.River.DisasterHappened || _riverCrossingOfTotalWidth > 0)
+            {
+                ImagePath = null;
+            }
+
             // Stop crossing if we have finished.
             if (_finishedCrossingRiver)
+            {
+                _crossingPrompt.Clear();
+                ImagePath = null;
+                SetForm(typeof(CrossingResult));
                 return;
+            }
 
             // Increment the amount we have floated over the river.
             _riverCrossingOfTotalWidth += UserData.Game.Random.Next(1, UserData.River.RiverWidth/4);
@@ -232,7 +251,7 @@ namespace OregonTrail
         public override void OnInputBufferReturned(string input)
         {
             // Skip if we are still crossing the river.
-            if (_riverCrossingOfTotalWidth < UserData.River.RiverWidth)
+            if (!_finishedCrossingRiver)
                 return;
 
             SetForm(typeof (CrossingResult));

@@ -2,6 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace OregonTrail
@@ -26,6 +28,7 @@ namespace OregonTrail
         public HuntingPrompt(IWindow window) : base(window)
         {
             _huntHelp = new StringBuilder();
+            ImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "hunting.gif");
         }
 
         public override object MenuCommands

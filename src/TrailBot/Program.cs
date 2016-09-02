@@ -298,7 +298,7 @@ namespace TrailBot
 
                 // Group sessions need to ignore the player during this stage.
                 if (game.Session?.WindowManager?.FocusedWindow?.CurrentForm is InputPlayerNames &&
-                    game.GameType != ChatType.Private)
+                    game.GameType != ChatType.Private && !message.Text.Contains("Generate Names"))
                     return;
 
                 // Clear anything that was in the input buffer before this message.
@@ -334,24 +334,77 @@ namespace TrailBot
             // Check if there are multiple commands that can be pressed (or dialog with continue only).
             if ((menuCommands != null && menuCommands.Length <= 0) || menuCommands == null)
             {
-                // Makes the bot appear to be thinking.
-                _bot.SendChatActionAsync(session.ChatID, ChatAction.Typing).Wait();
-
-                if (session.GameType == ChatType.Private)
+                // Figures out where the image will be coming from.
+                var window = _sessions[session.ChatID].Session.WindowManager.FocusedWindow;
+                var fileName = string.Empty;
+                var filePath = string.Empty;
+                if (!string.IsNullOrEmpty(window.ImagePath) &&
+                    window.CurrentForm == null)
                 {
-                    _bot.SendTextMessageAsync(session.ChatID, content,
-                        replyMarkup: new ReplyKeyboardHide(),
-                        disableWebPagePreview: true,
-                        disableNotification: true).Wait();
+                    fileName = window.ImagePath.Split('\\').Last();
+                    filePath = window.ImagePath;
+                }
+                else if (!string.IsNullOrEmpty(window.CurrentForm?.ImagePath))
+                {
+                    fileName = window.CurrentForm.ImagePath.Split('\\').Last();
+                    filePath = window.CurrentForm.ImagePath;
+                }
+
+                if (string.IsNullOrEmpty(fileName))
+                {
+                    // Makes the bot appear to be thinking.
+                    _bot.SendChatActionAsync(session.ChatID, ChatAction.Typing).Wait();
+
+                    if (session.GameType == ChatType.Private)
+                    {
+                        _bot.SendTextMessageAsync(session.ChatID, content,
+                            replyMarkup: new ReplyKeyboardHide(),
+                            disableWebPagePreview: true,
+                            disableNotification: true).Wait();
+                    }
+                    else
+                    {
+                        // Send the text user interface to chat room.
+                        var forceReply = new ForceReply {Force = true, Selective = true};
+                        _bot.SendTextMessageAsync(session.ChatID,
+                            $"@{session.LeaderUsername}{Environment.NewLine}{content}",
+                            replyMarkup: forceReply,
+                            disableWebPagePreview: true,
+                            disableNotification: true).Wait();
+                    }
                 }
                 else
                 {
-                    // Send the text user interface to chat room.
-                    var forceReply = new ForceReply {Force = true, Selective = true};
-                    _bot.SendTextMessageAsync(session.ChatID, $"@{session.LeaderUsername}{Environment.NewLine}{content}",
-                        replyMarkup: forceReply,
-                        disableWebPagePreview: true,
-                        disableNotification: true).Wait();
+                    // Makes the bot appear to be thinking.
+                    _bot.SendChatActionAsync(session.ChatID, ChatAction.UploadPhoto).Wait();
+
+                    // Grabs the picture from the given path and then loads it into the Telegram API.
+                    using (var fileStream =
+                        new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    {
+                        var fts = new FileToSend(fileName, fileStream);
+
+                        if (session.GameType == ChatType.Private)
+                        {
+                            _bot.SendDocumentAsync(session.ChatID, fts, string.Empty).Wait();
+
+                            _bot.SendTextMessageAsync(session.ChatID, content, replyMarkup: new ReplyKeyboardHide(),
+                                disableNotification: true)
+                                .Wait();
+                        }
+                        else
+                        {
+                            // Send a message the user can reply to.
+                            _bot.SendDocumentAsync(session.ChatID, fts, string.Empty).Wait();
+
+                            // Group messages cannot send a picture and also spawn a keyboard so make them separate.
+                            _bot.SendTextMessageAsync(session.ChatID,
+                                $"@{session.LeaderUsername}{Environment.NewLine}{content}",
+                                replyMarkup: new ReplyKeyboardHide(),
+                                disableWebPagePreview: true,
+                                disableNotification: true).Wait();
+                        }
+                    }
                 }
             }
             else if (menuCommands.Length > 0)
@@ -420,18 +473,20 @@ namespace TrailBot
                     }
                     else
                     {
+                        // Makes the bot appear to be thinking.
+                        _bot.SendChatActionAsync(session.ChatID, ChatAction.UploadPhoto).Wait();
+
                         // Grabs the picture from the given path and then loads it into the Telegram API.
                         using (var fileStream =
                             new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
                         {
-                            // Makes the bot appear to be thinking.
-                            _bot.SendChatActionAsync(session.ChatID, ChatAction.UploadPhoto).Wait();
-
                             var fts = new FileToSend(fileName, fileStream);
 
                             if (session.GameType == ChatType.Private)
                             {
-                                _bot.SendDocumentAsync(session.ChatID, fts, content, replyMarkup: keyboard,
+                                _bot.SendDocumentAsync(session.ChatID, fts, string.Empty).Wait();
+
+                                _bot.SendTextMessageAsync(session.ChatID, content, replyMarkup: keyboard,
                                     disableNotification: true)
                                     .Wait();
                             }
@@ -477,17 +532,19 @@ namespace TrailBot
                         filePath = window.ImagePath;
                         fileName = window.ImagePath.Split('\\').Last();
 
+                        _bot.SendChatActionAsync(session.ChatID, ChatAction.UploadPhoto).Wait();
+
                         // Grabs the picture from the given path and then loads it into the Telegram API.
                         using (var fileStream =
                             new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
                         {
-                            _bot.SendChatActionAsync(session.ChatID, ChatAction.UploadPhoto).Wait();
-
                             var fts = new FileToSend(fileName, fileStream);
 
                             if (session.GameType == ChatType.Private)
                             {
-                                _bot.SendDocumentAsync(session.ChatID, fts, content, replyMarkup: keyboard,
+                                _bot.SendDocumentAsync(session.ChatID, fts, string.Empty).Wait();
+
+                                _bot.SendTextMessageAsync(session.ChatID, content, replyMarkup: keyboard,
                                     disableNotification: true).Wait();
                             }
                             else
@@ -540,7 +597,9 @@ namespace TrailBot
 
                                 if (session.GameType == ChatType.Private)
                                 {
-                                    _bot.SendDocumentAsync(session.ChatID, fts, content, replyMarkup: keyboard,
+                                    _bot.SendDocumentAsync(session.ChatID, fts, string.Empty).Wait();
+
+                                    _bot.SendTextMessageAsync(session.ChatID, content, replyMarkup: keyboard,
                                         disableNotification: true).Wait();
                                 }
                                 else

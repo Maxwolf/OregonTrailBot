@@ -55,9 +55,6 @@ namespace OregonTrail
             // Get instance of game simulation for easy reading.
             var game = UserData.Game;
 
-            // Image of the wagon traveling on the trail.
-            ImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "travel.gif");
-
             // Create travel text, but only update it once.
             CreateTravelInfo();
 
@@ -65,6 +62,14 @@ namespace OregonTrail
             if (game.Trail.DistanceToNextLocation > 0 &&
                 game.Trail.CurrentLocation.Status == LocationStatus.Arrived)
                 game.Trail.CurrentLocation.Status = LocationStatus.Departed;
+        }
+
+        public override void OnFormActivate()
+        {
+            base.OnFormActivate();
+
+            // Create travel text, but only update it once.
+            CreateTravelInfo();
         }
 
         /// <summary>
@@ -80,6 +85,8 @@ namespace OregonTrail
 
             // Basic information about simulation.
             _drive.AppendLine(UserData.DriveStatus);
+
+            _drive.AppendLine("Traveling to next location on the trail...");
 
             // Don't add the RETURN KEY text here if we are not actually at a point.
             _drive.Append("Press STOP to size up the situation");

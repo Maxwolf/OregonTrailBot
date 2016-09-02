@@ -30,7 +30,7 @@ namespace OregonTrail
         /// <summary>
         ///     Determines the maximum number of animals that will be spawned in this area for the player to hunt.
         /// </summary>
-        private const int MaxPrey = 15;
+        private const int MaxPrey = 7;
 
         /// <summary>
         ///     Determines the total weight of all the food the player is allowed to take away from a given hunting session.
@@ -107,6 +107,10 @@ namespace OregonTrail
             GeneratePrey();
         }
 
+        public decimal TargetPercentage { get; private set; }
+
+        public decimal DaylightPercentage { get; private set; }
+
         /// <summary>
         ///     Determines the current hunting word the player needs to type if an animal exists.
         /// </summary>
@@ -128,11 +132,11 @@ namespace OregonTrail
                     : $"Hunting near {_game.Trail.NextLocation.Name}");
 
                 // Represent seconds remaining as daylight left percentage.
-                var daylightPercentage = _secondsRemaining/(decimal) Huntingtime;
-                huntStatus.AppendLine($"Daylight Remaining: {(daylightPercentage*100).ToString("N0")}%");
+                DaylightPercentage = _secondsRemaining/(decimal) Huntingtime;
+                //huntStatus.AppendLine($"Daylight Remaining: {(_daylightPercentage * 100).ToString("N0")}%");
 
                 // Current weather on the planes.
-                huntStatus.AppendLine($"Weather: {_game.Trail.CurrentLocation.Weather.ToDescriptionAttribute()}");
+                //huntStatus.AppendLine($"Weather: {_game.Trail.CurrentLocation.Weather.ToDescriptionAttribute()}");
 
                 // Show the player their current shooting word and target they are aiming at.
                 huntStatus.AppendLine(
@@ -147,8 +151,8 @@ namespace OregonTrail
                 if (_target != null)
                 {
                     // Represent targeting time as a percentage of total animal awareness of the hunter.
-                    var targetPercentage = _target.TargetTime/(decimal) _target.TargetTimeMax;
-                    huntStatus.AppendLine($"Awareness: {(targetPercentage*100).ToString("N0")}%");
+                    TargetPercentage = _target.TargetTime/(decimal) _target.TargetTimeMax;
+                    //huntStatus.AppendLine($"Awareness: {(TargetPercentage * 100).ToString("N0")}%");
                 }
 
                 // Prompt the player with information about what to do.
@@ -167,11 +171,14 @@ namespace OregonTrail
                     // Prey will read out animals for multiple, and just animal for one (1), animals for zero (0).
                     huntStatus.AppendLine(
                         $"{Environment.NewLine}You sense {_sortedPrey.Count.ToString("N0")} {animalText} in the area...");
+
+                    huntStatus.AppendLine("Hunting lasts for the entire day (30 seconds)...");
                 }
 
                 return huntStatus.ToString();
             }
         }
+
 
         /// <summary>
         ///     Gets the bear.

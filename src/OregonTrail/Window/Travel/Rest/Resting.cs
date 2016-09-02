@@ -1,6 +1,7 @@
 ﻿// Created by Ron 'Maxwolf' McDowell (ron.mcdowell@gmail.com) 
 // Timestamp 01/03/2016@1:50 AM
 
+using System;
 using System.Text;
 
 namespace OregonTrail
@@ -121,8 +122,8 @@ namespace OregonTrail
                     _restMessage.AppendLine($"You camp near the river for {_daysRested.ToString("N0")} days.");
                 else if (_daysRested == 1)
                     _restMessage.AppendLine("You camp near the river for a day.");
-                else if (_daysRested <= 0)
-                    _restMessage.AppendLine("Preparing to camp near the river...");
+                //else if (_daysRested <= 0)
+                //    _restMessage.AppendLine("Preparing to camp near the river...");
             }
             else
             {
@@ -131,7 +132,7 @@ namespace OregonTrail
                 else if (_daysRested == 1)
                     _restMessage.AppendLine("You rest for a day.");
                 //else if (_daysRested <= 0)
-                //    _restMessage.AppendLine($"{Environment.NewLine}Preparing to rest...");
+                //    _restMessage.AppendLine("Preparing to rest...");
             }
 
             // Prints out the message about resting for however long this cycle was.
