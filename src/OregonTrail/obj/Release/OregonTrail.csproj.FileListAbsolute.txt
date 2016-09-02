@@ -1,6 +1,5 @@
 C:\OregonTrailBot\bin\OregonTrail.dll.config
 C:\OregonTrailBot\bin\OregonTrail.dll
 C:\OregonTrailBot\bin\OregonTrail.pdb
-C:\OregonTrailBot\src\OregonTrail\obj\Release\OregonTrail.csprojResolveAssemblyReference.cache
 C:\OregonTrailBot\src\OregonTrail\obj\Release\OregonTrail.dll
 C:\OregonTrailBot\src\OregonTrail\obj\Release\OregonTrail.pdb

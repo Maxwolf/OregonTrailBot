@@ -182,7 +182,7 @@ namespace OregonTrail
             {
                 _crossingPrompt.Clear();
                 ImagePath = null;
-                SetForm(typeof(CrossingResult));
+                SetForm(typeof (CrossingResult));
                 return;
             }
 

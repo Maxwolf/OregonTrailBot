@@ -44,7 +44,8 @@ namespace OregonTrail
             vehicle?.ReduceMileage(20 - 20*eventExecutor.Game.Random.Next());
 
             // Image of the wagon being washed out.
-            eventExecutor.Game.WindowManager.FocusedWindow.CurrentForm.ImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "washout.gif");
+            eventExecutor.Game.WindowManager.FocusedWindow.CurrentForm.ImagePath =
+                Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "washout.gif");
         }
 
         /// <summary>

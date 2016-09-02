@@ -2,8 +2,6 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
-using System.IO;
-using System.Reflection;
 using System.Text;
 
 namespace OregonTrail
