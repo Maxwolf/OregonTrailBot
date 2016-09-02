@@ -147,7 +147,7 @@ namespace TrailBot
             if (message == null || message.Type != MessageType.TextMessage)
                 return;
 
-            if (_sessions.ContainsKey(message.Chat.Id) && message.Text.Contains("/quit"))
+            if (_sessions.ContainsKey(message.Chat.Id) && _sessions[message.Chat.Id].UserID == message.From.Id && message.Text.Contains("/quit"))
             {
                 // Skip messages that are internal mode switching or empty (populating) windows and forms.
                 if (messageEventArgs.Message.Text.Contains(SceneGraph.GAMEMODE_DEFAULT_TUI) ||
@@ -182,7 +182,7 @@ namespace TrailBot
                 // Remove session from list.
                 _sessions.Remove(message.Chat.Id);
             }
-            else if (_sessions.ContainsKey(message.Chat.Id) && message.Text.Contains("/reset"))
+            else if (_sessions.ContainsKey(message.Chat.Id) && _sessions[message.Chat.Id].UserID == message.From.Id && message.Text.Contains("/reset"))
             {
                 // Skip messages that are internal mode switching or empty (populating) windows and forms.
                 if (messageEventArgs.Message.Text.Contains(SceneGraph.GAMEMODE_DEFAULT_TUI) ||
@@ -217,28 +217,10 @@ namespace TrailBot
                         throw new ArgumentOutOfRangeException();
                 }
             }
-            else if (!_sessions.ContainsKey(message.Chat.Id) && message.Text.Contains("/start"))
-            {
-                // Skip messages that are internal mode switching or empty (populating) windows and forms.
-                if (messageEventArgs.Message.Text.Contains(SceneGraph.GAMEMODE_DEFAULT_TUI) ||
-                    messageEventArgs.Message.Text.Contains(SceneGraph.GAMEMODE_EMPTY_TUI))
-                    return;
-
-                // Makes the bot appear to be thinking.
-                _bot.SendChatActionAsync(message.Chat.Id, ChatAction.Typing).Wait();
-
-                _sessions.Add(message.Chat.Id, new BotSession(message));
-                _bot.SendTextMessageAsync(message.Chat.Id,
-                    $"Creating new Oregon Trail session with {message.From.FirstName} as the leader since they said start first.",
-                    replyMarkup: new ReplyKeyboardHide(), disableWebPagePreview: true,
-                    disableNotification: true).Wait();
-
-                // Hook delegate event for knowing when that simulation is updated.
-                _sessions[message.Chat.Id].Session.SceneGraph.ScreenBufferDirtyEvent +=
-                    SceneGraphOnScreenBufferDirtyEvent;
-            }
-            else if (_sessions.ContainsKey(message.Chat.Id) && message.Text.Contains("/join") &&
-                     _sessions[message.Chat.Id]?.Session?.WindowManager?.FocusedWindow?.CurrentForm is InputPlayerNames)
+            else if (_sessions.ContainsKey(message.Chat.Id) &&
+                _sessions[message.Chat.Id].UserID == message.From.Id &&
+                message.Text.Contains("/join") &&
+                    _sessions[message.Chat.Id]?.Session?.WindowManager?.FocusedWindow?.CurrentForm is InputPlayerNames)
             {
                 // Get the current session based on ID we know exists now.
                 var game = _sessions[message.Chat.Id];
@@ -271,6 +253,26 @@ namespace TrailBot
 
                 // Send whatever we got to the simulation for processing it will decide what it wants.
                 game.Session.InputManager.SendInputBufferAsCommand();
+            }
+            else if (!_sessions.ContainsKey(message.Chat.Id) && message.Text.Contains("/start"))
+            {
+                // Skip messages that are internal mode switching or empty (populating) windows and forms.
+                if (messageEventArgs.Message.Text.Contains(SceneGraph.GAMEMODE_DEFAULT_TUI) ||
+                    messageEventArgs.Message.Text.Contains(SceneGraph.GAMEMODE_EMPTY_TUI))
+                    return;
+
+                // Makes the bot appear to be thinking.
+                _bot.SendChatActionAsync(message.Chat.Id, ChatAction.Typing).Wait();
+
+                _sessions.Add(message.Chat.Id, new BotSession(message));
+                _bot.SendTextMessageAsync(message.Chat.Id,
+                    $"Creating new Oregon Trail session with {message.From.FirstName} as the leader since they said start first.",
+                    replyMarkup: new ReplyKeyboardHide(), disableWebPagePreview: true,
+                    disableNotification: true).Wait();
+
+                // Hook delegate event for knowing when that simulation is updated.
+                _sessions[message.Chat.Id].Session.SceneGraph.ScreenBufferDirtyEvent +=
+                    SceneGraphOnScreenBufferDirtyEvent;
             }
             else if (_sessions.ContainsKey(message.Chat.Id))
             {
@@ -325,6 +327,7 @@ namespace TrailBot
                 var halfCommandCount = menuCommands.Length/2;
 
                 // Check if less than zero.
+                var window = _sessions[session.ChatID].Session.WindowManager.FocusedWindow;
                 if (halfCommandCount <= 0)
                 {
                     // Send custom keyboard.
@@ -338,29 +341,22 @@ namespace TrailBot
                     }, true, true);
 
                     // Simulation can send photos to chat to help visualize locations.
-                    if (_sessions[session.ChatID].Session.WindowManager.FocusedWindow == null)
+                    if (window == null)
                         return;
 
                     // Figures out where the image will be coming from.
                     var fileName = string.Empty;
                     var filePath = string.Empty;
-                    if (
-                        !string.IsNullOrEmpty(_sessions[session.ChatID].Session.WindowManager.FocusedWindow.ImagePath) &&
-                        _sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm == null)
+                    if (!string.IsNullOrEmpty(window.ImagePath) &&
+                        window.CurrentForm == null)
                     {
-                        fileName =
-                            _sessions[session.ChatID].Session.WindowManager.FocusedWindow.ImagePath.Split('\\').Last();
-                        filePath = _sessions[session.ChatID].Session.WindowManager.FocusedWindow.ImagePath;
+                        fileName = window.ImagePath.Split('\\').Last();
+                        filePath = window.ImagePath;
                     }
-                    else if (_sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm != null &&
-                             !string.IsNullOrEmpty(
-                                 _sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm.ImagePath))
+                    else if (!string.IsNullOrEmpty(window.CurrentForm?.ImagePath))
                     {
-                        fileName =
-                            _sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm.ImagePath.Split(
-                                '\\')
-                                .Last();
-                        filePath = _sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm.ImagePath;
+                        fileName = window.CurrentForm.ImagePath.Split('\\').Last();
+                        filePath = window.CurrentForm.ImagePath;
                     }
 
                     // Abort if there is no valid filename.
@@ -377,8 +373,8 @@ namespace TrailBot
                     else
                     {
                         // Grabs the picture from the given path and then loads it into the Telegram API.
-                        using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read)
-                            )
+                        using (var fileStream =
+                            new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
                         {
                             // Makes the bot appear to be thinking.
                             _bot.SendChatActionAsync(session.ChatID, ChatAction.UploadPhoto).Wait();
@@ -411,34 +407,26 @@ namespace TrailBot
                     // Figures out where the image will be coming from.
                     string fileName;
                     string filePath;
-                    if (
-                        !string.IsNullOrEmpty(_sessions[session.ChatID].Session.WindowManager.FocusedWindow.ImagePath) &&
-                        _sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm == null)
+                    if (!string.IsNullOrEmpty(window.ImagePath) &&
+                        window.CurrentForm == null)
                     {
-                        filePath = _sessions[session.ChatID].Session.WindowManager.FocusedWindow.ImagePath;
-                        fileName =
-                            _sessions[session.ChatID].Session.WindowManager.FocusedWindow.ImagePath.Split('\\').Last();
+                        filePath = window.ImagePath;
+                        fileName = window.ImagePath.Split('\\').Last();
 
                         // Grabs the picture from the given path and then loads it into the Telegram API.
-                        using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read)
-                            )
+                        using (var fileStream =
+                            new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
                         {
                             _bot.SendChatActionAsync(session.ChatID, ChatAction.UploadPhoto).Wait();
                             var fts = new FileToSend(fileName, fileStream);
                             _bot.SendPhotoAsync(session.ChatID, fts, content, replyMarkup: keyboard,
-                                disableNotification: true)
-                                .Wait();
+                                disableNotification: true).Wait();
                         }
                     }
-                    else if (_sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm != null &&
-                             !string.IsNullOrEmpty(
-                                 _sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm.ImagePath))
+                    else if (!string.IsNullOrEmpty(window.CurrentForm?.ImagePath))
                     {
-                        filePath = _sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm.ImagePath;
-                        fileName =
-                            _sessions[session.ChatID].Session.WindowManager.FocusedWindow.CurrentForm.ImagePath.Split(
-                                '\\')
-                                .Last();
+                        filePath = window.CurrentForm.ImagePath;
+                        fileName = window.CurrentForm.ImagePath.Split('\\').Last();
 
                         // Abort if there is no valid filename.
                         if (string.IsNullOrEmpty(fileName))
