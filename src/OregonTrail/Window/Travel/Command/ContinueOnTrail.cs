@@ -2,6 +2,8 @@
 // Timestamp 01/03/2016@1:50 AM
 
 using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace OregonTrail
@@ -53,13 +55,34 @@ namespace OregonTrail
             // Get instance of game simulation for easy reading.
             var game = UserData.Game;
 
-            // We don't create it in the constructor, will update with ticks.
-            _drive = new StringBuilder();
+            // Image of the wagon traveling on the trail.
+            ImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "travel.gif");
+
+            // Create travel text, but only update it once.
+            CreateTravelInfo();
 
             // Vehicle has departed the current location for the next one but you can only depart once.
             if (game.Trail.DistanceToNextLocation > 0 &&
                 game.Trail.CurrentLocation.Status == LocationStatus.Arrived)
                 game.Trail.CurrentLocation.Status = LocationStatus.Departed;
+        }
+
+        /// <summary>
+        ///     Creates all of the status information that is only updated a single time to prevent message spamming.
+        /// </summary>
+        private void CreateTravelInfo()
+        {
+            // We don't create it in the constructor, will update with ticks.
+            _drive = new StringBuilder();
+
+            // Clear whatever was in the string builder last tick.
+            _drive.Clear();
+
+            // Basic information about simulation.
+            _drive.AppendLine(UserData.DriveStatus);
+
+            // Don't add the RETURN KEY text here if we are not actually at a point.
+            _drive.Append("Press STOP to size up the situation");
         }
 
         /// <summary>
@@ -71,15 +94,6 @@ namespace OregonTrail
         /// </returns>
         public override string OnRenderForm()
         {
-            // Clear whatever was in the string builder last tick.
-            _drive.Clear();
-
-            // Basic information about simulation.
-            _drive.AppendLine(UserData.DriveStatus);
-
-            // Don't add the RETURN KEY text here if we are not actually at a point.
-            _drive.Append("Press STOP to size up the situation");
-
             // Wait for user input, event, or reaching next location...
             return _drive.ToString();
         }

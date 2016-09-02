@@ -34,7 +34,7 @@ namespace OregonTrail
             // Name of the point as it should be known to the player.
             Name = name;
 
-            var namePath = name.Replace(" ", "_").ToLowerInvariant() + ".jpg";
+            var namePath = name.Replace(" ", "_").ToLowerInvariant() + ".gif";
             // ReSharper disable once AssignNullToNotNullAttribute
             ImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), namePath);
 

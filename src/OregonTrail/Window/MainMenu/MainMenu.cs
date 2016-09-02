@@ -28,7 +28,7 @@ namespace OregonTrail
             var headerText = new StringBuilder();
 
             // Graphical title for main menu.
-            ImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "title.jpg");
+            ImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "title.gif");
             headerText.Append("You may:");
             MenuHeader = headerText.ToString();
 

@@ -130,8 +130,8 @@ namespace OregonTrail
                 $"Crossing By: {UserData.River.CrossingType}");
             _crossingPrompt.AppendLine(
                 $"River width: {UserData.River.RiverWidth.ToString("N0")} feet");
-            _crossingPrompt.AppendLine(
-                $"River crossed: {_riverCrossingOfTotalWidth.ToString("N0")} feet");
+            //_crossingPrompt.AppendLine(
+            //    $"River crossed: {_riverCrossingOfTotalWidth.ToString("N0")} feet");
 
             return _crossingPrompt.ToString();
         }

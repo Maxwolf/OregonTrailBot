@@ -54,7 +54,7 @@ namespace OregonTrail
             {
                 // Add the image of the tombstone.
                 ImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                    "tombstone.jpg");
+                    "tombstone.gif");
 
                 // Add the custom message the player made for this tombstone, or just the default if nothing else.
                 tombstoneViewer.AppendLine(UserData.Tombstone.ToString());

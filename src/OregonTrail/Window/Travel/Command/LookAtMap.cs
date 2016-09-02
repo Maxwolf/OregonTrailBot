@@ -44,7 +44,7 @@ namespace OregonTrail
             mapPrompt.AppendLine($"{Environment.NewLine}Trail Progress");
 
             // Graphical title for main menu.
-            ImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "map.jpg");
+            ImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "map.gif");
 
             // Build up a table of location names and if the player has visited them.
             var locationsCompleted = UserData.Game.Trail.Locations.Count(

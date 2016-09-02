@@ -431,14 +431,14 @@ namespace TrailBot
 
                             if (session.GameType == ChatType.Private)
                             {
-                                _bot.SendPhotoAsync(session.ChatID, fts, content, replyMarkup: keyboard,
+                                _bot.SendDocumentAsync(session.ChatID, fts, content, replyMarkup: keyboard,
                                     disableNotification: true)
                                     .Wait();
                             }
                             else
                             {
                                 // Send a message the user can reply to.
-                                _bot.SendPhotoAsync(session.ChatID, fts, string.Empty).Wait();
+                                _bot.SendDocumentAsync(session.ChatID, fts, string.Empty).Wait();
 
                                 // Group messages cannot send a picture and also spawn a keyboard so make them separate.
                                 _bot.SendTextMessageAsync(session.ChatID,
@@ -487,13 +487,13 @@ namespace TrailBot
 
                             if (session.GameType == ChatType.Private)
                             {
-                                _bot.SendPhotoAsync(session.ChatID, fts, content, replyMarkup: keyboard,
+                                _bot.SendDocumentAsync(session.ChatID, fts, content, replyMarkup: keyboard,
                                     disableNotification: true).Wait();
                             }
                             else
                             {
                                 // Send a message the user can reply to.
-                                _bot.SendPhotoAsync(session.ChatID, fts, string.Empty).Wait();
+                                _bot.SendDocumentAsync(session.ChatID, fts, string.Empty).Wait();
 
                                 // Group messages cannot send a picture and also spawn a keyboard so make them separate.
                                 _bot.SendTextMessageAsync(session.ChatID,
@@ -540,13 +540,13 @@ namespace TrailBot
 
                                 if (session.GameType == ChatType.Private)
                                 {
-                                    _bot.SendPhotoAsync(session.ChatID, fts, content, replyMarkup: keyboard,
+                                    _bot.SendDocumentAsync(session.ChatID, fts, content, replyMarkup: keyboard,
                                         disableNotification: true).Wait();
                                 }
                                 else
                                 {
                                     // Send a message the user can reply to.
-                                    _bot.SendPhotoAsync(session.ChatID, fts, string.Empty).Wait();
+                                    _bot.SendDocumentAsync(session.ChatID, fts, string.Empty).Wait();
 
                                     // Group messages cannot send a picture and also spawn a keyboard so make them separate.
                                     _bot.SendTextMessageAsync(session.ChatID,
