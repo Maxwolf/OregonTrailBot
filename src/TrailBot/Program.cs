@@ -82,13 +82,14 @@ namespace TrailBot
             {
                 // Only update the session count if it changes.
                 if (!_lastSessionCount.Equals(_sessions.Count))
-                {
                     UpdateServerInfo();
-                }
 
                 // Simulation takes any number of pulses to determine seconds elapsed.
-                foreach (var sim in _sessions)
-                    sim.Value.Session.OnTick(true);
+                lock (_sessions)
+                {
+                    foreach (var sim in _sessions)
+                        sim.Value.Session.OnTick(true);
+                }
 
                 // Do not consume all of the CPU, allow other messages to occur.
                 Thread.Sleep(1);
@@ -123,8 +124,11 @@ namespace TrailBot
         private static void Console_CancelKeyPress(object sender, ConsoleCancelEventArgs e)
         {
             // Destroy the simulation sessions.
-            foreach (var sim in _sessions)
-                sim.Value.Session.Destroy();
+            lock (_sessions)
+            {
+                foreach (var sim in _sessions)
+                    sim.Value.Session.Destroy();
+            }
 
             // Clear out and then destroy the dictionary which will exit the main loop and stop application.
             _sessions.Clear();
@@ -182,7 +186,10 @@ namespace TrailBot
                 }
 
                 // Remove session from list.
-                _sessions.Remove(message.Chat.Id);
+                lock (_sessions)
+                {
+                    _sessions.Remove(message.Chat.Id);
+                }
             }
             else if (_sessions.ContainsKey(message.Chat.Id) &&
                      _sessions[message.Chat.Id].UserID == message.From.Id &&
@@ -273,7 +280,11 @@ namespace TrailBot
                 // Makes the bot appear to be thinking.
                 _bot.SendChatActionAsync(message.Chat.Id, ChatAction.Typing).Wait();
 
-                _sessions.Add(message.Chat.Id, new BotSession(message));
+                lock (_sessions)
+                {
+                    _sessions.Add(message.Chat.Id, new BotSession(message));
+                }
+
                 _bot.SendTextMessageAsync(message.Chat.Id,
                     $"Creating new Oregon Trail session with {message.From.FirstName} as the leader since they said start first.",
                     replyMarkup: new ReplyKeyboardHide(), disableWebPagePreview: true,
