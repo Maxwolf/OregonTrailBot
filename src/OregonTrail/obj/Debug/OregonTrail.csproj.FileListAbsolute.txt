@@ -3,3 +3,4 @@ C:\OregonTrailBot\bin\OregonTrail.dll
 C:\OregonTrailBot\bin\OregonTrail.pdb
 C:\OregonTrailBot\src\OregonTrail\obj\Debug\OregonTrail.dll
 C:\OregonTrailBot\src\OregonTrail\obj\Debug\OregonTrail.pdb
+C:\OregonTrailBot\src\OregonTrail\obj\Debug\OregonTrail.csprojResolveAssemblyReference.cache
