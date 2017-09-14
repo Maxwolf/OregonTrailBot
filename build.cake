@@ -17,14 +17,7 @@ var buildDir = Directory("./bin");
 // TASKS
 //////////////////////////////////////////////////////////////////////
 
-Task("Clean")
-    .Does(() =>
-{
-    CleanDirectory(buildDir);
-});
-
 Task("Restore-NuGet-Packages")
-    .IsDependentOn("Clean")
     .Does(() =>
 {
     NuGetRestore("./src/OregonTrailBot.sln");
