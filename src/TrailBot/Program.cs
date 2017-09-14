@@ -166,7 +166,7 @@ namespace TrailBot
                 // Send the notification to the chat room.
                 _bot.SendTextMessageAsync(message.Chat.Id,
                     $"{message.From.FirstName} has quit the game, losing their progress. To start a new game type /start to become leader of new session.",
-                    replyMarkup: new ReplyKeyboardHide(),
+                    replyMarkup: new ReplyKeyboardRemove(),
                     disableWebPagePreview: true,
                     disableNotification: true).Wait();
 
@@ -210,7 +210,7 @@ namespace TrailBot
                         // Send the notification to the chat room.
                         _bot.SendTextMessageAsync(message.Chat.Id,
                             $"{message.From.FirstName} has reset the game, losing their progress. Starting a new session now with them as the leader again.",
-                            replyMarkup: new ReplyKeyboardHide(),
+                            replyMarkup: new ReplyKeyboardRemove(),
                             disableWebPagePreview: true,
                             disableNotification: true)
                             .Wait();
@@ -224,7 +224,7 @@ namespace TrailBot
                         // Send the notification to the chat room.
                         _bot.SendTextMessageAsync(message.Chat.Id,
                             $"{message.From.FirstName} has reset the game, losing their progress. Starting a new session now with them as the leader again.",
-                            replyMarkup: new ReplyKeyboardHide(),
+                            replyMarkup: new ReplyKeyboardRemove(),
                             disableWebPagePreview: true,
                             disableNotification: true).Wait();
                         break;
@@ -287,7 +287,7 @@ namespace TrailBot
 
                 _bot.SendTextMessageAsync(message.Chat.Id,
                     $"Creating new Oregon Trail session with {message.From.FirstName} as the leader since they said start first.",
-                    replyMarkup: new ReplyKeyboardHide(), disableWebPagePreview: true,
+                    replyMarkup: new ReplyKeyboardRemove(), disableWebPagePreview: true,
                     disableNotification: true).Wait();
 
                 // Hook delegate event for knowing when that simulation is updated.
@@ -369,7 +369,7 @@ namespace TrailBot
                     if (session.GameType == ChatType.Private)
                     {
                         _bot.SendTextMessageAsync(session.ChatID, content,
-                            replyMarkup: new ReplyKeyboardHide(),
+                            replyMarkup: new ReplyKeyboardRemove(),
                             disableWebPagePreview: true,
                             disableNotification: true).Wait();
                     }
@@ -399,7 +399,7 @@ namespace TrailBot
                         {
                             _bot.SendDocumentAsync(session.ChatID, fts, string.Empty).Wait();
 
-                            _bot.SendTextMessageAsync(session.ChatID, content, replyMarkup: new ReplyKeyboardHide(),
+                            _bot.SendTextMessageAsync(session.ChatID, content, replyMarkup: new ReplyKeyboardRemove(),
                                 disableNotification: true)
                                 .Wait();
                         }
@@ -411,7 +411,7 @@ namespace TrailBot
                             // Group messages cannot send a picture and also spawn a keyboard so make them separate.
                             _bot.SendTextMessageAsync(session.ChatID,
                                 $"@{session.LeaderUsername}{Environment.NewLine}{content}",
-                                replyMarkup: new ReplyKeyboardHide(),
+                                replyMarkup: new ReplyKeyboardRemove(),
                                 disableWebPagePreview: true,
                                 disableNotification: true).Wait();
                         }

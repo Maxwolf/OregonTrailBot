@@ -4,3 +4,4 @@ C:\OregonTrailBot\bin\TrailBot.pdb
 C:\OregonTrailBot\src\TrailBot\obj\Debug\TrailBot.csprojResolveAssemblyReference.cache
 C:\OregonTrailBot\src\TrailBot\obj\Debug\TrailBot.exe
 C:\OregonTrailBot\src\TrailBot\obj\Debug\TrailBot.pdb
+C:\OregonTrailBot\src\TrailBot\obj\Debug\TrailBot.csproj.CoreCompileInputs.cache

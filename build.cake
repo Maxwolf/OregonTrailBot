@@ -1,92 +1,71 @@
-///////////////////////////////////////////////////////////////////////////////
+#tool nuget:?package=NUnit.ConsoleRunner&version=3.4.0
+//////////////////////////////////////////////////////////////////////
 // ARGUMENTS
-///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 
-var target = Argument<string>("target", "Default");
-var configuration = Argument<string>("configuration", "Release");
+var target = Argument("target", "Default");
+var configuration = Argument("configuration", "Release");
 
-///////////////////////////////////////////////////////////////////////////////
-// GLOBAL VARIABLES
-///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+// PREPARATION
+//////////////////////////////////////////////////////////////////////
 
-var solutions = GetFiles("./**/*.sln");
-var solutionPaths = solutions.Select(solution => solution.GetDirectory());
+// Define directories.
+var buildDir = Directory("./bin");
 
-///////////////////////////////////////////////////////////////////////////////
-// SETUP / TEARDOWN
-///////////////////////////////////////////////////////////////////////////////
-
-Setup(() =>
-{
-    // Executed BEFORE the first task.
-    Information("Running tasks...");
-});
-
-Teardown(() =>
-{
-    // Executed AFTER the last task.
-    Information("Finished running tasks.");
-});
-
-///////////////////////////////////////////////////////////////////////////////
-// TASK DEFINITIONS
-///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+// TASKS
+//////////////////////////////////////////////////////////////////////
 
 Task("Clean")
     .Does(() =>
 {
-    // Clean solution directories.
-    foreach(var path in solutionPaths)
-    {
-        Information("Cleaning {0}", path);
-        CleanDirectories(path + "/**/bin/" + configuration);
-        CleanDirectories(path + "/**/obj/" + configuration);
-    }
+    CleanDirectory(buildDir);
 });
 
-Task("Restore")
+Task("Restore-NuGet-Packages")
+    .IsDependentOn("Clean")
     .Does(() =>
 {
-    // Restore all NuGet packages.
-    foreach(var solution in solutions)
-    {
-        Information("Restoring {0}...", solution);
-        NuGetRestore(solution);
-    }
+    NuGetRestore("./src/OregonTrailBot.sln");
 });
 
 Task("Build")
-    .IsDependentOn("Clean")
-    .IsDependentOn("Restore")
+    .IsDependentOn("Restore-NuGet-Packages")
     .Does(() =>
 {
-    // Build all solutions.
-    foreach(var solution in solutions)
+    if(IsRunningOnWindows())
     {
-        Information("Building {0}", solution);
-        if(IsRunningOnWindows())
-        {
-            // Use MSBuild
-            MSBuild(solution, settings =>
-            settings.SetConfiguration(configuration));
-        }
-        else
-        {
-            // Use XBuild
-            XBuild(solution);
-        }
+      // Use MSBuild
+      MSBuild("./src/OregonTrailBot.sln", settings =>
+        settings.SetConfiguration(configuration));
+    }
+    else
+    {
+      // Use XBuild
+      XBuild("./src/OregonTrailBot.sln", settings =>
+        settings.SetConfiguration(configuration));
     }
 });
 
-///////////////////////////////////////////////////////////////////////////////
-// TARGETS
-///////////////////////////////////////////////////////////////////////////////
+Task("Run-Unit-Tests")
+    .IsDependentOn("Build")
+    .Does(() =>
+{
+    NUnit3("./src/**/bin/" + configuration + "/*.Tests.dll", new NUnit3Settings {
+        NoResults = true
+        });
+});
+
+//////////////////////////////////////////////////////////////////////
+// TASK TARGETS
+//////////////////////////////////////////////////////////////////////
 
 Task("Default")
-    .IsDependentOn("Build");
+    .IsDependentOn("Run-Unit-Tests");
 
-///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 // EXECUTION
-///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 
 RunTarget(target);
